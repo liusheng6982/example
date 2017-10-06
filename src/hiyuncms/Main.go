@@ -7,6 +7,7 @@ import (
 	"os"
 	"net/http"
 	"os/signal"
+	_"hiyuncms/models"
 	"hiyuncms/service"
 	"hiyuncms/routes"
 	"hiyuncms/config"

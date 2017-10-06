@@ -3,41 +3,54 @@ package models
 import (
 	"time"
 	"log"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"github.com/go-xorm/core"
+	"hiyuncms/config"
 )
 
-var enginex * xorm.Engine
-var engine * Engine
+//var enginex * xorm.DbMaster
+var DbMaster * xorm.Engine
+
+/*
+db.master.driver=mysql
+db.master.dbname=hiyuncms
+db.master.user=root
+db.master.password=root
+db.master.host=localhost:3306
+db.master.prefix=hiyuncms_
+db.master.encoding=utf8
+ */
+
 func init()  {
+	driver := config.GetValue("db.master.driver")
+	dbname := config.GetValue("db.master.dbname")
+	user   := config.GetValue("db.master.user")
+	password := config.GetValue("db.master.password")
+	host := config.GetValue("db.master.host")
+	encode := config.GetValue("db.master.encoding")
+	prefix := config.GetValue("db.master.prefix")
+	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true", user, password, host, dbname,encode)
+	var err error
+	DbMaster, err = xorm.NewEngine(driver, params)
+	log.Println( "init Database DbMaster ", GetErrorInfo(err))
 
-	log.Println( "init Database engine ")
-	//driver, _ := c.String("database", "db.driver")
-	//dbname, _ := c.String("database", "db.dbname")
-	//user, _ := c.String("database", "db.user")
-	//password, _ := c.String("database", "db.password")
-	//host, _ := c.String("database", "db.host")
-	//params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true", user, password, host, dbname)
-
-	enginex, _ = xorm.NewEngine("mysql", "root:root@/ADC?charset=utf8")
-
-	engine = &Engine{*enginex}
-
-	engine.SetMaxIdleConns( 50 )
-	engine.SetMaxOpenConns( 200 )
-	engine.ShowSQL(true)
-	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, "sys_")
-	engine.SetTableMapper(tbMapper)
+	DbMaster.SetMaxIdleConns( 50 )
+	DbMaster.SetMaxOpenConns( 200 )
+	DbMaster.ShowSQL(true)
+	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
+	DbMaster.SetTableMapper(tbMapper)
 }
 
+/*
 type Page struct {
 	PageSize int `json:"pageSize"`
 	PageNum  int `json:"pageNo"`
-}
+}*/
 
 
-func getErrorInfo(err error)  string{
+func GetErrorInfo(err error)  string{
 	if err == nil {
 		return "success"
 	}else {
@@ -92,25 +105,28 @@ func (t Date) String() string {
 	return time.Time(t).Format(dateFormart)
 }
 
-
+/*
 type Session struct {
 	xorm.Session
 }
 
-func (this * Session) MyLimit(page Page) * Session {
-	this.Statement.Limit(page.PageSize, page.PageSize * page.PageNum)
-	return  this
+
+func (s * Session) MyLimit(page Page) * Session {
+	s.Statement.Limit(page.PageSize, page.PageSize * page.PageNum)
+	return  s
 }
 
-type  Engine struct{xorm.Engine}
+type  DbMaster struct{xorm.DbMaster}
 
-func (this *Engine) Where(query interface{}, args ...interface{}) *Session {
-	session := this.NewSession()
+func (e *DbMaster) Where(query interface{}, args ...interface{}) *Session {
+	session := e.NewSession()
 	session.IsAutoClose = true
 	session.Where(query, args...)
 	newSession := &Session{*session}
 	return newSession
 }
+*/
+
 
 
 

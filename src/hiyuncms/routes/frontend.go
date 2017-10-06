@@ -24,3 +24,7 @@ func initRouteFrontend()   *gin.Engine{
 	return e
 }
 
+func regFrontRoute()  {
+
+}
+

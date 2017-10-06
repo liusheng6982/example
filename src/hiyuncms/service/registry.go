@@ -50,13 +50,22 @@ func getServiceId() string {
 	return fmt.Sprintf("%s:%d", getLocalIp(), getLocalPort())
 }
 
+func isRegistry() bool {
+	return config.GetBool("consul.server.registry.registry")
+}
 
 func UnRegService() {
+	if !isRegistry(){
+		return
+	}
 	agentClient, _ := consulapi.NewClient(getConfig())
 	agentClient.Agent().ServiceDeregister(getServiceId())
 }
 
 func RegService() {
+	if !isRegistry(){
+		return
+	}
 	appName := config.GetValue("hiyuncms.application.name")
 	var err error = nil
 	agentClient, err := consulapi.NewClient( getConfig() )

@@ -23,8 +23,14 @@ func GetValue(key string) (string) {
 }
 
 func GetInt(key string)(int)  {
-	intValue, _ := cfg.Int(goconfig.DEFAULT_SECTION, key);
+	intValue, _ := cfg.Int(goconfig.DEFAULT_SECTION, key)
 	return intValue
 }
+
+func GetBool(key string)(bool)  {
+	boolValue, _ := cfg.Bool(goconfig.DEFAULT_SECTION, key)
+	return boolValue
+}
+
 
 
