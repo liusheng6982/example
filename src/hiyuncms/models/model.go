@@ -43,11 +43,21 @@ func init()  {
 	DbMaster.SetTableMapper(tbMapper)
 }
 
-/*
-type Page struct {
-	PageSize int `json:"pageSize"`
-	PageNum  int `json:"pageNo"`
-}*/
+
+type PageRequest struct {
+	Rows       int `form:"rows"`
+	Page       int `form:"page"`
+	Sidx 	   string `form:"sidx"`
+	Sord	   string `form:"sord"`
+	Filters    string `form:"filters"`
+}
+
+type PageResponse struct {
+	Page int `json:"page"`
+	Records  int64 `json:"records"`
+	Total int64 `json:"total"`
+	Rows  interface{} `json:"rows"`
+}
 
 
 func GetErrorInfo(err error)  string{
@@ -111,8 +121,8 @@ type Session struct {
 }
 
 
-func (s * Session) MyLimit(page Page) * Session {
-	s.Statement.Limit(page.PageSize, page.PageSize * page.PageNum)
+func (s * Session) MyLimit(page PageRequest) * Session {
+	s.Statement.Limit(page.Rows, page.Rows * page.Page)
 	return  s
 }
 

@@ -59,5 +59,14 @@ func regRoute()  {
 	BackendRoute.GET("/index", backend.Index)
 	BackendRoute.GET("/login", backend.Login ) //打开login页面
 	BackendRoute.POST("/login",backend.UserLogin)//提交登录
+
+	BackendRoute.GET("/columnlist",backend.ColumnList)      //栏目列表
+	BackendRoute.POST("/columnlist",backend.ColumnDataList) //栏目列表数据
+	BackendRoute.GET("/article", backend.ArticleShow)       //新增文档时显示
+	BackendRoute.POST("/article", backend.ArticleSave)      //新增文档
+	BackendRoute.GET("/articlelist", backend.ArticleListShow)   //新增列表页
+	BackendRoute.POST("/articlelist", backend.ArticleListData)  //新增表数据
+	BackendRoute.GET("/UEditorAction", backend.UEdit)
+	BackendRoute.POST("/UEditorAction", backend.UEditAction)
 }
 

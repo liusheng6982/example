@@ -12,7 +12,10 @@ type Admin struct {
 }
 
 func GetUserByUserName(userName string ) Admin{
-	admin := Admin{LoginName:userName}
+	if  userName == "" {
+		return Admin{}
+	}
+	admin := Admin{ LoginName:userName }
 	models.DbMaster.Get(&admin)
 	return admin
 }
