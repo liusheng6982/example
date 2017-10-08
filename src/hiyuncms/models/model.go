@@ -8,6 +8,7 @@ import (
 	"github.com/go-xorm/xorm"
 	"github.com/go-xorm/core"
 	"hiyuncms/config"
+	"admin/app/models"
 )
 
 //var enginex * xorm.DbMaster
@@ -57,6 +58,20 @@ type PageResponse struct {
 	Records  int64 `json:"records"`
 	Total int64 `json:"total"`
 	Rows  interface{} `json:"rows"`
+}
+
+func InitPageResponse(page * PageRequest, list interface{}, records int64 ) *PageResponse {
+	pageResponse := PageResponse{}
+	pageResponse.Rows = &list
+	pageResponse.Page = page.Page
+	pageResponse.Records = records
+	total := records / int64(page.Page)
+	if records % int64(page.Page) != 0 {
+		total +=1
+	}
+	pageResponse.Total = total
+
+	return &pageResponse
 }
 
 

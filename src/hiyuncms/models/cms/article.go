@@ -68,11 +68,9 @@ func  GetAllArticles(page *models.PageRequest) *models.PageResponse{
 	if err != nil {
 		log.Printf("获取Article数据:%s", models.GetErrorInfo(err))
 	}
-	pageResponse := models.PageResponse{}
-	pageResponse.Rows = &articleList
-	pageResponse.Page = page.Page
-	pageResponse.Records ,_= models.DbMaster.Table(Article{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Count(Column{})
-	return &pageResponse
+	records ,_ := models.DbMaster.Table(Article{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Count(Column{})
+	pageResponse := models.InitPageResponse(page, &articleList, records)
+	return pageResponse
 
 }
 
