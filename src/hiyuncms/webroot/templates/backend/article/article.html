@@ -1,0 +1,101 @@
+{{template "header.html" .}}
+{{template "top.html" .}}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-sm-1 control-label no-padding-right" for="article-title">标题：</label>
+
+            <div class="col-sm-5">
+                <input  id="article-title" placeholder="请输入标题" class="col-xs-10 col-sm-12" />
+            </div>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="form-group">
+            <label class="col-sm-1 control-label no-padding-right" for="article-keyword">关键字：</label>
+
+            <div class="col-sm-5">
+                <input  id="article-keyword" placeholder="请输入关键字" class="col-xs-10 col-sm-12" />
+            </div>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="form-group" >
+            <label class="col-sm-1 control-label no-padding-right">关联的栏目：</label>
+
+            <div class="col-sm-5">
+            {{ range $k,$v := .columns }}
+            <label>
+                <input type="checkbox" name="article-column" value="{{$v.Id}}"> {{$v.Name}}
+            </label>&nbsp;&nbsp;
+            {{ end }}
+            </div>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-sm-12" >
+            内容：
+            <script id="newEditor" name="content"  type="text/plain" >
+            </script>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-offset-6 col-md-3">
+            <button class="btn btn-primary" type="button" id="article-save-button">
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                保 存
+            </button>
+            &nbsp; &nbsp; &nbsp;
+        </div>
+
+    </div>
+
+</div>
+
+{{template "bottom.html" .}}
+{{template "footer.html" .}}
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script>
+    ueeee = UE.getEditor("newEditor");
+    $("#article-save-button").click(function () {
+        var chk_value =[];
+        $('input[name="article-column"]:checked').each(function(){
+            chk_value.push($(this).val());
+        });
+
+        var data = {
+            Title:$("#article-title").val(),
+            Content:ueeee.getContent(),
+            Keywords:$("#article-keyword").val(),
+            Columns:chk_value
+        }
+        $.ajax({
+            "url":"/article",
+            "data":data,
+            async:false,
+            dataType:"json",
+            type:"POST",
+            success:function (result) {
+                if( result.flag == "SUCCESS"){
+                    alert("保存成功")
+                }
+                else{
+                    alert("保存失败！")
+                }
+            },
+            error:function (result) {
+                alert("保存失败！")
+            }
+
+
+        })
+    })
+
+</script>

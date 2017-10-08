@@ -19,7 +19,9 @@ func  GetAll() *[]*Column{
 	return &columnList
 }
 
-
+/**
+获取所有栏目
+ */
 func  GetAllColumns(page *models.PageRequest) *models.PageResponse{
 	columnList := make([]*Column, 0)
 	err := models.DbMaster.Table(Column{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&columnList)
