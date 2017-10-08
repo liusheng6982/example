@@ -27,11 +27,8 @@ func ArticleListShow(c * gin.Context){
 
 func ArticleListData(c *gin.Context){
 	page := models.PageRequest{}
-	log.Print("before:%v\n", page)
 	c.Bind( &page )
-	log.Print("bind:%v\n", page)
 	responsePage := cms.GetAllArticles(&page)
-	log.Print("after:%v\n", responsePage)
 	c.JSON(http.StatusOK, responsePage)
 }
 
@@ -40,9 +37,7 @@ func ArticleSave(c *gin.Context)  {
 	article := cms.Article{}
 	c.Bind(&article)
 	columns := c.PostFormArray("Columns[]")
-
 	cms.SaveArticle(&article, columns)
-
 	c.JSON(http.StatusOK, gin.H{
 		"flag":"SUCCESS",
 	})

@@ -68,4 +68,6 @@ func  GetAllArticles(page *models.PageRequest) *models.PageResponse{
 }
 
 
+func GetArticlesByPath(page * models.PageRequest, path string) * models.PageResponse{
 
+}

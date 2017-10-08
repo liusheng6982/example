@@ -17,10 +17,7 @@ func ColumnList(c *gin.Context){
 
 func ColumnDataList(c *gin.Context){
 	page := models.PageRequest{}
-	log.Print("before:%v\n", page)
 	c.Bind( &page )
-	log.Print("bind:%v\n", page)
 	responsePage := cms.GetAllColumns(&page)
-	log.Print("after:%v\n", responsePage)
 	c.JSON(http.StatusOK, responsePage)
 }
