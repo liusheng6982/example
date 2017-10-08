@@ -10,7 +10,7 @@ type Column struct {
 	Name 		string 	`xorm:"varchar(100)"`
 	Url  		string 	`xorm:"varchar(200)"`
 	ParentId 	int64 	`xorm:"BIGINT"`
-	OrderNum 	int 	`xorm:"int"`
+	//OrderNum 	int 	`xorm:"int"`
 }
 
 func  GetAll() *[]*Column{
@@ -22,7 +22,10 @@ func  GetAll() *[]*Column{
 
 func  GetAllColumns(page *models.PageRequest) *models.PageResponse{
 	columnList := make([]*Column, 0)
-	models.DbMaster.Table(Column{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&columnList)
+	err := models.DbMaster.Table(Column{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&columnList)
+	if err != nil {
+		log.Printf("获取Article数据:%s", models.GetErrorInfo(err))
+	}
 	pageResponse := models.PageResponse{}
 	pageResponse.Rows = columnList
 	pageResponse.Page = page.Page

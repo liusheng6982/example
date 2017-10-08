@@ -13,6 +13,7 @@ func init()  {
 }
 
 
+
 type Article struct {
 	Id             int64      `xorm:"pk autoincr"`
 	Title          string     `xorm:"varchar(80)"`
@@ -27,7 +28,9 @@ type Article struct {
 	ColumnNames    string 	  `xorm:"varchar(1000)"`
 }
 
-
+/*
+新增文档
+ */
 func SaveArticle(article *Article, columnIds []string)  {
 
 	after := func(bean interface{}){
@@ -56,18 +59,47 @@ func SaveArticle(article *Article, columnIds []string)  {
 	}
 }
 
-
+/**
+获取所有文章
+ */
 func  GetAllArticles(page *models.PageRequest) *models.PageResponse{
-	articleList := make([]*Article, 0)
-	models.DbMaster.Table(Article{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&articleList)
+	articleList := make([]Article, 0)
+	err := models.DbMaster.Table(Article{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&articleList)
+	if err != nil {
+		log.Printf("获取Article数据:%s", models.GetErrorInfo(err))
+	}
 	pageResponse := models.PageResponse{}
-	pageResponse.Rows = articleList
+	pageResponse.Rows = &articleList
 	pageResponse.Page = page.Page
-	pageResponse.Records ,_= models.DbMaster.Table(Column{}).Count(Column{})
+	pageResponse.Records ,_= models.DbMaster.Table(Article{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Count(Column{})
 	return &pageResponse
+
+}
+
+/**
+通过Column的URL获取Article
+ */
+func GetArticlesByPath(page *models.PageRequest, path string) * models.PageResponse{
+	articles_ := make([]Article, 0)
+	log.Printf("%v", page)
+	err := models.DbMaster.Table(Article{}).Alias("a").
+		Limit(page.Rows, (page.Page - 1) * page.Rows).
+		Join("INNER", []string{"hiyuncms_column_article","ca"}, "a.id=ca.article_id").
+		Join("INNER", []string{"hiyuncms_column" ,"c"},"c.id=ca.column_id and c.url='"+ path +"'").
+		Find(&articles_)
+	if err != nil {
+		log.Printf("通过Column的URL获取Article数据:%s", models.GetErrorInfo(err))
+	}
+	pageResponse := models.PageResponse{}
+	pageResponse.Rows = &articles_
+	pageResponse.Page = page.Page
+	pageResponse.Records ,_=  models.DbMaster.Table(Article{}).Alias("a").
+		Limit(page.Rows, (page.Page - 1) * page.Rows).
+		Join("INNER", []string{"hiyuncms_column_article","ca"}, "a.id=ca.article_id").
+		Join("INNER", []string{"hiyuncms_column" ,"c"},"c.id=ca.column_id and c.url='"+ path +"'").
+		Count(Column{})
+	return  &pageResponse
+
 }
 
 
-func GetArticlesByPath(page * models.PageRequest, path string) * models.PageResponse{
-
-}

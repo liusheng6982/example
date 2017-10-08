@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"hiyuncms/models"
 	"hiyuncms/models/cms"
-	"log"
 )
 
 func ColumnList(c *gin.Context){
