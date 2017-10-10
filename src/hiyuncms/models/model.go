@@ -8,7 +8,6 @@ import (
 	"github.com/go-xorm/xorm"
 	"github.com/go-xorm/core"
 	"hiyuncms/config"
-	"admin/app/models"
 )
 
 //var enginex * xorm.DbMaster
@@ -65,8 +64,12 @@ func InitPageResponse(page * PageRequest, list interface{}, records int64 ) *Pag
 	pageResponse.Rows = &list
 	pageResponse.Page = page.Page
 	pageResponse.Records = records
-	total := records / int64(page.Page)
-	if records % int64(page.Page) != 0 {
+	if page.Rows == 0 {
+		page.Rows = 10
+	}
+	total := records / int64(page.Rows)
+	log.Printf("records=%d,  一共%d页\n",records,  total)
+	if records % int64(page.Rows) != 0 {
 		total +=1
 	}
 	pageResponse.Total = total

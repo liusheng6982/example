@@ -1,0 +1,13 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+{{template "slider.html" .}}
+    {{ $page := loadArticles "/home" 10 1}}
+    {{range $k,$v := $page.Rows}}
+    <div>
+        <h1>{{$k}}</h1>
+        {{$v.Title}}
+        {{$v.Content | html}}
+    </div>
+    {{end}}
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}

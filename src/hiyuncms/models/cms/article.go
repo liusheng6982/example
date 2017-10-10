@@ -68,7 +68,7 @@ func  GetAllArticles(page *models.PageRequest) *models.PageResponse{
 	if err != nil {
 		log.Printf("获取Article数据:%s", models.GetErrorInfo(err))
 	}
-	records ,_ := models.DbMaster.Table(Article{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Count(Column{})
+	records ,_ := models.DbMaster.Table(Article{}).Count(Article{})
 	pageResponse := models.InitPageResponse(page, &articleList, records)
 	return pageResponse
 
@@ -88,15 +88,13 @@ func GetArticlesByPath(page *models.PageRequest, path string) * models.PageRespo
 	if err != nil {
 		log.Printf("通过Column的URL获取Article数据:%s", models.GetErrorInfo(err))
 	}
-	pageResponse := models.PageResponse{}
-	pageResponse.Rows = &articles_
-	pageResponse.Page = page.Page
-	pageResponse.Records ,_=  models.DbMaster.Table(Article{}).Alias("a").
-		Limit(page.Rows, (page.Page - 1) * page.Rows).
+	records,_ :=  models.DbMaster.Table(Article{}).Alias("a").
 		Join("INNER", []string{"hiyuncms_column_article","ca"}, "a.id=ca.article_id").
 		Join("INNER", []string{"hiyuncms_column" ,"c"},"c.id=ca.column_id and c.url='"+ path +"'").
-		Count(Column{})
-	return  &pageResponse
+		Count(Article{})
+
+	pageResponse := models.InitPageResponse(page, &articles_, records)
+	return  pageResponse
 
 }
 
