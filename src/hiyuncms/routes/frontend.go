@@ -21,6 +21,7 @@ func initRouteFrontend()   *gin.Engine{
 	engine.Use(gin.Recovery())
 	engine.Use( gin.Logger() )
 	engine.SetFuncMap(template.FuncMap{
+		"loadColumn":loadColumn,
 		"loadArticles": loadArticles,
 		"html" : html,
 	})
@@ -43,6 +44,10 @@ func html (x string) interface{} {
 func loadArticles(path string, pageSize int, pageNo int ) * models.PageResponse {
 	page := models.PageRequest{Rows:pageSize, Page:pageNo}
 	return cms.GetArticlesByPath(&page, path)
+}
+
+func loadColumn() *[]*cms.Column{
+	return cms.GetAllColumnsToShow()
 }
 
 

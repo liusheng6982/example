@@ -21,12 +21,24 @@ func main() {
 }
 
 func runBackendServer()  {
-	go http.ListenAndServe(fmt.Sprintf(":%d", config.GetInt("hiyuncms.server.backend.port")), routes.BackendRoute)
+	bServer :=func () {
+		err := http.ListenAndServe(fmt.Sprintf(":%d", config.GetInt("hiyuncms.server.backend.port")), routes.BackendRoute)
+		if err != nil {
+			fmt.Printf("init runBackendServer error%s\n", err)
+		}
+	}
+	go bServer()
 }
 
 
 func runFrontendServer(){
-	go http.ListenAndServe(fmt.Sprintf(":%d", config.GetInt("hiyuncms.server.frontend.port")), routes.FrontendRoute)
+	fServer :=func (){
+		err := http.ListenAndServe(fmt.Sprintf(":%d", config.GetInt("hiyuncms.server.frontend.port")), routes.FrontendRoute)
+		if err != nil {
+			fmt.Printf("%c[0;40;31m%s%s%c[0m\n", 0x1B,  "init runFrontendServer error:",err, 0x1B)
+		}
+	}
+	go fServer()
 }
 
 func RegService(){

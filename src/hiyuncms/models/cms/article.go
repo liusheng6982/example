@@ -84,6 +84,7 @@ func GetArticlesByPath(page *models.PageRequest, path string) * models.PageRespo
 		Limit(page.Rows, (page.Page - 1) * page.Rows).
 		Join("INNER", []string{"hiyuncms_column_article","ca"}, "a.id=ca.article_id").
 		Join("INNER", []string{"hiyuncms_column" ,"c"},"c.id=ca.column_id and c.url='"+ path +"'").
+		Where(" a.status=1").
 		Find(&articles_)
 	if err != nil {
 		log.Printf("通过Column的URL获取Article数据:%s", models.GetErrorInfo(err))
@@ -91,6 +92,7 @@ func GetArticlesByPath(page *models.PageRequest, path string) * models.PageRespo
 	records,_ :=  models.DbMaster.Table(Article{}).Alias("a").
 		Join("INNER", []string{"hiyuncms_column_article","ca"}, "a.id=ca.article_id").
 		Join("INNER", []string{"hiyuncms_column" ,"c"},"c.id=ca.column_id and c.url='"+ path +"'").
+		Where(" a.status=1").
 		Count(Article{})
 
 	pageResponse := models.InitPageResponse(page, &articles_, records)

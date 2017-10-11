@@ -7,8 +7,11 @@ import (
 	"hiyuncms/models"
 )
 
+/**
+显示编辑页面
+ */
 func ArticleShow( c *gin.Context )  {
-	columns := cms.GetAll()
+	columns := cms.GetAllColumnsToSelect()
 	c.HTML(http.StatusOK, "article.html", gin.H{
 		"mainMenu":"新增文档",
 		"bodyCss" : "no-skin",
@@ -16,7 +19,9 @@ func ArticleShow( c *gin.Context )  {
 	})
 }
 
-
+/**
+文章列表显示页面
+ */
 func ArticleListShow(c * gin.Context){
 	c.HTML(http.StatusOK, "articlelist.html", gin.H{
 		"mainMenu":"文档列表",
@@ -24,6 +29,9 @@ func ArticleListShow(c * gin.Context){
 	})
 }
 
+/**
+文章列表
+ */
 func ArticleListData(c *gin.Context){
 	page := models.PageRequest{}
 	c.Bind( &page )
@@ -31,7 +39,9 @@ func ArticleListData(c *gin.Context){
 	c.JSON(http.StatusOK, responsePage)
 }
 
-
+/**
+保存文章
+ */
 func ArticleSave(c *gin.Context)  {
 	article := cms.Article{}
 	c.Bind(&article)

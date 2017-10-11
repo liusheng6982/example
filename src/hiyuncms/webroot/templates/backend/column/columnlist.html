@@ -57,29 +57,33 @@
 
 
         jQuery(grid_selector).jqGrid({
-            caption: "栏目列表",
+            //caption: "栏目列表",
             subGrid : false,
             datatype: "json",
             url: '/columnlist',
+			editurl : 'columnEdit',
 			mtype:'POST',
             //datatype: "local",
             height: 400,
-            colNames:[' ', 'ID','栏目名', 'URL', '排序号'],
+            colNames:[' ', 'ID', '', '栏目名',  'URL',  '排序号', '是否显示', '模板路径',"父节点ID"],
             colModel:[
                 {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                     formatter:'actions',
                     formatoptions:{
                         keys:true,
-                        //delbutton: false,//disable delete button
-
+                        delbutton: false,//disable delete button
                         delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
                 },
-                {name:'Id',index:'id', width:60, sorttype:"int", editable: true},
-                {name:'Name',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
-                {name:'Url',index:'stock', width:70, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch},
-                {name:'OrderNum',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}}
+                {name:'Id',index:'id', width:60, sorttype:"int", editable: false},
+                {name:'',index:'', width:100,editable: true, hidden : true},
+                {name:'Name',index:'name', width:100,editable: true},
+                {name:'Url',index:'url', width:70, editable: true},
+                {name:'OrderNum',index:'order_num', width:90, editable: true},
+                {name:'ShowFlag',index:'Show_Flag', width:70, editable: true,formatter: "select",edittype:"select",editoptions: {value:"1:是;2:否"},unformat: aceSwitch},
+                {name:'TemplatePath',index:'Template_Path', width:70, editable: true},
+                {name:'ParentId',index:'Parent_Id', width:70, editable: true}
             ],
 
             viewrecords : true,
@@ -129,13 +133,13 @@
                 editicon : 'ace-icon fa fa-pencil blue',
                 add: true,
                 addicon : 'ace-icon fa fa-plus-circle purple',
-                del: true,
+                del: false,
                 delicon : 'ace-icon fa fa-trash-o red',
-                search: true,
+                search: false,
                 searchicon : 'ace-icon fa fa-search orange',
                 refresh: true,
                 refreshicon : 'ace-icon fa fa-refresh green',
-                view: true,
+                view: false,
                 viewicon : 'ace-icon fa fa-search-plus grey',
             },
             {

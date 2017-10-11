@@ -5,6 +5,9 @@ import (
 	"net/http"
 	"hiyuncms/models"
 	"hiyuncms/models/cms"
+	"log"
+	"strconv"
+	"fmt"
 )
 
 func ColumnList(c *gin.Context){
@@ -17,6 +20,26 @@ func ColumnList(c *gin.Context){
 func ColumnDataList(c *gin.Context){
 	page := models.PageRequest{}
 	c.Bind( &page )
-	responsePage := cms.GetAllColumns(&page)
+	responsePage := cms.GetAllColumnsByPage(&page)
 	c.JSON(http.StatusOK, responsePage)
+}
+
+func ColumnEdit(c * gin.Context){
+	column := cms.Column{}
+	c.Bind( &column )
+	oper, _ := c.GetPostForm("oper")
+	if "edit" == oper {
+		fmt.Printf( "%+v\n", column)
+		id, _:= c.GetPostForm("id")
+		column.Id, _= strconv.ParseInt(id, 10, 64)
+		_, err := models.DbMaster.ID(column.Id).Update(&column)
+		if err != nil {
+			log.Printf("更新Cloun报错:%s\n",models.GetErrorInfo(err))
+		}
+	}else if"add" == oper {
+		_, err := models.DbMaster.Insert( &column )
+		if err != nil {
+			log.Printf("新增Cloun报错:%s\n",models.GetErrorInfo(err))
+		}
+	}
 }

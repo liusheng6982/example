@@ -10,29 +10,43 @@ type Column struct {
 	Name 		string 	`xorm:"varchar(100)"`
 	Url  		string 	`xorm:"varchar(200)"`
 	ParentId 	int64 	`xorm:"BIGINT"`
-	//OrderNum 	int 	`xorm:"int"`
+	ShowFlag	int		`xorm:"INT"`
+	OrderNum 	int 	`xorm:"int"`
+	TemplatePath string `xorm:varchar(100)`
 }
 
-func  GetAll() *[]*Column{
+func  GetAllColumnsToSelect() *[]*Column{
 	columnList := make([]*Column, 0)
-	models.DbMaster.Table(Column{}).Find(&columnList)
+	err := models.DbMaster.Table(Column{}).Find(&columnList)
+	if err != nil {
+		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
+	}
 	return &columnList
 }
 
 /**
 获取所有栏目
  */
-func  GetAllColumns(page *models.PageRequest) *models.PageResponse{
+func GetAllColumnsByPage(page *models.PageRequest) *models.PageResponse{
 	columnList := make([]*Column, 0)
 	err := models.DbMaster.Table(Column{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&columnList)
 	if err != nil {
-		log.Printf("获取Article数据:%s", models.GetErrorInfo(err))
+		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
 	}
 	pageResponse := models.PageResponse{}
 	pageResponse.Rows = columnList
 	pageResponse.Page = page.Page
 	pageResponse.Records ,_= models.DbMaster.Table(Column{}).Count(Column{})
 	return &pageResponse
+}
+
+func  GetAllColumnsToShow() *[]*Column{
+	columnList := make([]*Column, 0)
+	err := models.DbMaster.Table(Column{}).Where("Show_Flag = 1").Find(&columnList)
+	if err != nil {
+		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
+	}
+	return &columnList
 }
 
 

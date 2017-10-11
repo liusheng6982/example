@@ -61,6 +61,7 @@ func regRoute()  {
 	BackendRoute.POST("/login",backend.UserLogin)//提交登录
 
 	BackendRoute.GET("/columnlist",backend.ColumnList)      //栏目列表
+	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      //栏目列表
 	BackendRoute.POST("/columnlist",backend.ColumnDataList) //栏目列表数据
 	BackendRoute.GET("/article", backend.ArticleShow)       //新增文档时显示
 	BackendRoute.POST("/article", backend.ArticleSave)      //新增文档
