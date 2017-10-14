@@ -1,0 +1,26 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+
+<style>
+    li {list-style-type:none;}
+
+    .container{
+        
+    }
+</style>
+<section class="yy-news">
+    {{ $article := loadArticle .articleId }}
+<div class="container">
+
+    <div class="col-md-10 col-md-offset-1 yy-news-body" style="background-color: white">
+           <div style="align-content: center;margin: 0 auto;width: 300px">
+            <h3>
+               {{ $article.Title }}
+           </h3>
+           </div>
+           {{ $article.Content | html }}
+    </div>
+</div>
+</section>
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}
