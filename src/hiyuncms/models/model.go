@@ -12,6 +12,7 @@ import (
 
 //var enginex * xorm.DbMaster
 var DbMaster * xorm.Engine
+var DbSlave * xorm.Engine
 
 /*
 db.master.driver=mysql
@@ -36,11 +37,39 @@ func init()  {
 	DbMaster, err = xorm.NewEngine(driver, params)
 	log.Println( "init Database DbMaster ", GetErrorInfo(err))
 
-	DbMaster.SetMaxIdleConns( 50 )
-	DbMaster.SetMaxOpenConns( 200 )
-	DbMaster.ShowSQL(true)
+	maxIdle := config.GetInt("db.master.max.idle")
+	maxConn := config.GetInt("db.master.max.conn")
+	DbMaster.SetMaxIdleConns( maxIdle )
+	DbMaster.SetMaxOpenConns( maxConn )
+	showSql := config.GetBool("db.master.show.sql")
+	DbMaster.ShowSQL( showSql )
 	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
 	DbMaster.SetTableMapper(tbMapper)
+
+	initSlave()
+}
+
+func initSlave()  {
+	driver := config.GetValue("db.slave.driver")
+	dbname := config.GetValue("db.slave.dbname")
+	user   := config.GetValue("db.slave.user")
+	password := config.GetValue("db.slave.password")
+	host := config.GetValue("db.slave.host")
+	encode := config.GetValue("db.slave.encoding")
+	prefix := config.GetValue("db.slave.prefix")
+	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true", user, password, host, dbname,encode)
+	var err error
+	DbSlave, err = xorm.NewEngine(driver, params)
+	log.Println( "init Database DbMaster ", GetErrorInfo(err))
+
+	maxIdle := config.GetInt("db.slave.max.idle")
+	maxConn := config.GetInt("db.slave.max.conn")
+	DbSlave.SetMaxIdleConns( maxIdle )
+	DbSlave.SetMaxOpenConns( maxConn )
+	showSql := config.GetBool("db.slave.show.sql")
+	DbSlave.ShowSQL( showSql )
+	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
+	DbSlave.SetTableMapper(tbMapper)
 }
 
 
@@ -53,27 +82,29 @@ type PageRequest struct {
 }
 
 type PageResponse struct {
-	Page int `json:"page"`
+	Page     int `json:"page"`
 	Records  int64 `json:"records"`
-	Total int64 `json:"total"`
-	Rows  interface{} `json:"rows"`
+	Total    int `json:"total"`
+	Rows     interface{} `json:"rows"`
+	PageSize int
+	Path     string
 }
 
 func InitPageResponse(page * PageRequest, list interface{}, records int64 ) *PageResponse {
 	pageResponse := PageResponse{}
 	pageResponse.Rows = &list
 	pageResponse.Page = page.Page
+	pageResponse.PageSize = page.Rows
 	pageResponse.Records = records
 	if page.Rows == 0 {
 		page.Rows = 10
 	}
-	total := records / int64(page.Rows)
-	log.Printf("records=%d,  一共%d页\n",records,  total)
+	total := int(records) / page.Rows
 	if records % int64(page.Rows) != 0 {
 		total +=1
 	}
+	//log.Printf("records=%d,  一共%d页\n",records,  total)
 	pageResponse.Total = total
-
 	return &pageResponse
 }
 

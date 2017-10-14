@@ -16,7 +16,7 @@ func GetUserByUserName(userName string ) Admin{
 		return Admin{}
 	}
 	admin := Admin{ LoginName:userName }
-	models.DbMaster.Get(&admin)
+	models.DbSlave.Get(&admin)
 	return admin
 }
 

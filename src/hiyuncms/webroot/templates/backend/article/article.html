@@ -1,13 +1,17 @@
 {{template "header.html" .}}
 {{template "top.html" .}}
 
+{{ $article := .article }}
+{{ $columnArticles := .columnArticles}}
 <div class="container-fluid">
+    <input type="hidden" id="article-id" value="{{$article.Id}}">
+
     <div class="row">
         <div class="form-group">
             <label class="col-sm-1 control-label no-padding-right" for="article-title">标题：</label>
 
             <div class="col-sm-5">
-                <input  id="article-title" placeholder="请输入标题" class="col-xs-10 col-sm-12" />
+                <input  id="article-title" placeholder="请输入标题" class="col-xs-10 col-sm-12" value="{{$article.Title}}"/>
             </div>
         </div>
     </div>
@@ -17,7 +21,7 @@
             <label class="col-sm-1 control-label no-padding-right" for="article-keyword">关键字：</label>
 
             <div class="col-sm-5">
-                <input  id="article-keyword" placeholder="请输入关键字" class="col-xs-10 col-sm-12" />
+                <input  id="article-keyword" placeholder="请输入关键字" class="col-xs-10 col-sm-12" value="{{$article.Keywords}}"/>
             </div>
         </div>
     </div>
@@ -29,7 +33,7 @@
             <div class="col-sm-5">
             {{ range $k,$v := .columns }}
             <label>
-                <input type="checkbox" name="article-column" value="{{$v.Id}}"> {{$v.Name}}
+                <input type="checkbox" name="article-column" {{if mycontain $v.Id $columnArticles}} checked="checked" {{end}} value="{{$v.Id}}"> {{$v.Name}}
             </label>&nbsp;&nbsp;
             {{ end }}
             </div>
@@ -64,13 +68,27 @@
 <script type="text/javascript" charset="utf-8" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script>
     ueeee = UE.getEditor("newEditor");
+    ueeee.ready(function(){
+        ueeee.setContent("{{$article.Content}}", false );
+    });
+
     $("#article-save-button").click(function () {
+        var title = $("#article-title").val()
+        if( title == ""){
+            alert("标题不能为空！")
+            return;
+        }
         var chk_value =[];
         $('input[name="article-column"]:checked').each(function(){
             chk_value.push($(this).val());
         });
+        if( chk_value.length == 0 ){
+            alert("其选择栏目！")
+            return;
+        }
 
         var data = {
+            Id : $("#article-id").val(),
             Title:$("#article-title").val(),
             Content:ueeee.getContent(),
             Keywords:$("#article-keyword").val(),
@@ -85,6 +103,10 @@
             success:function (result) {
                 if( result.flag == "SUCCESS"){
                     alert("保存成功")
+                    $("#article-title").val("");
+                    ueeee.setContent("", false );
+                    $("#article-keyword").val("");
+                    $("#article-id").val("");
                 }
                 else{
                     alert("保存失败！")
@@ -93,8 +115,6 @@
             error:function (result) {
                 alert("保存失败！")
             }
-
-
         })
     })
 

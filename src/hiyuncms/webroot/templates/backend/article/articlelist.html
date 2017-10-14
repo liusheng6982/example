@@ -16,7 +16,64 @@
 {{template "bottom.html" .}}
 {{template "footer.html" .}}
 <script type="text/javascript">
+    function deleteArticle(articleId) {
+        var data = {
+            "articleId" : articleId
+        }
+        $.ajax({
+            "url": "/delarticle",
+            "data": data,
+            async: false,
+            dataType: "json",
+            type: "POST",
+            success: function (result) {
+                if (result.flag == "SUCCESS") {
+                    $("#grid-table").jqGrid("setGridParam", {
+                        search: true, mtype: "post"
+                    }).trigger("reloadGrid", [{}
+                    ]);
+                }
+                else {
+                    alert("删除失败！")
+                }
+            },
+            error: function (result) {
+                alert("删除失败！")
+            }
+        })
+    }
+
+    function publishArticle(articleId) {
+        var data = {
+            "articleId" : articleId
+        }
+        $.ajax({
+            "url": "/pubarticle",
+            "data": data,
+            async: false,
+            dataType: "json",
+            type: "POST",
+            success: function (result) {
+                if (result.flag == "SUCCESS") {
+                    $("#grid-table").jqGrid("setGridParam", {
+                        search: true, mtype: "post"
+                    }).trigger("reloadGrid", [{}
+                    ]);
+                }
+                else {
+                    alert("发布失败！")
+                }
+            },
+            error: function (result) {
+                alert("发布失败！")
+            }
+        })
+    }
+
     jQuery(function($) {
+
+
+
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
 
@@ -63,11 +120,19 @@
             url: '/articlelist',
 			mtype:'POST',
             //datatype: "local",
-            height: 400,
+            height: 415,
             colNames:[' ', 'ID','标题','关键字','栏目名', '发布状态'],
             colModel:[
-                {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
-                    formatter:'actions',
+                {name:'myac',index:'', width:120, fixed:true, sortable:false, resize:false,
+
+
+                    formatter: function (cellvalue, options, rowObject) {
+                        var taskAudit ='<input type="button" value="修改" onClick="window.location.href=\'/article?id='+rowObject.Id+'\'">&nbsp;';
+                        taskAudit += '<input type="button" value="删除" onClick="deleteArticle(\''+rowObject.Id + '\')">&nbsp;'
+                        taskAudit += '<input type="button" value="发布" onClick="publishArticle(\''+rowObject.Id + '\')">'
+                        return taskAudit;
+                    },
+
                     formatoptions:{
                         keys:true,
                         //delbutton: false,//disable delete button
@@ -76,11 +141,11 @@
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
                 },
-                {name:'Id',index:'id', width:60, sorttype:"int", editable: true},
+                {name:'Id',index:'id', width:30, sorttype:"int", editable: true},
                 {name:'Title',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
-                {name:'Keywords',index:'stock', width:70, editable: false},
-                {name:'ColumnNames',index:'stock', width:70, editable: false},
-                {name:'Status',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"1:已发布;2:未发布;"}}
+                {name:'Keywords',index:'stock', width:30, editable: false},
+                {name:'ColumnNames',index:'stock', width:170, editable: false},
+                {name:'Status',index:'ship', width:30, editable: true,formatter: "select",edittype:"select",editoptions:{value:"1:已发布;2:未发布;"}}
             ],
 
             viewrecords : true,
@@ -126,17 +191,17 @@
         //navButtons
         jQuery(grid_selector).jqGrid('navGrid',pager_selector,
             { 	//navbar options
-                edit: true,
+                edit: false,
                 editicon : 'ace-icon fa fa-pencil blue',
-                add: true,
+                add: false,
                 addicon : 'ace-icon fa fa-plus-circle purple',
-                del: true,
+                del: false,
                 delicon : 'ace-icon fa fa-trash-o red',
-                search: true,
+                search: false,
                 searchicon : 'ace-icon fa fa-search orange',
                 refresh: true,
                 refreshicon : 'ace-icon fa fa-refresh green',
-                view: true,
+                view: false,
                 viewicon : 'ace-icon fa fa-search-plus grey',
             },
             {
@@ -333,5 +398,7 @@
             $.jgrid.gridDestroy(grid_selector);
             $('.ui-jqdialog').remove();
         });
+
+
     });
 </script>

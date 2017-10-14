@@ -5,8 +5,10 @@ import (
 	"net/http"
 	"hiyuncms/controllers/backend"
 	"github.com/gin-gonic/contrib/sessions"
-	"time"
 	"strings"
+	"hiyuncms/models/cms"
+	"html/template"
+	"hiyuncms/controllers"
 )
 
 var BackendRoute *gin.Engine
@@ -24,7 +26,10 @@ func MiddleWare() gin.HandlerFunc {
 		sessionUser := session.Get("hiyuncms.back.user")
 
 		if sessionUser == nil {
-			if c.Request.URL.Path == "/login" || c.Request.URL.Path == "/userlogin" || strings.Contains(c.Request.URL.Path,"/static/") {
+			if c.Request.URL.Path == "/login" ||
+				c.Request.URL.Path == "/userlogin" ||
+				c.Request.URL.Path == "/captcha" ||
+				strings.Contains(c.Request.URL.Path,"/static/") {
 				c.Next()
 			} else{
 				c.Redirect(http.StatusFound, "/login")
@@ -40,9 +45,12 @@ func initRouteBackend() *gin.Engine {
 
 	engine.Use(gin.Recovery())
 	engine.Use( gin.Logger() )
+	engine.SetFuncMap(template.FuncMap{
+		"mycontain":contain,
+	})
 	store := sessions.NewCookieStore([]byte("hiyuncms.secret"))
 	store.Options(sessions.Options{
-		MaxAge: int(30 * time.Minute), //30min
+		MaxAge: int(30 * 60 ), //30min
 		Path:   "/",
 	})
 	engine.Use( sessions.Sessions(SessionName, store) )
@@ -55,19 +63,34 @@ func initRouteBackend() *gin.Engine {
 	return engine
 }
 
-func regRoute()  {
-	BackendRoute.GET("/index", backend.Index)
-	BackendRoute.GET("/login", backend.Login ) //打开login页面
-	BackendRoute.POST("/login",backend.UserLogin)//提交登录
+func contain(obj int64, list []* cms.ColumnArticle ) (bool) {
+	for _, objs := range list{
+		if obj == objs.ColumnId {
+			return true
+		}
+	}
+	return false
+}
 
-	BackendRoute.GET("/columnlist",backend.ColumnList)      //栏目列表
+
+func regRoute()  {
+	BackendRoute.GET ("/", backend.Index)					   //首页
+	BackendRoute.GET ("/index", backend.Index)               //首页
+	BackendRoute.GET ("/login", backend.Login )              //打开login页面
+	BackendRoute.POST("/login",backend.UserLogin)            //提交登录
+	BackendRoute.GET ("/captcha",controllers.Captcha)
+
+	BackendRoute.GET ("/columnlist",backend.ColumnList)      //栏目列表
 	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      //栏目列表
-	BackendRoute.POST("/columnlist",backend.ColumnDataList) //栏目列表数据
-	BackendRoute.GET("/article", backend.ArticleShow)       //新增文档时显示
-	BackendRoute.POST("/article", backend.ArticleSave)      //新增文档
-	BackendRoute.GET("/articlelist", backend.ArticleListShow)   //新增列表页
+	BackendRoute.POST("/columnlist",backend.ColumnDataList)  //栏目列表数据
+
+	BackendRoute.GET ("/article", backend.ArticleShow)          //新增文档时显示
+	BackendRoute.POST("/article", backend.ArticleSave)          //新增文档
+	BackendRoute.POST("/delarticle", backend.ArticleDel)        //删除文档
+	BackendRoute.POST("/pubarticle", backend.ArticlePublish)    //发布文档
+	BackendRoute.GET ("/articlelist", backend.ArticleListShow)  //新增列表页
 	BackendRoute.POST("/articlelist", backend.ArticleListData)  //新增表数据
-	BackendRoute.GET("/UEditorAction", backend.UEdit)
-	BackendRoute.POST("/UEditorAction", backend.UEditAction)
+	BackendRoute.GET ("/UEditorAction", backend.UEdit)          //富文本配置
+	BackendRoute.POST("/UEditorAction", backend.UEditAction)    //富文本上传图片
 }
 

@@ -3,6 +3,7 @@ package cms
 import (
 	"hiyuncms/models"
 	"log"
+	"fmt"
 )
 
 type Column struct {
@@ -15,9 +16,12 @@ type Column struct {
 	TemplatePath string `xorm:varchar(100)`
 }
 
+/**
+编辑文章关联的数据
+ */
 func  GetAllColumnsToSelect() *[]*Column{
 	columnList := make([]*Column, 0)
-	err := models.DbMaster.Table(Column{}).Find(&columnList)
+	err := models.DbSlave.Table(Column{}).Find(&columnList)
 	if err != nil {
 		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
 	}
@@ -29,7 +33,7 @@ func  GetAllColumnsToSelect() *[]*Column{
  */
 func GetAllColumnsByPage(page *models.PageRequest) *models.PageResponse{
 	columnList := make([]*Column, 0)
-	err := models.DbMaster.Table(Column{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&columnList)
+	err := models.DbSlave.Table(Column{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&columnList)
 	if err != nil {
 		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
 	}
@@ -40,13 +44,25 @@ func GetAllColumnsByPage(page *models.PageRequest) *models.PageResponse{
 	return &pageResponse
 }
 
+/**
+发布时，用到的栏目（显示栏目位）
+ */
 func  GetAllColumnsToShow() *[]*Column{
 	columnList := make([]*Column, 0)
-	err := models.DbMaster.Table(Column{}).Where("Show_Flag = 1").Find(&columnList)
+	err := models.DbSlave.Table(Column{}).Where("Show_Flag = 1").Find(&columnList)
 	if err != nil {
 		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
 	}
 	return &columnList
+}
+
+/**
+根据路径，获取栏目对象
+ */
+func GetColumnByPath(path string) *Column {
+	column := Column{}
+	models.DbSlave.Table(Column{}).Where( fmt.Sprintf("Url = '%s'", path )).Get( &column )
+	return &column
 }
 
 

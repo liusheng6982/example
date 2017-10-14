@@ -7,7 +7,6 @@ import (
 	"hiyuncms/models/cms"
 	"log"
 	"strconv"
-	"fmt"
 )
 
 func ColumnList(c *gin.Context){
@@ -29,7 +28,6 @@ func ColumnEdit(c * gin.Context){
 	c.Bind( &column )
 	oper, _ := c.GetPostForm("oper")
 	if "edit" == oper {
-		fmt.Printf( "%+v\n", column)
 		id, _:= c.GetPostForm("id")
 		column.Id, _= strconv.ParseInt(id, 10, 64)
 		_, err := models.DbMaster.ID(column.Id).Update(&column)

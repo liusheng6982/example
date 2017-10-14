@@ -1,0 +1,54 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+{{template "slider.html" .}}
+<style>
+    #li {list-style-type:none;}
+    .container{
+
+    }
+</style>
+<section class="yy-news">
+    <div class="container-fluid">&nbsp;</div>
+<div class="container">
+    <div class="col-md-offset-1 col-md-9 yy-news-body">
+        <div class="row">
+            <div class="yy-news-list">
+                <ul class="met-page-ajax">
+                    {{ $page := loadArticles .path .pageSize .pageNo }}
+                    {{range $k,$v := $page.Rows}}
+                    <li class="">
+                        <div class="media media-lg">
+                            <div class="media-left">
+                                <a href="/articleShow?articleId={{$v.Id}}" title="{{ $v.Title }}" target="_self">
+                                    <img class="media-object" src="{{$v.FirstImage}}" alt="{{ $v.Title }}">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <a href="/articleShow?articleId={{$v.Id}}" title="{{ $v.Title }}" target="_self">
+                                        {{ $v.Title }}
+                                    </a>
+                                </h4>
+                                <p class="des">{{ $v.FirstContent }}</p>
+                                <p class="info">
+                                    <span>{{ $v.Createtime }}</span>
+                                    <span class="margin-left-10">admin</span>
+                                    <span class="margin-left-10"><i class="icon wb-eye margin-right-5" aria-hidden="true"></i>480</span>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+        <div class="row" style="margin: 15px">
+        {{template "pagination.html" $page }}
+        </div>
+    </div>
+
+</div>
+
+</section>
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}
