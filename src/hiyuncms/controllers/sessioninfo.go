@@ -6,6 +6,7 @@ import (
 	"hiyuncms/util"
 	"fmt"
 	"github.com/gin-gonic/contrib/sessions"
+	"time"
 )
 
 const(
@@ -23,14 +24,17 @@ func Captcha(c * gin.Context) {
 	d := make([]byte, 4)
 
 	ss := ""
+	rd := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for v := range d {
-		d[v] = byte(rand.Intn(10))
+		d[v] = byte(rd.Intn(10))
 		ss = fmt.Sprintf("%s%d", ss, d[v])
 	}
 	c.Header("Content-Type", "image/png")
 
+	fmt.Printf("ssssssss=%s\n", ss)
 	session := sessions.Default(c)
 	session.Delete(BACK_CAPTCHA_SESSION)
 	session.Set(BACK_CAPTCHA_SESSION, ss)
+	session.Save()
 	util.NewImage(fmt.Sprintf("%d",rand.Int()),d, 80, 40).WriteTo(c.Writer)
 }
