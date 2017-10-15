@@ -22,6 +22,5 @@ func Index( c *gin.Context )  {
 func Login(c *gin.Context){
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"bodyCss":"login-layout",
-
 	})
 }

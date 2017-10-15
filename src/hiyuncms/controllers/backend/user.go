@@ -12,8 +12,21 @@ import (
 
 
 func  UserLogin(c * gin.Context)  {
+	vcode := c.PostForm("vcode")
+	session := sessions.Default(c)
+	sessionCode := session.Get( controllers.BACK_CAPTCHA_SESSION )
+	log.Printf("%s----------%v", vcode, sessionCode)
+	if vcode != sessionCode {
+		c.HTML(http.StatusOK, "login.html",gin.H{
+			"msg":"验证码错误！",
+			"bodyCss": "login-layout",
+		})
+		return
+	}
 	userName := c.PostForm("Username")
 	passwd := c.PostForm("Password")
+
+
 	log.Printf("form 提交的密码用户名,%s----%s\n", userName, passwd)
 	admin := system.GetUserByUserName(userName)
 	log.Printf( "%v\n", admin.LoginPassword )
