@@ -23,4 +23,9 @@ func GetUserByUserName(userName string ) Admin{
 func init()  {
 	err := models.DbMaster.Sync2( Admin{})
 	log.Println( "init table admin ", models.GetErrorInfo(err))
+	adminUser := Admin{Id:1, LoginName:"admin", LoginPassword:"8211c2dc6aa7cf474144ab9bfa73893e"}
+	_,err = models.DbMaster.Insert( &adminUser )
+	if err != nil {
+		log.Println("管理员账号已存在： ", models.GetErrorInfo(err))
+	}
 }

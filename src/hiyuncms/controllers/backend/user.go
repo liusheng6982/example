@@ -8,9 +8,14 @@ import (
 	"net/http"
 	"log"
 	"encoding/json"
+	"crypto/md5"
+	"encoding/hex"
+	"fmt"
 )
 
-
+/**
+后台用户登录
+ */
 func  UserLogin(c * gin.Context)  {
 	vcode := c.PostForm("vcode")
 	session := sessions.Default(c)
@@ -30,7 +35,24 @@ func  UserLogin(c * gin.Context)  {
 	log.Printf("form 提交的密码用户名,%s----%s\n", userName, passwd)
 	admin := system.GetUserByUserName(userName)
 	log.Printf( "%v\n", admin.LoginPassword )
-	if admin.LoginPassword == passwd {
+
+	m5 := md5.New()
+	m5.Write([]byte(passwd))
+	m5.Write([]byte(string("hihi")))
+	st := m5.Sum(nil)
+	passwdMd5 := fmt.Sprintf("%s", hex.EncodeToString(st))
+	log.Printf("111111111111111111111111111111111111=%s\n", passwdMd5)
+
+	/*
+	m5 = md5.New()
+	m5.Write([]byte(admin.LoginPassword))
+	m5.Write([]byte(string("hihi")))
+	st = m5.Sum(nil)
+	loginPasswdMd5 := fmt.Sprintf("%s", hex.EncodeToString(st))
+	*/
+
+	if admin.LoginPassword == passwdMd5 {
+	//if admin.LoginPassword == passwd {
 		log.Printf("登录成功！\n")
 		bus := controllers.BackendUserSession{Name:admin.LoginName, Id:admin.Id}
 		session := sessions.Default(c)
