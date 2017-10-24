@@ -11,7 +11,18 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+	"hiyuncms/models"
+	"strconv"
 )
+
+func md5str(passwd string) string  {
+	m5 := md5.New()
+	m5.Write([]byte(passwd))
+	m5.Write([]byte(string("hihi")))
+	st := m5.Sum(nil)
+	passwdMd5 := fmt.Sprintf("%s", hex.EncodeToString(st))
+	return passwdMd5
+}
 
 /**
 后台用户登录
@@ -36,12 +47,8 @@ func  UserLogin(c * gin.Context)  {
 	admin := system.GetUserByUserName(userName)
 	log.Printf( "%v\n", admin.LoginPassword )
 
-	m5 := md5.New()
-	m5.Write([]byte(passwd))
-	m5.Write([]byte(string("hihi")))
-	st := m5.Sum(nil)
-	passwdMd5 := fmt.Sprintf("%s", hex.EncodeToString(st))
-	log.Printf("111111111111111111111111111111111111=%s\n", passwdMd5)
+
+	passwdMd5 := md5str(passwd)
 
 	/*
 	m5 = md5.New()
@@ -66,5 +73,56 @@ func  UserLogin(c * gin.Context)  {
 			"msg":"用户名不存在或密码错误！",
 			"bodyCss": "login-layout",
 		})
+	}
+}
+
+func UserList(c *gin.Context){
+	c.HTML(http.StatusOK, "userlist.html", gin.H{
+		"bodyCss":"no-skin",
+		"mainMenu" :"用户管理",
+	})
+}
+
+func UserListData(c *gin.Context){
+	page := models.PageRequest{}
+	c.Bind( &page )
+	orgIdStr,_:= c.GetPostForm("orgId")
+	orgId,_:= strconv.ParseInt(orgIdStr, 10, 64)
+	responsePage := system.GetUsersByOrg(&page, orgId)
+	c.JSON(http.StatusOK, responsePage)
+}
+
+/*
+组织操作
+ */
+func UserEdit(c * gin.Context){
+	user := system.User{}
+	c.Bind( &user)
+	oper, _ := c.GetPostForm("oper")
+	if "edit" == oper {
+		id, _:= c.GetPostForm("id")
+		user.Id, _= strconv.ParseInt(id, 10, 64)
+		_, err := models.DbMaster.ID(user.Id).Update(&user)
+		if err != nil {
+			log.Printf("更新Org报错:%s\n",models.GetErrorInfo(err))
+		}
+	}else if "add" == oper {
+		passwordMd5 := md5str("000000")
+		user.LoginPassword = passwordMd5
+		orgIdStr,_ := c.GetPostForm("orgId")
+		orgId,_:= strconv.ParseInt(orgIdStr, 10, 64)
+		system.SaveUser( &user, orgId, 0)
+
+		c.String(http.StatusOK, "%s", "success")
+	} else if "del" == oper{
+		id, _:= c.GetPostForm("id")
+		user.Id, _= strconv.ParseInt(id, 10, 64)
+		_, err := models.DbMaster.Delete(&user)
+		if err != nil {
+			log.Printf("删除Org报错:%s\n",models.GetErrorInfo(err))
+			c.String(http.StatusInternalServerError, "%s", "fail")
+			return
+		}
+		c.String(http.StatusOK, "%s", "success")
 	}
 }

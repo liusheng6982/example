@@ -32,28 +32,34 @@ func OrgListData(c *gin.Context){
 组织操作
  */
 func OrgEdit(c * gin.Context){
-	column := system.Org{}
-	c.Bind( &column )
+	org := system.Org{}
+	c.Bind( &org)
 	oper, _ := c.GetPostForm("oper")
 	if "edit" == oper {
 		id, _:= c.GetPostForm("id")
-		column.Id, _= strconv.ParseInt(id, 10, 64)
-		_, err := models.DbMaster.ID(column.Id).Update(&column)
+		org.Id, _= strconv.ParseInt(id, 10, 64)
+		_, err := models.DbMaster.ID(org.Id).Update(&org)
 		if err != nil {
 			log.Printf("更新Org报错:%s\n",models.GetErrorInfo(err))
 		}
 	}else if "add" == oper {
-		_, err := models.DbMaster.Insert( &column )
+		_, err := models.DbMaster.Insert( &org)
 		if err != nil {
 			log.Printf("新增Org报错:%s\n",models.GetErrorInfo(err))
+			c.String(http.StatusInternalServerError, "%s", "fail")
+			return
 		}
+		c.String(http.StatusOK, "%s", "success")
 	} else if "del" == oper{
 		id, _:= c.GetPostForm("id")
-		column.Id, _= strconv.ParseInt(id, 10, 64)
-		_, err := models.DbMaster.Delete(&column)
+		org.Id, _= strconv.ParseInt(id, 10, 64)
+		_, err := models.DbMaster.Delete(&org)
 		if err != nil {
 			log.Printf("删除Org报错:%s\n",models.GetErrorInfo(err))
+			c.String(http.StatusInternalServerError, "%s", "fail")
+			return
 		}
+		c.String(http.StatusOK, "%s", "success")
 	}
 }
 

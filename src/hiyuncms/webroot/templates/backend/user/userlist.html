@@ -1,25 +1,68 @@
 {{template "header.html" .}}
 {{template "top.html" .}}
 
+<link rel="stylesheet" href="/static/jstree/themes/default/style.min.css" />
 
 <div class="row">
-	<div class="col-xs-12">
-
-		<table id="grid-table"></table>
-
-		<div id="grid-pager"></div>
-
-		<!-- PAGE CONTENT ENDS -->
-	</div><!-- /.col -->
-</div><!-- /.row -->
+    <div class="col-xs-2" style="height:540px;border: 1px solid #307ECC;padding: 10px;font-size:14px;">
+        <div >
+            <a id="org-id-0" href="#" class="jstree-anchor  jstree-clicked"><i class="jstree-icon jstree-themeicon ace-icon ace-icon fa fa-folder blue jstree-themeicon-custom">组织结构树</i></a>
+        </div>
+        <div id="brand_tree" class="demo" style="min-height:200px;max-height: 600px;overflow: auto;"></div>
+    </div>
+    <div class="col-xs-10">
+            <table id="user-table"></table>
+            <div id="user-pager"></div>
+    </div>
+</div>
 
 {{template "bottom.html" .}}
 {{template "footer.html" .}}
-<script type="text/javascript">
-	jQuery(function($) {
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
 
+<script src="/static/jstree/jstree.min.js"></script>
+<script type="application/javascript">
+
+    var parentId = 0;
+    var parentName = "用户列表(组织结构树)";
+    treeInit('brand_tree');
+    orgList()
+
+    jQuery("#org-id-0").click(function(){
+        parentId = 0;
+        jQuery(".ui-jqgrid-title").text("用户列表(组织结构树)");
+        jQuery("#user-table").jqGrid('setGridParam',{
+            postData : {"orgId" : parentId},
+            page : 1
+        }).trigger('reloadGrid');//重新载入
+
+    });
+
+    function treeInit(divId) {
+        $('#' + divId).jstree({
+            core: {
+                data: {
+                    url: '/orgtree',
+                    data: function(treeNode) {
+                        return {
+                            parentId: treeNode.id
+                        };
+                    }
+                }
+            }
+        }).bind('select_node.jstree', function(node, refNode) {
+            parentName = refNode.node.text;
+            jQuery(".ui-jqgrid-title").text("用户列表("+parentName+")");
+            parentId = refNode.node.id;
+            jQuery("#user-table").jqGrid('setGridParam',{
+                postData : {"orgId" : parentId},
+                page : 1
+            }).trigger('reloadGrid');//重新载入
+        });
+    }
+
+    function orgList() {
+        var grid_selector = "#user-table";
+        var pager_selector = "#user-pager";
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
         //resize to fit page size
@@ -37,41 +80,28 @@
             }
         })
 
-        //if your grid is inside another element, for example a tab pane, you should use its parent's width:
-        /**
-         $(window).on('resize.jqGrid', function () {
-					var parent_width = $(grid_selector).closest('.tab-pane').width();
-					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
-				})
-         //and also set width when tab pane becomes visible
-         $('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-				  if($(e.target).attr('href') == '#mygrid') {
-					var parent_width = $(grid_selector).closest('.tab-pane').width();
-					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
-				  }
-				})
-         */
-
-
-
-
+        var data = {
+            "orgId" : parentId
+        }
 
         jQuery(grid_selector).jqGrid({
-            //caption: "栏目列表",
+            caption: parentName,
             subGrid : false,
             datatype: "json",
-            url: '/columnlist',
-			editurl : 'columnEdit',
-			mtype:'POST',
+            data : data,
+            url: '/userlist',
+            editurl : '/useredit',
+            mtype:'POST',
             //datatype: "local",
             height: 400,
-            colNames:[' ', 'ID', '', '栏目名',  'URL',  '排序号', '是否显示', '模板路径',"父节点ID"],
+            shrinkToFit: true,
+            colNames:[' ', 'ID', '', '姓名',  '登录名',  '手机'],
             colModel:[
                 {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                     formatter:'actions',
                     formatoptions:{
                         keys:true,
-                        delbutton: true,//disable delete button
+                        //delbutton: ,//disable delete button
                         delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
@@ -79,11 +109,8 @@
                 {name:'id',index:'id', width:60, sorttype:"int", editable: false},
                 {name:'',index:'', width:100,editable: true, hidden : true},
                 {name:'Name',index:'name', width:100,editable: true},
-                {name:'Url',index:'url', width:70, editable: true},
-                {name:'OrderNum',index:'order_num', width:90, editable: true},
-                {name:'ShowFlag',index:'Show_Flag', width:70, editable: true,formatter: "select",edittype:"select",editoptions: {value:"1:是;2:否"},unformat: aceSwitch},
-                {name:'TemplatePath',index:'Template_Path', width:70, editable: true},
-                {name:'ParentId',index:'Parent_Id', width:70, editable: true}
+                {name:'LoginName',index:'login_name', width:70, editable: true},
+                {name:'Phone',index:'phone', width:90, editable: true},
             ],
 
             viewrecords : true,
@@ -161,9 +188,21 @@
                 viewPagerButtons: false,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
+                    /*
+                    var hiddenParentId=document.createElement("input");
+                    hiddenParentId.setAttribute("type","hidden");
+                    hiddenParentId.value=parentId;
+                    hiddenParentId.name = "ParentId";
+                    form.append(hiddenParentId);
+                    */
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
                         .wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
+                },
+                beforeSubmit: function(postdata, formObj){
+                    //var parentId = $('.DataTD #parentId', formObj).data('value');
+                    postdata.orgId = parentId;
+                    return [true,'']
                 }
             },
             {
@@ -177,6 +216,13 @@
                     style_delete_form(form);
 
                     form.data('styled', true);
+                },
+                afterSubmit: function (response, postdata) {
+                    var arr =  response.responseText;
+                    if(arr == "success") {
+                        $('#brand_tree').jstree('refresh');
+                        return [true, ''];
+                    }
                 },
                 onClick : function(e) {
                     //alert(1);
@@ -336,5 +382,6 @@
             $.jgrid.gridDestroy(grid_selector);
             $('.ui-jqdialog').remove();
         });
-    });
+
+    }
 </script>

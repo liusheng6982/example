@@ -6,7 +6,7 @@ import (
 )
 
 type AdminRole struct {
-	Admin `xorm:"extends"`
+	User `xorm:"extends"`
 	Role  `xorm:"extends"`
 }
 
