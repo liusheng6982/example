@@ -1,14 +1,17 @@
 package system
 
-import ("log"
+import (
+	"log"
 	"hiyuncms/models"
 	"fmt"
 )
 
 type Org struct {
-	Id int64  `xorm:"pk BIGINT autoincr"`
-	OrgName 	string `xorm:"varchar(40) notnull"`
+	Id 			int64   `xorm:"pk BIGINT autoincr" json:"id"`
+	OrgName 	string  `xorm:"varchar(40) notnull"`
+	OrgCode		string  `xorm:"varchar(40)"`
 	ParentId 	int64 	`xorm:"BIGINT"`
+	OrderNo		int		`xorm:"INT"`
 }
 
 func init()  {

@@ -81,16 +81,17 @@ func regRoute()  {
 	BackendRoute.GET ("/captcha",controllers.Captcha)
 
 	BackendRoute.GET ("/columnlist",backend.ColumnList)      //栏目列表
-	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      //栏目列表
+	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      //栏目操作（增删改）
 	BackendRoute.POST("/columnlist",backend.ColumnDataList)  //栏目列表数据
 
 	BackendRoute.GET ("/rolelist",backend.RoleList)			//角色列表
-	BackendRoute.POST("/roleEdit",backend.RoleEdit)			//角色列表
+	BackendRoute.POST("/roleEdit",backend.RoleEdit)			//角色列表（增删改）
 	BackendRoute.POST("/rolelist",backend.RoleDataList)		//角色列表数据
 
 	BackendRoute.GET ("/orgtree",backend.GetSubOrg)			//组织树
 	BackendRoute.GET ("/orglist",backend.OrgList) 			//组织显示页面
-	BackendRoute.POST("/orglist",backend.OrgListData) 			//组织列表
+	BackendRoute.POST("/orglist",backend.OrgListData) 		//组织列表
+	BackendRoute.POST("/orgedit",backend.OrgEdit) 			//组织操作（增删改）
 
 	BackendRoute.GET ("/article", backend.ArticleShow)          //新增文档时显示
 	BackendRoute.POST("/article", backend.ArticleSave)          //新增文档
