@@ -65,13 +65,13 @@
 			mtype:'POST',
             //datatype: "local",
             height: 400,
-            colNames:[' ', 'ID', '', '角色名称',  '角色编码',  '排序号', '是否显示', '模板路径',"父节点ID"],
+            colNames:[' ', 'ID', '', '角色名称',  '角色编码'],
             colModel:[
                 {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                     formatter:'actions',
                     formatoptions:{
                         keys:true,
-                        delbutton: false,//disable delete button
+                        delbutton: true,//disable delete button
                         delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
@@ -79,11 +79,7 @@
                 {name:'Id',index:'id', width:60, sorttype:"int", editable: false},
                 {name:'',index:'', width:100,editable: true, hidden : true},
                 {name:'RoleName',index:'name', width:100,editable: true},
-                {name:'RoleCode',index:'url', width:70, editable: true},
-                {name:'OrderNum',index:'order_num', width:90, editable: true},
-                {name:'ShowFlag',index:'Show_Flag', width:70, editable: true,formatter: "select",edittype:"select",editoptions: {value:"1:是;2:否"},unformat: aceSwitch},
-                {name:'TemplatePath',index:'Template_Path', width:70, editable: true},
-                {name:'ParentId',index:'Parent_Id', width:70, editable: true}
+                {name:'RoleCode',index:'url', width:70, editable: true}
             ],
 
             viewrecords : true,

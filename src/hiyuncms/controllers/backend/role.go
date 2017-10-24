@@ -32,12 +32,20 @@ func RoleEdit(c * gin.Context){
 		role.Id, _= strconv.ParseInt(id, 10, 64)
 		_, err := models.DbMaster.ID(role.Id).Update(&role)
 		if err != nil {
-			log.Printf("更新Cloun报错:%s\n",models.GetErrorInfo(err))
+			log.Printf("更新Role报错:%s\n",models.GetErrorInfo(err))
 		}
 	}else if"add" == oper {
 		_, err := models.DbMaster.Insert( &role )
 		if err != nil {
-			log.Printf("新增Cloun报错:%s\n",models.GetErrorInfo(err))
+			log.Printf("新增Role报错:%s\n",models.GetErrorInfo(err))
 		}
+	} else if "del" == oper {
+		id, _:= c.GetPostForm("id")
+		role.Id, _= strconv.ParseInt(id, 10, 64)
+		_, err := models.DbMaster.Delete( role )
+		if err != nil {
+			log.Printf("删除Role报错:%s\n",models.GetErrorInfo(err))
+		}
+
 	}
 }

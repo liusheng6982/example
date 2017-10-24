@@ -116,13 +116,8 @@ func UserEdit(c * gin.Context){
 		c.String(http.StatusOK, "%s", "success")
 	} else if "del" == oper{
 		id, _:= c.GetPostForm("id")
-		user.Id, _= strconv.ParseInt(id, 10, 64)
-		_, err := models.DbMaster.Delete(&user)
-		if err != nil {
-			log.Printf("删除Org报错:%s\n",models.GetErrorInfo(err))
-			c.String(http.StatusInternalServerError, "%s", "fail")
-			return
-		}
+		userId, _ := strconv.ParseInt(id, 10, 64)
+		system.DelUser(userId)
 		c.String(http.StatusOK, "%s", "success")
 	}
 }

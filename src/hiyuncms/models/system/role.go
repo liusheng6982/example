@@ -6,7 +6,7 @@ import (
 )
 
 type Role struct {
-	Id int64  `xorm:"pk BIGINT autoincr"`
+	Id int64  `xorm:"pk BIGINT autoincr" json:"id"`
 	RoleName string `xorm:"varchar(40) notnull"`
 	RoleCode string `xorm:"varchar(25) notnull unique"`
 }

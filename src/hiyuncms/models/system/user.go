@@ -49,6 +49,12 @@ func SaveUser(user * User, orgId int64, orderNo int)  {
 	models.DbMaster.Insert( orgUser  )
 }
 
+func DelUser(userId int64)  {
+	article := User{Id:userId}
+	models.DbMaster.Delete( &article )
+	models.DbMaster.Delete(&OrgUser{UserId:userId})
+}
+
 /**
 根据组织获得用户
  */
