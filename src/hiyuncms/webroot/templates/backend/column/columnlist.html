@@ -71,12 +71,12 @@
                     formatter:'actions',
                     formatoptions:{
                         keys:true,
-                        delbutton: false,//disable delete button
+                        delbutton: true,//disable delete button
                         delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
                 },
-                {name:'Id',index:'id', width:60, sorttype:"int", editable: false},
+                {name:'id',index:'id', width:60, sorttype:"int", editable: false},
                 {name:'',index:'', width:100,editable: true, hidden : true},
                 {name:'Name',index:'name', width:100,editable: true},
                 {name:'Url',index:'url', width:70, editable: true},

@@ -39,5 +39,15 @@ func ColumnEdit(c * gin.Context){
 		if err != nil {
 			log.Printf("新增Cloun报错:%s\n",models.GetErrorInfo(err))
 		}
+	} else if "del" == oper{
+	id, _:= c.GetPostForm("id")
+		column.Id, _= strconv.ParseInt(id, 10, 64)
+		_, err := models.DbMaster.Delete(&column)
+		if err != nil {
+		log.Printf("删除Org报错:%s\n",models.GetErrorInfo(err))
+		c.String(http.StatusInternalServerError, "%s", "fail")
+		return
+		}
+		c.String(http.StatusOK, "%s", "success")
 	}
 }

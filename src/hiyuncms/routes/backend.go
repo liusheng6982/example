@@ -9,6 +9,7 @@ import (
 	"hiyuncms/models/cms"
 	"html/template"
 	"hiyuncms/controllers"
+	"hiyuncms/config"
 )
 
 var BackendRoute *gin.Engine
@@ -50,7 +51,7 @@ func initRouteBackend() *gin.Engine {
 	})
 	store := sessions.NewCookieStore([]byte("hiyuncms.secret"))
 	store.Options(sessions.Options{
-		MaxAge: int(30 * 60 ), //30min
+		MaxAge: int(config.GetInt("hiyuncms.server.backend.session.timeout")), //30min
 		Path:   "/",
 	})
 	engine.Use( sessions.Sessions(SessionName, store) )
@@ -81,8 +82,22 @@ func regRoute()  {
 	BackendRoute.GET ("/captcha",controllers.Captcha)
 
 	BackendRoute.GET ("/columnlist",backend.ColumnList)      //栏目列表
-	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      //栏目列表
+	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      //栏目操作（增删改）
 	BackendRoute.POST("/columnlist",backend.ColumnDataList)  //栏目列表数据
+
+	BackendRoute.GET ("/rolelist",backend.RoleList)			//角色列表
+	BackendRoute.POST("/roleEdit",backend.RoleEdit)			//角色列表（增删改）
+	BackendRoute.POST("/rolelist",backend.RoleDataList)		//角色列表数据
+
+	BackendRoute.GET ("/orgtree",backend.GetSubOrg)			//组织树
+	BackendRoute.GET ("/orglist",backend.OrgList) 			//组织显示页面
+	BackendRoute.POST("/orglist",backend.OrgListData) 		//组织列表
+	BackendRoute.POST("/orgedit",backend.OrgEdit) 			//组织操作（增删改）
+
+	BackendRoute.GET ("/userlist",backend.UserList) 			//用户显示页面
+	BackendRoute.POST("/userlist",backend.UserListData) 		//用户列表数据
+	BackendRoute.POST("/useredit",backend.UserEdit) 			//用户操作（增删改）
+
 
 	BackendRoute.GET ("/article", backend.ArticleShow)          //新增文档时显示
 	BackendRoute.POST("/article", backend.ArticleSave)          //新增文档

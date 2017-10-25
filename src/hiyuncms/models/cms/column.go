@@ -7,7 +7,7 @@ import (
 )
 
 type Column struct {
-	Id   		int64 	`xorm:"pk BIGINT autoincr`
+	Id   		int64 	`xorm:"pk BIGINT autoincr" json:"id"`
 	Name 		string 	`xorm:"varchar(100)"`
 	Url  		string 	`xorm:"varchar(200)"`
 	ParentId 	int64 	`xorm:"BIGINT"`
