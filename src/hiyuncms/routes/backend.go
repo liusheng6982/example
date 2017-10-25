@@ -81,10 +81,6 @@ func regRoute()  {
 	BackendRoute.POST("/login",backend.UserLogin)            //提交登录
 	BackendRoute.GET ("/captcha",controllers.Captcha)
 
-	BackendRoute.GET ("/columnlist",backend.ColumnList)      //栏目列表
-	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      //栏目操作（增删改）
-	BackendRoute.POST("/columnlist",backend.ColumnDataList)  //栏目列表数据
-
 	BackendRoute.GET ("/rolelist",backend.RoleList)			//角色列表
 	BackendRoute.POST("/roleEdit",backend.RoleEdit)			//角色列表（增删改）
 	BackendRoute.POST("/rolelist",backend.RoleDataList)		//角色列表数据
@@ -98,6 +94,14 @@ func regRoute()  {
 	BackendRoute.POST("/userlist",backend.UserListData) 		//用户列表数据
 	BackendRoute.POST("/useredit",backend.UserEdit) 			//用户操作（增删改）
 
+	BackendRoute.GET ("/resourcetree",backend.GetResource)		//资源树
+	BackendRoute.GET ("/resourcelist",backend.ResourceList) 		//资源显示页面
+	BackendRoute.POST("/resourcelist",backend.ResourceListData) 	//资源列表数据
+	BackendRoute.POST("/resourceedit",backend.ResourceEdit) 		//资源操作（增删改）
+
+	BackendRoute.GET ("/columnlist",backend.ColumnList)      		//栏目列表
+	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      		//栏目操作（增删改）
+	BackendRoute.POST("/columnlist",backend.ColumnDataList)  		//栏目列表数据
 
 	BackendRoute.GET ("/article", backend.ArticleShow)          //新增文档时显示
 	BackendRoute.POST("/article", backend.ArticleSave)          //新增文档
