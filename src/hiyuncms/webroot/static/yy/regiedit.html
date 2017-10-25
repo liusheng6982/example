@@ -1,0 +1,156 @@
+<div class="z_center">
+    <div class="z_center1">
+        <div class="zhxx">账户信息</div>
+
+        <div class="yonghu">
+            <table class="z_yh">
+                <tbody><tr class="tr-1">
+                    <td class="td-1"><p class="zi"><span class="xing">*</span> 用户名</p></td>
+                    <td class="td-2"><input type="text" id="name" onblur="blur_name()" onfocus="focus_name()" class="name_hui" value="6-16位小写字母或数字"></td>
+                    <td class="td-3"><div id="name_ts_i"></div><div id="name_ts_f" class="no_font"></div></td>
+                </tr>
+                <tr class="tr-1">
+                    <td class="td-1"><p class="zi"><span class="xing">*</span> 密码  </p></td>
+                    <td class="td-2">
+                        <input type="text" class="name_hui" id="pwd11" onfocus="focus_pwd1()" value="6-16位字符，可使用字母、数字和符号的组合 " style="ime-mode: disabled; display: inline">
+                        <input type="password" class="name" id="pwd12" onblur="blur_pwd1()" onkeyup="keyup_pwd1(this.value)" style="ime-mode: disabled; display:none"></td>
+                    <td class="td-3"><div id="pwd1_ts_i"></div><div id="pwd1_ts_f" class="no_font"></div></td>
+                </tr>
+
+                <tr class="tr-2">
+                    <td class="td-1"><p class="zi"><span style="color:#999;">密码强度</span> </p></td>
+                    <td style="width:269px;height:12px;padding-left:5px"><div id="pwd_qd" class="pwd1_img1"></div></td>
+
+                </tr>
+                <tr class="tr-1">
+                    <td class="td-1"><div class="zi"><span class="xing">*</span> 确认密码 </div> </td>
+                    <td class="td-2">
+                        <input type="text" class="name_hui" id="pwd21" onfocus="focus_pwd2()" value="请再次输入密码 " style="ime-mode: disabled; display: inline">
+                        <input type="password" class="name" id="pwd22" onblur="blur_pwd2()" style="ime-mode: disabled; display:none">
+                    </td>
+                    <td class="td-3"><div id="pwd2_ts_i"></div><div id="pwd2_ts_f" class="no_font"></div></td>
+                </tr>
+                </tbody></table>
+        </div>
+        <div class="zhxx_1">联系人信息</div>
+
+        <div class="lianxi">
+            <table class="z_yh">
+                <tbody><tr class="tr-1">
+                    <td class="td-1"><div class="zi"><span class="xing">*</span> 公司名称</div></td>
+                    <td class="td-2"><input type="text" id="company" onblur="blur_company()" onfocus="focus_company()" class="name_hui" value="请输入公司全称含分公司或办事处"></td>
+                    <td class="td-3"><div id="company_ts_i"></div><div id="company_ts_f" class="no_font"></div></td>
+                </tr>
+                <tr class="tr-1">
+                    <td class="td-1"><div class="zi"><span class="xing">*</span> 联系人姓名</div></td>
+                    <td class="td-2"><input type="text" class="name" id="contact" onblur="blur_contact()"></td>
+                    <td class="td-3"><div id="contact_ts_i"></div><div id="contact_ts_f" class="no_font"></div></td>
+                </tr>
+                <tr class="tr-1">
+                    <td class="td-1"><div class="zi">&nbsp; <span class="xing">*</span>  固定电话</div></td>
+                    <td class="td-2"><input type="text" class="name_1" id="t_phone_q" onblur="blur_t_phone_q()"><div class="heng"><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/a.png"></div><input type="text" class="name_2" id="t_phone_h" onblur="blur_t_phone_h()"></td>
+                    <td class="td-3"><div id="t_phone_ts_i"></div><div id="t_phone_ts_f" class="no_font"></div></td>
+                </tr>
+                <tr class="tr-1">
+                    <td>&nbsp;</td>
+                    <td style="font-size:12px;color:#b2b2b2;padding-left:5px">可填国家或地区区号数字 如：德国 0049 或 北京 010  </td>
+                </tr>
+                <tr class="tr-1">
+                    <td class="td-1"><div class="zi"><span class="xing">*</span> 电子邮箱</div></td>
+                    <td class="td-2">
+                        <div class="namea"><input type="text" id="e_mail" class="name" onkeyup="up_email(this.value)"></div>
+                        <ul id="e_mail_id" style="display:none;  height: 138px;list-style: none outside none;margin: 0;overflow-x: hidden; overflow-y: scroll; padding: 0;position: absolute; width: 268px;border:1px solid #ccc;background:#fff">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </td>
+                    <td class="td-3"><div id="e_mail_ts_i"></div><div id="e_mail_ts_f" class="no_font"></div></td>
+                </tr>
+                <tr class="tr-1">
+                    <td class="td-1">&nbsp; &nbsp;  </td>
+                    <td class="td-2"><div class="shuru">请填写您的电子邮箱，以便为我们将项目最新动态发送至您的邮箱</div></td>
+                    <td class="td-3"></td>
+                </tr>
+                <tr class="tr-1">
+                    <input type="hidden" id="mobile_hidden">
+                    <td class="td-1"><div class="zi"><span class="xing">*</span> 手机号</div> </td>
+                    <td class="td-2">
+                        <input type="text" class="name" id="m_phone" style="display:none;" onblur="blur_m_phone()">
+                        <input type="text" class="name" id="m_phone_x" value="请输入正确的手机号" onfocus="changeB();" style="color:#d6a889;">
+
+                    </td>
+                    <td class="td-3">
+                        <div id="m_phone_ts_i"></div><div id="m_phone_ts_f" class="no_font"></div>
+                        <!--<a  id="fsyz" onclick="check_mobile_use(this);pop_yzm();"class="sjyz">获取验证码</a>-->
+                        <!--<img class="sjyz" id="fuceng"  src="https://cdn.chinabidding.cn/public/cblcn/info/images/loading.gif"/>-->
+                        <!--<a  class="sjyz" id="fuceng" style="width:70px;display: none;"> <img style="width:25px;height:25px;padding-top:3px;" id="fuceng"  src="https://cdn.chinabidding.cn/public/cblcn/info/images/loading2.gif"/> </a>-->
+                    </td>
+                </tr>
+
+                <tr class="tr-1">
+                    <td class="td-1"> <div class="zi"><span class="xing">*</span>验证码</div> </td>
+                    <td class="td-2">
+                        <input type="text" id="yzm2" class="name_3" onblur="blur_yzm2()" onfocus="showyzm();">
+                        <span class="zc_yzt"><img id="img_jisuan" style="width:70px;height:28px;background:#EDF9F0;cursor:pointer;" onclick="changeI2()" src="/cblcn/member.regist/generateYzm?randomID=1fe682e6-ed5c-4c78-8a27-5d25cc4a635b">
+                            <!--                                    <input type="text" id="yzm3" class="name_3" onblur="blur_yzm3()" />
+                                                                <div class="kanbq">请输入短信验证码</div> -->
+                                    <input type="hidden" id="jishi">
+                                    <input type="hidden" value="1fe682e6-ed5c-4c78-8a27-5d25cc4a635b" id="randomID">
+                                    <input type="hidden" value="82906050" id="h_id">
+                                </span></td>
+
+                    <td class="td-3"><div id="yzm_ts_i" class=""></div><div id="yzm_ts_f" class="no_font"></div></td>
+                </tr>
+                <tr class="tr-1">
+                    <td class="td-1">&nbsp; &nbsp;</td>
+                    <td class="td-9"><input type="button" class="qued" onclick="ztyz()" style="cursor:pointer;"></td>
+                    <td></td>
+                </tr>
+                </tbody></table>
+            <div class="yishang">以上注册内容请放心填写，本网站不会泄露您的任何个人信息。
+                点击"确认注册"进行下一步操作。</div>
+        </div>
+    </div>
+    <div class="z_center2">
+        <div><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/wei_top.png"></div>
+        <div class="wei_cen">
+            <div class="wsm">
+                <div class="wsm1"><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/z_liji_img.png"></div>
+                <div class="wsm2">为什么注册？</div>
+            </div>
+            <div class="wei_b">
+                <div class="wei_b_1">
+                    <dl class="wei_b_1_a">
+                        <dt class="wei_b_1_b"><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/wei_b1.png"></dt>
+                        <dd class="wei_b_1_c">我们工作的目标就是为客户提供及时、准确、权威的招标采购项目信息。</dd>
+                    </dl>
+                    <dl class="wei_b_1_a">
+                        <dt class="wei_b_1_b"><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/wei_b2.png"></dt>
+                        <dd class="wei_b_1_c">与全国5000多家招标代理公司,业主,政府采购中心,工程交易中心紧密合作。</dd>
+                    </dl>
+                    <dl class="wei_b_1_a">
+                        <dt class="wei_b_1_b"><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/wei_b3.png"></dt>
+                        <dd class="wei_b_1_c">注册用户能够自主发布和管理招标、中标、采购信息。</dd>
+                    </dl>
+                    <dl class="wei_b_1_a">
+                        <dt class="wei_b_1_b"><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/wei_b4.png"></dt>
+                        <dd class="wei_b_1_c">网站将为已注册的公司提供有针对性的个性化业务。</dd>
+                    </dl>
+                </div>
+            </div>
+
+        </div>
+        <div><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/wei_bottom.png"></div>
+        <div class="z_dianhua"><a href="https://cdn.chinabidding.cn/public/cblcn/about/lxwm.html" target="_blank"><img src="https://cdn.chinabidding.cn/public/info/new_regist/images/z_liji.png"></a></div>
+    </div>
+</div>
