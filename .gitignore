@@ -4,17 +4,10 @@
 /src/github.com/
 /src/golang.org/
 /src/gopkg.in/
-<<<<<<< HEAD
 .idea
-=======
->>>>>>> master
 bin
 pkg
 github.com
 golang.org
 gopkg.in
-<<<<<<< HEAD
-=======
-.idea
 .vscode
->>>>>>> master
