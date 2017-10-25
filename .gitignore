@@ -4,3 +4,9 @@
 /src/github.com/
 /src/golang.org/
 /src/gopkg.in/
+.idea
+bin
+pkg
+github.com
+golang.org
+gopkg.in
