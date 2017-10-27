@@ -6,13 +6,13 @@
 <div class="row">
     <div class="col-xs-2" style="height:540px;border: 1px solid #307ECC;padding: 10px;font-size:14px;">
         <div >
-            <a id="org-id-0" href="#" class="jstree-anchor  jstree-clicked"><i class="jstree-icon jstree-themeicon ace-icon ace-icon fa fa-folder blue jstree-themeicon-custom">组织树</i></a>
+            <a id="resource-id-0" href="#" class="jstree-anchor  jstree-clicked"><i class="jstree-icon jstree-themeicon ace-icon ace-icon fa fa-folder blue jstree-themeicon-custom">组织树</i></a>
         </div>
-        <div id="brand_tree" class="demo" style="min-height:200px;max-height: 600px;overflow: auto;"></div>
+        <div id="resource-tree" class="demo" style="min-height:200px;max-height: 600px;overflow: auto;"></div>
     </div>
     <div class="col-xs-10">
-            <table id="org-table" ></table>
-            <div id="org-pager"></div>
+            <table id="resource-table" ></table>
+            <div id="resource-pager"></div>
     </div>
 </div>
 
@@ -23,12 +23,12 @@
 <script type="application/javascript">
 
     var parentId = 0;
-    treeInit('brand_tree');
-    orgList()
+    treeInit('resource-tree');
+    resourceList()
 
-    jQuery("#org-id-0").click(function(){
+    jQuery("#resource-id-0").click(function(){
         parentId = 0;
-        jQuery("#org-table").jqGrid('setGridParam',{
+        jQuery("#resource-table").jqGrid('setGridParam',{
             postData : {"parentId" : parentId},
             page : 1
         }).trigger('reloadGrid');//重新载入
@@ -49,16 +49,16 @@
             }
         }).bind('select_node.jstree', function(node, refNode) {
             parentId = refNode.node.id;
-            jQuery("#org-table").jqGrid('setGridParam',{
+            jQuery("#resource-table").jqGrid('setGridParam',{
                 postData : {"parentId" : parentId},
                 page : 1
             }).trigger('reloadGrid');//重新载入
         });
     }
 
-    function orgList() {
-        var grid_selector = "#org-table";
-        var pager_selector = "#org-pager";
+    function resourceList() {
+        var grid_selector = "#resource-table";
+        var pager_selector = "#resource-pager";
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
         //resize to fit page size
@@ -204,7 +204,7 @@
                 afterSubmit: function (response, postdata) {
                     var arr =  response.responseText;
                     if(arr == "success") {
-                        $('#brand_tree').jstree('refresh');
+                        $('#resource-tree').jstree('refresh');
                         return [true, ''];
                     };
                 }
@@ -224,7 +224,7 @@
                 afterSubmit: function (response, postdata) {
                     var arr =  response.responseText;
                     if(arr == "success") {
-                        $('#brand_tree').jstree('refresh');
+                        $('#resource-tree').jstree('refresh');
                         return [true, ''];
                     }
                 },

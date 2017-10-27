@@ -47,3 +47,15 @@ func GetResourceByPage(page *models.PageRequest, parentId int64) * models.PageRe
 	pageResponse := models.InitPageResponse(page, &resources, records)
 	return  pageResponse
 }
+
+func GetResourceByRole(roleId int64)  []*Resource{
+	resources := make([]*Resource, 0)
+	err := models.DbSlave.Table(Resource{}).Alias("r").
+		Select("r.*").
+		Join("INNER", []string{"hiyuncms_role_resource","rr"}, fmt.Sprintf("rr.resource_id=r.id and rr.role_id=%d",roleId)).
+		Find(&resources)
+	if err != nil {
+		log.Printf("根据role_id获取resource数据:%s", models.GetErrorInfo(err))
+	}
+	return resources
+}

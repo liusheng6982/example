@@ -71,7 +71,7 @@ func GetResource(c * gin.Context){
 	orgs := system.GetResourceByPraentId( parentId )
 	treeNodes := make([]*json.TreeNode, len(orgs))
 	for k,v := range orgs{
-		tempOrgs := system.GetSubOrgByPraentId( v.Id )
+		tempOrgs := system.GetResourceByPraentId( v.Id )
 		hasChildren := false
 		icon := "ace-icon ace-icon fa fa-folder-o blue"
 		if tempOrgs != nil && len(tempOrgs) > 0 {

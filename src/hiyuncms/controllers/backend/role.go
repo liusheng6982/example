@@ -23,6 +23,7 @@ func RoleDataList(c *gin.Context){
 	c.JSON(http.StatusOK, responsePage)
 }
 
+
 func RoleEdit(c * gin.Context){
 	role := system.Role{}
 	c.Bind( &role )
@@ -48,4 +49,11 @@ func RoleEdit(c * gin.Context){
 		}
 
 	}
+}
+
+func RoleResource(c * gin.Context){
+	id, _:= c.GetPostForm("roleId")
+	roleId, _ := strconv.ParseInt(id, 10, 64)
+	resources := system.GetResourceByRole( roleId )
+	c.JSON(http.StatusOK, resources)
 }

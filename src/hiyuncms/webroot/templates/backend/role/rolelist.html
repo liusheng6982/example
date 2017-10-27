@@ -1,7 +1,8 @@
 {{template "header.html" .}}
 {{template "top.html" .}}
 
-
+<link rel="stylesheet" href="/static/jstree/themes/default/style.min.css" />
+<link rel="stylesheet" href="/static/ace/assets/css/jquery-ui.min.css" />
 <div class="row">
 	<div class="col-xs-12">
 
@@ -13,8 +14,30 @@
 	</div><!-- /.col -->
 </div><!-- /.row -->
 
+
+<!-- 选择资源 -->
+<div title=" 选择资源" id="select_resource_div">
+	<div id="select_resource_form" class="row" style="display: none">
+		<div class="col-xs-12 col-sm-7">
+			<div class="widget-body">
+				<div class="widget-main">
+					<div>
+						<label>系统资源</label>
+						<div id="select_resource">
+							<div id="resource_tree" class="demo" style="min-height:200px;max-height: 600px;overflow: auto;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
 {{template "bottom.html" .}}
 {{template "footer.html" .}}
+<script src="/static/jstree/jstree.min.js"></script>
+<script src="/static/ace/assets/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	jQuery(function($) {
         var grid_selector = "#grid-table";
@@ -65,7 +88,7 @@
 			mtype:'POST',
             //datatype: "local",
             height: 400,
-            colNames:[' ', 'ID', '', '角色名称',  '角色编码'],
+            colNames:[' ', 'ID', '', '角色名称',  '角色编码', '设置资源',],
             colModel:[
                 {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                     formatter:'actions',
@@ -76,10 +99,20 @@
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
                 },
-                {name:'Id',index:'id', width:60, sorttype:"int", editable: false},
+                {name:'id',index:'id', width:60, sorttype:"int", editable: false},
                 {name:'',index:'', width:100,editable: true, hidden : true},
                 {name:'RoleName',index:'name', width:100,editable: true},
-                {name:'RoleCode',index:'url', width:70, editable: true}
+                {name:'RoleCode',index:'url', width:70, editable: true},
+                {
+                    name: 'resource',
+                    width: 80,
+                    align: 'center',
+                    editable: false,
+                    search: false,
+                    formatter: function(cellVal, opts, rowObj) {
+                        return '<button class="setResource btn btn-xs btn-warning">设置资源</button>';
+                    }
+                }
             ],
 
             viewrecords : true,
@@ -99,6 +132,14 @@
                     updateActionIcons(table);
                     updatePagerIcons(table);
                     enableTooltips(table);
+
+
+					// 设置资源
+					$('.setResource').click(function(){
+						var rowId = $(this).parents('tr').attr('id');
+						setResource(rowId);
+					});
+
                 }, 0);
             }
 
@@ -332,5 +373,133 @@
             $.jgrid.gridDestroy(grid_selector);
             $('.ui-jqdialog').remove();
         });
+
+
+
+        var selectedResourceIds = {};
+
+
+        var oldResourceIds = {};
+
+        function setResource(roleId) {
+            selectedResourceIds = {};
+            $('#select_resource_form').show().find('#select_system', '#select_resource').empty();
+            if($('.jstree-container-ul').length != 0) {
+                $('#resource_tree').children().remove();
+                $('#select_resource').html("<div id='resource_tree' class='demo' style='min-height:200px;max-height: 600px;overflow: auto;'></div>");
+            }
+
+            $.post('/roleresource', {roleId : roleId}, function (r) {
+                oldResourceIds = r;
+            });
+
+
+			treeInit(roleId);
+
+			$('#select_resource_div').dialog({
+				title: "选择资源",
+				title_html: true,
+				modal: true,
+				width : 500,
+				height: 600,
+				resizable: false,
+				open: function () {
+
+				},
+				buttons: [{
+					html: "<i class='ace-icon fa fa-crosshairs bigger-110'></i>&nbsp; 确定",
+					"class": "btn btn-primary btn-xs",
+					click: function () {
+						setResourceSubmit(roleId);
+					}
+				}, {
+					html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+					"class": "btn btn-xs",
+					click: function () {
+						$('#select_resource_form').hide();
+						$(this).dialog("close");
+					}
+				}]
+			});
+
+        }
+
+        function treeInit(systemId, roleId) {
+            if($('.jstree-container-ul').length != 0) {
+                $('#resource_tree').children().remove();
+                $('#select_resource').html("<div id='resource_tree' class='demo' style='min-height:200px;max-height: 600px;overflow: auto;'></div>");
+            }
+            $('#resource_tree').jstree({
+                "plugins" : ["wholerow", "checkbox"],
+                core: {
+                    data: {
+                        url: '/resourcetree',
+                        data: function(treeNode) {
+                            var data = {};
+							data = {
+								parentId: treeNode.id
+							};
+                            return data;
+                        }
+                    }
+                }
+            }).bind('load_node.jstree', function(node, refNode) {
+                var original = refNode.node;
+                if(original.children) {
+                    $("#resource_tree").jstree('open_all');
+                };
+            }).bind('select_node.jstree', function(node, refNode) {
+                selectResource();
+            }).bind('deselect_node.jstree', function(node, refNode) {
+                selectResource();
+            });
+        }
+
+        function selectResource() {
+            //取得所有选中的节点，返回节点对象的集合
+            var resourceIds = $('#resource_tree').jstree('get_checked');
+            if (resourceIds != null && resourceIds != '' && resourceIds.length != 0) {
+                $.each(resourceIds, function(k, v) {
+                    selectParentId(resourceIds, v);
+                });
+                selectedResourceIds = resourceIds;
+            } else {
+                selectedResourceIds = null;
+            }
+        }
+
+        function selectParentId(resourceIds, resourceId) {
+            var data = $('#resource_tree').jstree().get_node(resourceId);
+            var parentId = $('#resource_tree #' + resourceId).parent().parent().attr('id');
+            if (parentId != 'resource_tree' && $.inArray(parentId, resourceIds) == -1) {
+                resourceIds.push(parentId);
+                selectParentId(resourceIds, parentId);
+            }
+        }
+
+        function setResourceSubmit (roleId) {
+            //取得所有选中的节点，返回节点对象的集合
+            var resourceIds = [];
+            $.each(oldResourceIds, function(k, v) {
+                if (selectedResourceIds[k] == null) {
+                    return;
+                }
+                if (selectedResourceIds[k].length > 0) {
+                    $.each(selectedResourceIds[k], function(i, j){
+                        resourceIds.push(j);
+                    })
+                } else {
+                    $.each(v, function(i, j){
+                        resourceIds.push(j);
+                    })
+                }
+            });
+            $.getJSON('/roleresourcesave', {roleId : roleId, resourceIds : resourceIds.join()}, function (r) {
+                if (r.result == 'success') {
+                    $('#select_resource_form').hide();
+                    $("#select_resource_div").dialog("close");
+                }
+            });
+        }
     });
 </script>

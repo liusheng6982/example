@@ -81,9 +81,10 @@ func regRoute()  {
 	BackendRoute.POST("/login",backend.UserLogin)            //提交登录
 	BackendRoute.GET ("/captcha",controllers.Captcha)
 
-	BackendRoute.GET ("/rolelist",backend.RoleList)			//角色列表
-	BackendRoute.POST("/roleEdit",backend.RoleEdit)			//角色列表（增删改）
-	BackendRoute.POST("/rolelist",backend.RoleDataList)		//角色列表数据
+	BackendRoute.GET ("/rolelist",backend.RoleList)         //角色列表
+	BackendRoute.POST("/roleEdit",backend.RoleEdit)         //角色列表（增删改）
+	BackendRoute.POST("/rolelist",backend.RoleDataList)     //角色列表数据
+	BackendRoute.POST("/roleresource",backend.RoleResource) //角色下的所有资源
 
 	BackendRoute.GET ("/orgtree",backend.GetSubOrg)			//组织树
 	BackendRoute.GET ("/orglist",backend.OrgList) 			//组织显示页面
