@@ -16,15 +16,29 @@ func init()  {
 	log.Println( "init table role ", models.GetErrorInfo(err))
 }
 
-
+/**
+获得角色分页
+ */
 func GetAllRolesByPage(page *models.PageRequest) *models.PageResponse{
-	columnList := make([]*Role, 0)
-	err := models.DbSlave.Table(Role{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&columnList)
+	roleList := make([]*Role, 0)
+	err := models.DbSlave.Table(Role{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&roleList)
 	if err != nil {
 		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
 	}
 	records,_ := models.DbMaster.Table(Role{}).Count(Role{})
-	pageResponse := models.InitPageResponse(page, columnList, records)
+	pageResponse := models.InitPageResponse(page, roleList, records)
 
 	return pageResponse
+}
+
+/**
+获得角色数据
+ */
+func GetAllRoles() []*Role{
+	roleList := make([]*Role, 0)
+	err := models.DbSlave.Table(Role{}).Find(&roleList)
+	if err != nil {
+		log.Printf("获取Role数据:%s", models.GetErrorInfo(err))
+	}
+	return roleList
 }

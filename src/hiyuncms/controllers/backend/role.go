@@ -60,17 +60,16 @@ func RoleResource(c * gin.Context){
 	c.JSON(http.StatusOK, resources)
 }
 
+/**
+角色资源保存
+ */
 func RoleResourceSave(c * gin.Context){
 	roleIdStr := c.Query("roleId")
 	roleId, _ :=  strconv.ParseInt(roleIdStr, 10, 64)
-
 	resourceIdsStr := c.Query("resourceIds")
-	log.Printf("123456789asdfasdfasdfasdfasdfasdfasdfasf=%s", resourceIdsStr)
 	resourceIds := strings.Split(resourceIdsStr,",")
-	log.Printf("123456789asdfasdfasdfasdfasdfasdfasdfasf=%v", resourceIds)
 	resourceIdsInt := make([]int64, len(resourceIds))
 	for k,v := range  resourceIds{
-		log.Printf("123456789asdfasdfasdfasdfasdfasdfasdfasf=%s", v)
 		resourceIdsInt[k],_ = strconv.ParseInt(v, 10,64)
 	}
 	system.RoleResourceSave(roleId, resourceIdsInt)

@@ -96,6 +96,8 @@ func regRoute()  {
 	BackendRoute.GET ("/userlist",backend.UserList) 			//用户显示页面
 	BackendRoute.POST("/userlist",backend.UserListData) 		//用户列表数据
 	BackendRoute.POST("/useredit",backend.UserEdit) 			//用户操作（增删改）
+	BackendRoute.GET ("/userrole",backend.UserRoles)          //用户选择角色
+	BackendRoute.GET ("/userrolesave",backend.UserRolesSave)  //用户选择角色保存
 
 	BackendRoute.GET ("/resourcetree",backend.GetResource)		//资源树
 	BackendRoute.GET ("/resourcelist",backend.ResourceList) 		//资源显示页面
