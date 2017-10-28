@@ -27,16 +27,18 @@ func MiddleWare() gin.HandlerFunc {
 		sessionUser := session.Get("hiyuncms.back.user")
 
 		if sessionUser == nil {
-			if c.Request.URL.Path == "/login" ||
+			if  c.Request.URL.Path == "/login" ||
 				c.Request.URL.Path == "/userlogin" ||
 				c.Request.URL.Path == "/captcha" ||
 				strings.Contains(c.Request.URL.Path,"/static/") {
 				c.Next()
 			} else{
 				c.Redirect(http.StatusFound, "/login")
+				c.Abort()
 			}
+		} else {
+			c.Next()
 		}
-		c.Next()
 	}
 }
 

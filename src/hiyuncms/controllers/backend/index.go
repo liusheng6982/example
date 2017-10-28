@@ -15,7 +15,7 @@ func Index( c *gin.Context )  {
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"mainMenu":"首页",
 		"bodyCss": "no-skin",
-		})
+	})
 
 }
 
