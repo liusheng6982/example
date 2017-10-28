@@ -7,6 +7,8 @@ import (
 	"log"
 	"strconv"
 	"hiyuncms/models/system"
+	"hiyuncms/controllers/backend/json"
+	"strings"
 )
 
 func  RoleList(c *gin.Context){
@@ -56,4 +58,60 @@ func RoleResource(c * gin.Context){
 	roleId, _ := strconv.ParseInt(id, 10, 64)
 	resources := system.GetResourceByRole( roleId )
 	c.JSON(http.StatusOK, resources)
+}
+
+func RoleResourceSave(c * gin.Context){
+	roleIdStr := c.Query("roleId")
+	roleId, _ :=  strconv.ParseInt(roleIdStr, 10, 64)
+
+	resourceIdsStr := c.Query("resourceIds")
+	log.Printf("123456789asdfasdfasdfasdfasdfasdfasdfasf=%s", resourceIdsStr)
+	resourceIds := strings.Split(resourceIdsStr,",")
+	log.Printf("123456789asdfasdfasdfasdfasdfasdfasdfasf=%v", resourceIds)
+	resourceIdsInt := make([]int64, len(resourceIds))
+	for k,v := range  resourceIds{
+		log.Printf("123456789asdfasdfasdfasdfasdfasdfasdfasf=%s", v)
+		resourceIdsInt[k],_ = strconv.ParseInt(v, 10,64)
+	}
+	system.RoleResourceSave(roleId, resourceIdsInt)
+	c.JSON(http.StatusOK, gin.H{
+		"result":"success",
+	})
+}
+
+/**
+资源树
+ */
+func RoleResourceTree(c * gin.Context){
+	parentIdStr := c.Query("parentId")
+	roleIdStr := c.Query("roleId")
+
+	parentId,_:= strconv.ParseInt(parentIdStr, 10, 64)
+	roleId, _ :=  strconv.ParseInt(roleIdStr, 10, 64)
+
+	orgs := system.GetResourceByPraentId( parentId )
+	treeNodes := make([]*json.TreeNode, len(orgs))
+	for k,v := range orgs{
+		hasSelected := system.IsSelectResourceByRoleId(roleId, v.Id)
+		tempOrgs := system.GetResourceByPraentId( v.Id )
+		hasChildren := false
+
+		icon := "ace-icon ace-icon fa fa-folder-o blue"
+		if tempOrgs != nil && len(tempOrgs) > 0 {
+			hasChildren = true
+			icon = "ace-icon ace-icon fa fa-folder blue"
+		}
+		state := map[string]interface{}{"selected":hasSelected}
+
+		node := json.TreeNode{
+			Id:       v.Id,
+			Name:     v.ResourceName,
+			Icon:     icon,
+			Children: hasChildren,
+			Type:     "1",
+			State:    state,
+		}
+		treeNodes[k] = &node
+	}
+	c.JSON(http.StatusOK, treeNodes)
 }

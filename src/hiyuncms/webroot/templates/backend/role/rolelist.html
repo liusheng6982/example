@@ -18,7 +18,7 @@
 <!-- 选择资源 -->
 <div title=" 选择资源" id="select_resource_div">
 	<div id="select_resource_form" class="row" style="display: none">
-		<div class="col-xs-12 col-sm-7">
+		<div class="col-xs-10 col-sm-10">
 			<div class="widget-body">
 				<div class="widget-main">
 					<div>
@@ -424,20 +424,22 @@
 
         }
 
-        function treeInit(systemId, roleId) {
+        function treeInit(roleId) {
             if($('.jstree-container-ul').length != 0) {
                 $('#resource_tree').children().remove();
                 $('#select_resource').html("<div id='resource_tree' class='demo' style='min-height:200px;max-height: 600px;overflow: auto;'></div>");
             }
             $('#resource_tree').jstree({
                 "plugins" : ["wholerow", "checkbox"],
+                'checkbox': { cascade: "", three_state: false }, //不级联
                 core: {
                     data: {
-                        url: '/resourcetree',
+                        url: '/roleresourcetree',
                         data: function(treeNode) {
                             var data = {};
 							data = {
-								parentId: treeNode.id
+								parentId: treeNode.id,
+								roleId:roleId
 							};
                             return data;
                         }
@@ -480,20 +482,17 @@
         function setResourceSubmit (roleId) {
             //取得所有选中的节点，返回节点对象的集合
             var resourceIds = [];
-            $.each(oldResourceIds, function(k, v) {
-                if (selectedResourceIds[k] == null) {
-                    return;
-                }
-                if (selectedResourceIds[k].length > 0) {
-                    $.each(selectedResourceIds[k], function(i, j){
-                        resourceIds.push(j);
-                    })
-                } else {
-                    $.each(v, function(i, j){
-                        resourceIds.push(j);
-                    })
-                }
-            });
+
+			if (selectedResourceIds.length > 0) {
+				$.each(selectedResourceIds, function(i, j){
+					resourceIds.push(j);
+				});
+			}
+			else {
+			    $.each( oldResourceIds, function (i,j) {
+                    resourceIds.push(j.id);
+                })
+			}
             $.getJSON('/roleresourcesave', {roleId : roleId, resourceIds : resourceIds.join()}, function (r) {
                 if (r.result == 'success') {
                     $('#select_resource_form').hide();
