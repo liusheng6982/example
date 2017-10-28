@@ -32,19 +32,19 @@ func ColumnEdit(c * gin.Context){
 		column.Id, _= strconv.ParseInt(id, 10, 64)
 		_, err := models.DbMaster.ID(column.Id).Update(&column)
 		if err != nil {
-			log.Printf("更新Cloun报错:%s\n",models.GetErrorInfo(err))
+			log.Printf("更新Column报错:%s\n",models.GetErrorInfo(err))
 		}
 	}else if"add" == oper {
 		_, err := models.DbMaster.Insert( &column )
 		if err != nil {
-			log.Printf("新增Cloun报错:%s\n",models.GetErrorInfo(err))
+			log.Printf("新增Column报错:%s\n",models.GetErrorInfo(err))
 		}
 	} else if "del" == oper{
-	id, _:= c.GetPostForm("id")
+		id, _:= c.GetPostForm("id")
 		column.Id, _= strconv.ParseInt(id, 10, 64)
 		_, err := models.DbMaster.Delete(&column)
 		if err != nil {
-		log.Printf("删除Org报错:%s\n",models.GetErrorInfo(err))
+		log.Printf("删除Column报错:%s\n",models.GetErrorInfo(err))
 		c.String(http.StatusInternalServerError, "%s", "fail")
 		return
 		}
