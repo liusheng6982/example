@@ -45,6 +45,8 @@ func init()  {
 	DbMaster.ShowSQL( showSql )
 	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
 	DbMaster.SetTableMapper(tbMapper)
+	cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
+	DbMaster.SetDefaultCacher(cacher)
 
 	initSlave()
 }
@@ -70,6 +72,9 @@ func initSlave()  {
 	DbSlave.ShowSQL( showSql )
 	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
 	DbSlave.SetTableMapper(tbMapper)
+
+	cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
+	DbSlave.SetDefaultCacher(cacher)
 }
 
 
