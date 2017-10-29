@@ -104,9 +104,9 @@
                 },
                 {name:'id',index:'id', width:60, sorttype:"int", editable: false},
                 {name:'',index:'', width:100,editable: true, hidden : true},
-                {name:'ResourceName',index:'resource_name', width:100,editable: true},
-                {name:'ResourceCode',index:'resource_code', width:70, editable: true},
-                {name:'ResourceUrl',index:'resource_url', width:70, editable: true},
+                {name:'ResourceName',index:'resource_name', width:100,editable: true,editrules:{required: true}},
+                {name:'ResourceCode',index:'resource_code', width:70, editable: true,editrules:{required: true}},
+                {name:'ResourceUrl',index:'resource_url', width:70, editable: true,},
                 {name:'OrderNo',index:'order_num', width:90, editable: true, editrules:{required: true, integer: true}},
             ],
 
