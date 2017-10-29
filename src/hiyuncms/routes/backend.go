@@ -27,16 +27,18 @@ func MiddleWare() gin.HandlerFunc {
 		sessionUser := session.Get("hiyuncms.back.user")
 
 		if sessionUser == nil {
-			if c.Request.URL.Path == "/login" ||
+			if  c.Request.URL.Path == "/login" ||
 				c.Request.URL.Path == "/userlogin" ||
 				c.Request.URL.Path == "/captcha" ||
 				strings.Contains(c.Request.URL.Path,"/static/") {
 				c.Next()
 			} else{
 				c.Redirect(http.StatusFound, "/login")
+				c.Abort()
 			}
+		} else {
+			c.Next()
 		}
-		c.Next()
 	}
 }
 
@@ -81,13 +83,12 @@ func regRoute()  {
 	BackendRoute.POST("/login",backend.UserLogin)            //提交登录
 	BackendRoute.GET ("/captcha",controllers.Captcha)
 
-	BackendRoute.GET ("/columnlist",backend.ColumnList)      //栏目列表
-	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      //栏目操作（增删改）
-	BackendRoute.POST("/columnlist",backend.ColumnDataList)  //栏目列表数据
-
-	BackendRoute.GET ("/rolelist",backend.RoleList)			//角色列表
-	BackendRoute.POST("/roleEdit",backend.RoleEdit)			//角色列表（增删改）
-	BackendRoute.POST("/rolelist",backend.RoleDataList)		//角色列表数据
+	BackendRoute.GET ("/rolelist",backend.RoleList)                 //角色列表
+	BackendRoute.POST("/roleEdit",backend.RoleEdit)                 //角色列表（增删改）
+	BackendRoute.POST("/rolelist",backend.RoleDataList)             //角色列表数据
+	BackendRoute.POST("/roleresource",backend.RoleResource)         //角色下的所有资源
+	BackendRoute.GET ("/roleresourcetree",backend.RoleResourceTree) //角色下资源树
+	BackendRoute.GET ("/roleresourcesave",backend.RoleResourceSave) //角色下资源树
 
 	BackendRoute.GET ("/orgtree",backend.GetSubOrg)			//组织树
 	BackendRoute.GET ("/orglist",backend.OrgList) 			//组织显示页面
@@ -97,7 +98,17 @@ func regRoute()  {
 	BackendRoute.GET ("/userlist",backend.UserList) 			//用户显示页面
 	BackendRoute.POST("/userlist",backend.UserListData) 		//用户列表数据
 	BackendRoute.POST("/useredit",backend.UserEdit) 			//用户操作（增删改）
+	BackendRoute.GET ("/userrole",backend.UserRoles)          //用户选择角色
+	BackendRoute.GET ("/userrolesave",backend.UserRolesSave)  //用户选择角色保存
 
+	BackendRoute.GET ("/resourcetree",backend.GetResource)		//资源树
+	BackendRoute.GET ("/resourcelist",backend.ResourceList) 		//资源显示页面
+	BackendRoute.POST("/resourcelist",backend.ResourceListData) 	//资源列表数据
+	BackendRoute.POST("/resourceedit",backend.ResourceEdit) 		//资源操作（增删改）
+
+	BackendRoute.GET ("/columnlist",backend.ColumnList)      		//栏目列表
+	BackendRoute.POST("/columnEdit",backend.ColumnEdit)      		//栏目操作（增删改）
+	BackendRoute.POST("/columnlist",backend.ColumnDataList)  		//栏目列表数据
 
 	BackendRoute.GET ("/article", backend.ArticleShow)          //新增文档时显示
 	BackendRoute.POST("/article", backend.ArticleSave)          //新增文档

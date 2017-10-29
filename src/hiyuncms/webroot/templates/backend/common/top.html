@@ -90,8 +90,18 @@
             <li class='{{ if eq .mainMenu "用户管理" }} active {{ end }}'>
                 <a href="userlist">
                     <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
-                    <i class="menu-icon fa  fa-hdd-o"></i>
+                    <i class="menu-icon fa  fa-circle"></i>
                     <span class="menu-text"> 用户管理 </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class='{{ if eq .mainMenu "资源管理" }} active {{ end }}'>
+                <a href="resourcelist">
+                    <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
+                    <i class="menu-icon fa fa-globe"></i>
+                    <span class="menu-text"> 资源管理 </span>
                 </a>
 
                 <b class="arrow"></b>

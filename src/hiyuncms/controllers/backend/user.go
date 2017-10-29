@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"hiyuncms/models"
 	"strconv"
+	"strings"
 )
 
 func md5str(passwd string) string  {
@@ -93,7 +94,7 @@ func UserListData(c *gin.Context){
 }
 
 /*
-组织操作
+用户操作
  */
 func UserEdit(c * gin.Context){
 	user := system.User{}
@@ -120,4 +121,39 @@ func UserEdit(c * gin.Context){
 		system.DelUser(userId)
 		c.String(http.StatusOK, "%s", "success")
 	}
+}
+
+/**
+设置用户角色面板
+ */
+func UserRoles (c * gin.Context){
+	userIdStr := c.Query("userId")
+	userId, _ :=  strconv.ParseInt(userIdStr, 10, 64)
+
+	roles := system.GetAllRoles()
+	options := ""
+	for _,role := range roles{
+		if system.IsSelectRoleByUserId(userId, role.Id) {
+			options = fmt.Sprintf("%s<option value='%d' selected='selected'> %s </option>", options, role.Id,role.RoleName)
+		} else {
+			options = fmt.Sprintf("%s<option value='%d'>%s</option>", options, role.Id,role.RoleName)
+		}
+	}
+	c.JSON(http.StatusOK, options)
+}
+
+func UserRolesSave(c * gin.Context)  {
+
+	userIdStr := c.Query("userId")
+	userId, _ :=  strconv.ParseInt(userIdStr, 10, 64)
+	roleIdsStr := c.Query("roleIds")
+	roleIds := strings.Split(roleIdsStr,",")
+	roleIdsInt := make([]int64, len(roleIds))
+	for k,v := range  roleIds{
+		roleIdsInt[k],_ = strconv.ParseInt(v, 10,64)
+	}
+	system.UserRoleSave(userId, roleIdsInt)
+	c.JSON(http.StatusOK, gin.H{
+		"result":"success",
+	})
 }

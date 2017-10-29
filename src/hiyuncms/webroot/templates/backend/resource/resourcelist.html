@@ -1,25 +1,64 @@
 {{template "header.html" .}}
 {{template "top.html" .}}
 
+<link rel="stylesheet" href="/static/jstree/themes/default/style.min.css" />
 
 <div class="row">
-	<div class="col-xs-12">
-
-		<table id="grid-table"></table>
-
-		<div id="grid-pager"></div>
-
-		<!-- PAGE CONTENT ENDS -->
-	</div><!-- /.col -->
-</div><!-- /.row -->
+    <div class="col-xs-2" style="height:540px;border: 1px solid #307ECC;padding: 10px;font-size:14px;">
+        <div >
+            <a id="resource-id-0" href="#" class="jstree-anchor  jstree-clicked"><i class="jstree-icon jstree-themeicon ace-icon ace-icon fa fa-folder blue jstree-themeicon-custom">组织树</i></a>
+        </div>
+        <div id="resource-tree" class="demo" style="min-height:200px;max-height: 600px;overflow: auto;"></div>
+    </div>
+    <div class="col-xs-10">
+            <table id="resource-table" ></table>
+            <div id="resource-pager"></div>
+    </div>
+</div>
 
 {{template "bottom.html" .}}
 {{template "footer.html" .}}
-<script type="text/javascript">
-	jQuery(function($) {
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
 
+<script src="/static/jstree/jstree.min.js"></script>
+<script type="application/javascript">
+
+    var parentId = 0;
+    treeInit('resource-tree');
+    resourceList()
+
+    jQuery("#resource-id-0").click(function(){
+        parentId = 0;
+        jQuery("#resource-table").jqGrid('setGridParam',{
+            postData : {"parentId" : parentId},
+            page : 1
+        }).trigger('reloadGrid');//重新载入
+
+    });
+
+    function treeInit(divId) {
+        $('#' + divId).jstree({
+            core: {
+                data: {
+                    url: '/resourcetree',
+                    data: function(treeNode) {
+                        return {
+                            parentId: treeNode.id
+                        };
+                    }
+                }
+            }
+        }).bind('select_node.jstree', function(node, refNode) {
+            parentId = refNode.node.id;
+            jQuery("#resource-table").jqGrid('setGridParam',{
+                postData : {"parentId" : parentId},
+                page : 1
+            }).trigger('reloadGrid');//重新载入
+        });
+    }
+
+    function resourceList() {
+        var grid_selector = "#resource-table";
+        var pager_selector = "#resource-pager";
 
         var parent_column = $(grid_selector).closest('[class*="col-"]');
         //resize to fit page size
@@ -37,53 +76,38 @@
             }
         })
 
-        //if your grid is inside another element, for example a tab pane, you should use its parent's width:
-        /**
-         $(window).on('resize.jqGrid', function () {
-					var parent_width = $(grid_selector).closest('.tab-pane').width();
-					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
-				})
-         //and also set width when tab pane becomes visible
-         $('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-				  if($(e.target).attr('href') == '#mygrid') {
-					var parent_width = $(grid_selector).closest('.tab-pane').width();
-					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
-				  }
-				})
-         */
-
-
-
-
+        var data = {
+            "parentId" : parentId
+        }
 
         jQuery(grid_selector).jqGrid({
-            //caption: "栏目列表",
+            caption: "资源列表",
             subGrid : false,
             datatype: "json",
-            url: '/columnlist',
-			editurl : 'columnEdit',
-			mtype:'POST',
+            data : data,
+            url: '/resourcelist',
+            editurl : '/resourceedit',
+            mtype:'POST',
             //datatype: "local",
             height: 400,
-            colNames:[' ', 'ID', '', '栏目名',  'URL',  '排序号', '是否显示', '模板路径',"父节点ID"],
+            shrinkToFit: true,
+            colNames:[' ', 'ID', '', '资源名称',  '资源代码',  '地址', '排序号'],
             colModel:[
                 {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                     formatter:'actions',
                     formatoptions:{
                         keys:true,
-                        delbutton: true,//disable delete button
+                        //delbutton: ,//disable delete button
                         delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
                         //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
                     }
                 },
                 {name:'id',index:'id', width:60, sorttype:"int", editable: false},
                 {name:'',index:'', width:100,editable: true, hidden : true},
-                {name:'Name',index:'name', width:100,editable: true, editrules:{required: true}},
-                {name:'Url',index:'url', width:70, editable: true,editrules:{required: true}},
-                {name:'OrderNum',index:'order_num', width:90, editable: true,editrules:{required: true, integer: true}},
-                {name:'ShowFlag',index:'Show_Flag', width:70, editable: true,formatter: "select",edittype:"select",editoptions: {value:"1:是;2:否"},unformat: aceSwitch},
-                {name:'TemplatePath',index:'Template_Path', width:70, editable: true},
-                {name:'ParentId',index:'Parent_Id', width:70, editable: true}
+                {name:'ResourceName',index:'resource_name', width:100,editable: true,editrules:{required: true}},
+                {name:'ResourceCode',index:'resource_code', width:70, editable: true,editrules:{required: true}},
+                {name:'ResourceUrl',index:'resource_url', width:70, editable: true,},
+                {name:'OrderNo',index:'order_num', width:90, editable: true, editrules:{required: true, integer: true}},
             ],
 
             viewrecords : true,
@@ -161,9 +185,28 @@
                 viewPagerButtons: false,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
+                    /*
+                    var hiddenParentId=document.createElement("input");
+                    hiddenParentId.setAttribute("type","hidden");
+                    hiddenParentId.value=parentId;
+                    hiddenParentId.name = "ParentId";
+                    form.append(hiddenParentId);
+                    */
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
                         .wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
+                },
+                beforeSubmit: function(postdata, formObj){
+                    //var parentId = $('.DataTD #parentId', formObj).data('value');
+                    postdata.ParentId = parentId;
+                    return [true,'']
+                },
+                afterSubmit: function (response, postdata) {
+                    var arr =  response.responseText;
+                    if(arr == "success") {
+                        $('#resource-tree').jstree('refresh');
+                        return [true, ''];
+                    };
                 }
             },
             {
@@ -177,6 +220,13 @@
                     style_delete_form(form);
 
                     form.data('styled', true);
+                },
+                afterSubmit: function (response, postdata) {
+                    var arr =  response.responseText;
+                    if(arr == "success") {
+                        $('#resource-tree').jstree('refresh');
+                        return [true, ''];
+                    }
                 },
                 onClick : function(e) {
                     //alert(1);
@@ -336,5 +386,6 @@
             $.jgrid.gridDestroy(grid_selector);
             $('.ui-jqdialog').remove();
         });
-    });
+
+    }
 </script>
