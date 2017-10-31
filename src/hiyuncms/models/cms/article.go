@@ -78,14 +78,18 @@ func SaveArticle(article *Article, columnIds []string)  {
 	articleId := article.Id
 	models.DbMaster.Delete(&ColumnArticle{ArticleId:articleId})
 	columnNames := ""
-	for _, columnId := range columnIds {
+	for index, columnId := range columnIds {
 		ca := ColumnArticle{}
 		ca.ArticleId = articleId
 		ca.ColumnId ,_ = strconv.ParseInt( columnId, 0, 64 )
 		models.DbMaster.Insert( &ca )
 		column := Column{}
 		models.DbMaster.Id(ca.ColumnId).Get(&column)
-		columnNames = fmt.Sprintf("%s,%s", columnNames, column.Name)
+		if index == 0 {
+			columnNames = fmt.Sprintf("%s", column.Name)
+		}else {
+			columnNames = fmt.Sprintf("%s,%s", columnNames, column.Name)
+		}
 	}
 	article.ColumnNames = columnNames
 	_,err := models.DbMaster.Id(article.Id).Update( article )
