@@ -13,7 +13,7 @@ type Project struct {
 	ExpiredDate   models.Date `xorm:"DateTime"`
 }
 
-func (u * Project) TableName() string {
+func (p * Project) TableName() string {
 	return "yy_project"
 }
 
