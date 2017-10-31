@@ -9,12 +9,15 @@ import (
 	"hiyuncms/models/system"
 	"hiyuncms/controllers/backend/json"
 	"strings"
+	"hiyuncms/controllers"
 )
 
 func  RoleList(c *gin.Context){
 	c.HTML(http.StatusOK, "rolelist.html", gin.H{
 		"bodyCss":"no-skin",
 		"mainMenu" :"角色管理",
+		"user":controllers.GetSessionUser(c),
+
 	})
 }
 

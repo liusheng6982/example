@@ -80,6 +80,7 @@ func regRoute()  {
 	BackendRoute.GET ("/", backend.Index)					   //首页
 	BackendRoute.GET ("/index", backend.Index)               //首页
 	BackendRoute.GET ("/login", backend.Login )              //打开login页面
+	BackendRoute.GET ( "/logout", backend.Logout)
 	BackendRoute.POST("/login",backend.UserLogin)            //提交登录
 	BackendRoute.GET ("/captcha",controllers.Captcha)
 

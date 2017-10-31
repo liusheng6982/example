@@ -7,6 +7,7 @@ import (
 	"hiyuncms/models"
 	"fmt"
 	"strconv"
+	"hiyuncms/controllers"
 )
 
 /**
@@ -27,7 +28,7 @@ func ArticleShow( c *gin.Context )  {
 		"columns" : columns,
 		"article" : article,
 		"columnArticles" : columnArticles,
-
+		"user":controllers.GetSessionUser(c),
 	})
 }
 
@@ -38,6 +39,7 @@ func ArticleListShow(c * gin.Context){
 	c.HTML(http.StatusOK, "articlelist.html", gin.H{
 		"mainMenu":"文档列表",
 		"bodyCss" : "no-skin",
+		"user":controllers.GetSessionUser(c),
 	})
 }
 

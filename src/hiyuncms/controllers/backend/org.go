@@ -8,12 +8,14 @@ import (
 	"net/http"
 	"hiyuncms/models"
 	"log"
+	"hiyuncms/controllers"
 )
 
 func OrgList(c *gin.Context){
 	c.HTML(http.StatusOK, "orglist.html", gin.H{
 		"bodyCss":"no-skin",
 		"mainMenu" :"组织管理",
+		"user":controllers.GetSessionUser(c),
 	})
 }
 

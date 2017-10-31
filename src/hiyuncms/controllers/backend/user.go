@@ -81,6 +81,7 @@ func UserList(c *gin.Context){
 	c.HTML(http.StatusOK, "userlist.html", gin.H{
 		"bodyCss":"no-skin",
 		"mainMenu" :"用户管理",
+		"user":controllers.GetSessionUser(c),
 	})
 }
 
