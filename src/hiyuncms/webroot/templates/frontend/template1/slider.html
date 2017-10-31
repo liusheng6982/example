@@ -1,11 +1,14 @@
 <div class="slider-area">
     <div class="slider">
         <div id="bg-slider" class="owl-carousel owl-theme">
-
-            <div class="item"><img src="/static/yy/img/slider-image-3.jpg" alt="Mirror Edge"></div>
+            <!--div class="item"><img src="/static/yy/img/slider-image-3.jpg" alt="Mirror Edge"></div>
             <div class="item"><img src="/static/yy/img/slider-image-2.jpg" alt="The Last of us"></div>
-            <div class="item"><img src="/static/yy/img/slider-image-1.jpg" alt="GTA V"></div>
+            <div class="item"><img src="/static/yy/img/slider-image-1.jpg" alt="GTA V"></div-->
 
+            {{ $articles := loadArticlesTop "/published/haha" 0 2 }}
+            {{range $k,$v := $articles}}
+            <div class="item"><img src="{{$v.FirstImage}}"></div>
+            {{end}}
         </div>
     </div>
     <div class="container slider-content">
