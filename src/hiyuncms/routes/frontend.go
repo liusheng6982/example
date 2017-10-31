@@ -23,7 +23,8 @@ func initRouteFrontend()   *gin.Engine{
 	engine.Use( gin.Logger() )
 	engine.SetFuncMap(template.FuncMap{
 		"loadColumn":   loadColumn,
-		"loadArticles": loadArticles,
+		"loadArticles": loadArticlesByPage,
+		"loadArticlesTop": loadArticlesTop,
 		"loadArticle" : loadArticle,
 		"html"  : html,
 		"addNum": addNum,
@@ -55,10 +56,18 @@ func html (x string) interface{} {
 /**
 获得某个栏目下的所有文档
  */
-func loadArticles(path string, pageSize int, pageNo int ) * models.PageResponse {
+func loadArticlesByPage(path string, pageSize int, pageNo int ) * models.PageResponse {
 	page := models.PageRequest{Rows:pageSize, Page:pageNo}
 	response := cms.GetArticlesByPath(&page, path)
 	response.Path = path
+	return response
+}
+
+/**
+获得某个栏目下的前几条记录
+ */
+func loadArticlesTop(path string, begin int, end int ) []*cms.Article {
+	response := cms.GetArticlesByPathTop(path, begin, end)
 	return response
 }
 

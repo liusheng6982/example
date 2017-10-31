@@ -41,6 +41,7 @@ func SaveArticle(article *Article, columnIds []string)  {
 	article.Createtime = models.Time(time.Now())
 
 	after := func(bean interface{}){
+		/*
 		tempArticle := bean.(*Article)
 		articleId := tempArticle.Id
 		models.DbMaster.Delete(&ColumnArticle{ArticleId:articleId})
@@ -59,6 +60,7 @@ func SaveArticle(article *Article, columnIds []string)  {
 		if err != nil  {
 			log.Printf("保存Article的栏目名:%s", models.GetErrorInfo(err))
 		}
+		*/
 	}
 	if article.Id == 0   {
 		_, err := models.DbMaster.After(after).Insert(article)
@@ -70,6 +72,29 @@ func SaveArticle(article *Article, columnIds []string)  {
 		if err != nil {
 			log.Printf("更新Article数据:%s", models.GetErrorInfo(err))
 		}
+	}
+
+
+	articleId := article.Id
+	models.DbMaster.Delete(&ColumnArticle{ArticleId:articleId})
+	columnNames := ""
+	for index, columnId := range columnIds {
+		ca := ColumnArticle{}
+		ca.ArticleId = articleId
+		ca.ColumnId ,_ = strconv.ParseInt( columnId, 0, 64 )
+		models.DbMaster.Insert( &ca )
+		column := Column{}
+		models.DbMaster.Id(ca.ColumnId).Get(&column)
+		if index == 0 {
+			columnNames = fmt.Sprintf("%s", column.Name)
+		}else {
+			columnNames = fmt.Sprintf("%s,%s", columnNames, column.Name)
+		}
+	}
+	article.ColumnNames = columnNames
+	_,err := models.DbMaster.Id(article.Id).Update( article )
+	if err != nil  {
+		log.Printf("保存Article的栏目名:%s", models.GetErrorInfo(err))
 	}
 
 }
@@ -119,8 +144,14 @@ func GetArticlesByPath(page *models.PageRequest, path string) * models.PageRespo
 		Where(" a.status=1").
 		Count(Article{})
 
+	initFirstContent( articles_ )
 
+	pageResponse := models.InitPageResponse(page, &articles_, records)
+	return  pageResponse
 
+}
+
+func initFirstContent(articles_ []*Article)  {
 	for _, artic := range articles_ {
 		nodes, _ :=goquery.ParseString( artic.Content )
 
@@ -134,9 +165,22 @@ func GetArticlesByPath(page *models.PageRequest, path string) * models.PageRespo
 			artic.FirstContent = str
 		}
 	}
+}
 
-	pageResponse := models.InitPageResponse(page, &articles_, records)
-	return  pageResponse
+func GetArticlesByPathTop(path string, begin, end int ) []*Article{
+	articles_ := make([]*Article, 0)
+	//log.Printf("%v", page)
+	err := models.DbSlave.Table(Article{}).Alias("a").
+		Limit(end-begin, begin).
+		Join("INNER", []string{"hiyuncms_column_article","ca"}, "a.id=ca.article_id").
+		Join("INNER", []string{"hiyuncms_column" ,"c"},"c.id=ca.column_id and c.url='"+ path +"'").
+		Where(" a.status=1").
+		Find(&articles_)
+	if err != nil {
+		log.Printf("通过Column的URL获取Article数据:%s", models.GetErrorInfo(err))
+	}
+	initFirstContent( articles_ )
+	return  articles_
 
 }
 
@@ -154,7 +198,10 @@ func DeleteArticle(articleId int64)  {
  */
 func PublishArticle(articleId int64)  {
 	article := Article{Id:articleId, Status:1}
-	models.DbMaster.Id( articleId ).Update(&article)
+	_, err := models.DbMaster.Id( articleId ).Update(&article)
+	if err != nil {
+		log.Printf("发布Article出错:%s", models.GetErrorInfo(err))
+	}
 }
 
 

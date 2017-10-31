@@ -8,12 +8,14 @@ import (
 	"hiyuncms/models"
 	"hiyuncms/controllers/backend/json"
 	"log"
+	"hiyuncms/controllers"
 )
 
 func ResourceList(c *gin.Context){
 	c.HTML(http.StatusOK, "resourcelist.html", gin.H{
 		"bodyCss":"no-skin",
 		"mainMenu" :"资源管理",
+		"user":controllers.GetSessionUser(c),
 	})
 }
 

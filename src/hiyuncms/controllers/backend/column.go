@@ -7,12 +7,14 @@ import (
 	"hiyuncms/models/cms"
 	"log"
 	"strconv"
+	"hiyuncms/controllers"
 )
 
 func ColumnList(c *gin.Context){
 	c.HTML(http.StatusOK, "columnlist.html", gin.H{
 		"bodyCss":"no-skin",
 		"mainMenu" :"栏目管理",
+		"user":controllers.GetSessionUser(c),
 	})
 }
 

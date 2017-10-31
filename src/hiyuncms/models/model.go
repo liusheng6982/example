@@ -45,8 +45,8 @@ func init()  {
 	DbMaster.ShowSQL( showSql )
 	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
 	DbMaster.SetTableMapper(tbMapper)
-	cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
-	DbMaster.SetDefaultCacher(cacher)
+	//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
+	//DbMaster.SetDefaultCacher(cacher)
 
 	initSlave()
 }
@@ -62,7 +62,7 @@ func initSlave()  {
 	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true", user, password, host, dbname,encode)
 	var err error
 	DbSlave, err = xorm.NewEngine(driver, params)
-	log.Println( "init Database DbMaster ", GetErrorInfo(err))
+	log.Println( "init Database DbSlave ", GetErrorInfo(err))
 
 	maxIdle := config.GetInt("db.slave.max.idle")
 	maxConn := config.GetInt("db.slave.max.conn")
@@ -73,8 +73,8 @@ func initSlave()  {
 	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
 	DbSlave.SetTableMapper(tbMapper)
 
-	cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
-	DbSlave.SetDefaultCacher(cacher)
+	//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
+	//DbSlave.SetDefaultCacher(cacher)
 }
 
 

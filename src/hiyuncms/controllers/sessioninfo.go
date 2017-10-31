@@ -7,6 +7,10 @@ import (
 	"fmt"
 	"github.com/gin-gonic/contrib/sessions"
 	"time"
+	"reflect"
+	"hiyuncms/models/system"
+	"log"
+	"encoding/json"
 )
 
 const(
@@ -18,6 +22,20 @@ type BackendUserSession struct {
 	Id   int64  `json:"id"`
 }
 
+func GetSessionUser(c * gin.Context)  *system.User{
+	session := sessions.Default(c)
+	sessionUser := session.Get(BACK_USER_SESSION)
+	log.Printf("%s\n", reflect.TypeOf(sessionUser))
+	user := &system.User{}
+	json.Unmarshal([]byte(sessionUser.(string)), user)
+	return user
+}
+
+func ClearSessionUser(c * gin.Context){
+	session := sessions.Default(c)
+	session.Clear()
+	session.Save()
+}
 
 
 func Captcha(c * gin.Context) {
