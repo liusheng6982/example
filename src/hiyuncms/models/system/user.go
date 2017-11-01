@@ -14,13 +14,19 @@ type User struct {
 	LoginPassword string `xorm:"varchar(64) null" json:"-"`
 }
 
-func GetUserByUserName(userName string ) User {
+func GetUserById(userId int64 ) *User  {
+	admin := User{ Id:userId }
+	models.DbSlave.Get(&admin)
+	return &admin
+}
+
+func GetUserByUserName(userName string ) *User {
 	if  userName == "" {
-		return User{}
+		return &User{}
 	}
 	admin := User{ LoginName:userName }
 	models.DbSlave.Get(&admin)
-	return admin
+	return &admin
 }
 
 func init()  {

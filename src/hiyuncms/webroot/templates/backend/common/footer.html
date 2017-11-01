@@ -32,7 +32,107 @@
 <!-- ace scripts -->
 <script src="static/ace/assets/js/ace-elements.min.js"></script>
 <script src="static/ace/assets/js/ace.min.js"></script>
+<script src="static/ace/assets/js/pwstrength-bootstrap-1.2.5.min.js"></script>
+<script>
 
+    jQuery('#newPassword').pwstrength({
+        common: {
+            minChar: 8,
+            onKeyUp: function(e, status) {
+                $('body').data('strongLength', status.verdictLevel);
+            }
+        },
+        ui: {
+            showStatus: true,
+            showErrors: true,
+            verdicts: ['较弱', '一般', '中等', '强', '超强'],
+            errorMessages: {
+                wordLength: "长度不足",
+                wordNotEmail: "Email不能作为密码",
+                wordSimilarToUsername: "密码不能包含用户名",
+                wordTwoCharacterClasses: "两次密码不同",
+                wordRepetitions: "重复次数太多",
+                wordSequences: "不能包含有序字符"
+            }
+        }
+    });
+    /**
+     * 修改密码
+     * @param force 强制模式
+     */
+    function changePassword(force) {
+        var strongLength;
+        var changePasswordUrl = 'userpasswordchange';
+
+        // 强制修改密码模式隐藏取消按钮
+        if (force === true) {
+            changePasswordUrl = 'system/user/password/change/force';
+            $('#force').val(false);
+            $('.current-password').hide();
+            $('.change-password-cancel').hide();
+            $('#modifyPwdModal .close').hide();
+        } else {
+            $('#force').val(false);
+            $('.current-password').show();
+            $('.change-password-cancel').show();
+            $('#modifyPwdModal .close').show();
+        }
+
+        $('#doChangePassword').off('click').on('click', function() {
+
+            var currentPassword = $('#currentPassword').val();
+            var newPassword = $('#newPassword').val();
+            var repeatPassword = $('#repeatPassword').val();
+            var strongLength = $('body').data('strongLength');
+            if (!force && !currentPassword) {
+                alert('请输入当前密码！');
+            } else if (!newPassword || !repeatPassword) {
+                alert('请输入密码！');
+            } else if (newPassword != repeatPassword) {
+                alert('两次密码不一致，请检查！');
+            } else if (newPassword.length < 6) {
+                alert('两次密码不一致，请检查！');
+            } else if (strongLength && strongLength < 3) {
+                alert('密码强度太低，要求[强]以上！');
+            } else {
+                $.post(changePasswordUrl, {
+                    force: force,
+                    currentPassword: currentPassword,
+                    newPassword: newPassword
+                }, function(resp) {
+                    if (resp === true) {
+                        $('#modifyPwdModal').modal('hide');
+                        alert('密码已修改，请重新登录。');
+                        location.href = '/logout';
+                    } else {
+                        alert(resp);
+                    }
+                });
+            }
+        });
+        $('#modifyPwdModal').on('shown.bs.modal', function() {
+            if (force) {
+                $('#newPassword').focus();
+            } else {
+                $('#currentPassword').focus();
+            }
+        });
+
+        if (force) {
+            $('#modifyPwdModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        } else {
+            $('#modifyPwdModal').modal({
+                backdrop: true,
+                keyboard: false
+            });
+        }
+
+        $('#modifyPwdModal').modal('show');
+    }
+</script>
 
 </body>
 </html>
