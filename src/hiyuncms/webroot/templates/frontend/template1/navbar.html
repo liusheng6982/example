@@ -11,13 +11,19 @@
             </div>
             <div class="col-md-2 col-md-offset-5  col-sm-3 col-sm-offset-1  col-xs-3  col-xs-offset-1">
                 <div class="header-half header-social">
+                    <div class="button navbar-right">
+                        <button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s" onclick="javascript:location.href='/userlogin'">登录</button>
+                        <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.6s">注册</button>
+                    </div>
                     <ul class="list-inline">
+                        <!--
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                         <li><a href="#"><i class="fa fa-vine"></i></a></li>
                         <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                         <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                         <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        -->
                     </ul>
                 </div>
             </div>
@@ -35,15 +41,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="img/logo.png" alt=""></a>
+            <a class="navbar-brand" href="#"><img src="/static/yy/img/logo.png" alt=""></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <div class="button navbar-right">
-                <button class="navbar-btn nav-button wow bounceInRight login" data-wow-delay="0.8s">Login</button>
-                <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.6s">Sign up</button>
-            </div>
+
             <ul class="main-nav nav navbar-nav navbar-right">
                 {{ $columns := loadColumn }}
                 {{ $path := .path }}

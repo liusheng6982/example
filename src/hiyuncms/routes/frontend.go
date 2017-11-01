@@ -43,7 +43,9 @@ func regFrontRoute()  {
 		FrontendRoute.GET( column.Url, frontend.ArticlesShow)
 	}
 	//FrontendRoute.GET("/published/:route", frontend.ArticlesShow)
-	FrontendRoute.GET("/articleShow", frontend.ArticleShow)
+	FrontendRoute.GET ("/articleShow", frontend.ArticleShow)
+	FrontendRoute.GET ( "/userlogin",frontend.UserLoginShow)
+	FrontendRoute.POST( "/userlogin",frontend.UserLogin)
 }
 
 func addNum(x int, y int )int{
