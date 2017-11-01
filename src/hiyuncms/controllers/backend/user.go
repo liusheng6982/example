@@ -42,11 +42,7 @@ func  UserLogin(c * gin.Context)  {
 	}
 	userName := c.PostForm("Username")
 	passwd := c.PostForm("Password")
-
-
-	log.Printf("form 提交的密码用户名,%s----%s\n", userName, passwd)
 	admin := system.GetUserByUserName(userName)
-	log.Printf( "%v\n", admin.LoginPassword )
 
 
 	passwdMd5 := md5str(passwd)
@@ -75,6 +71,33 @@ func  UserLogin(c * gin.Context)  {
 			"bodyCss": "login-layout",
 		})
 	}
+}
+
+func ChangePassword(c *gin.Context)  {
+	user := controllers.GetSessionUser(c)
+	log.Printf("========%v", user)
+	log.Printf("========%s", user.LoginName)
+	admin := system.GetUserById( user.Id )
+
+	log.Printf("========%s", admin.LoginPassword)
+
+	currentPassword := c.PostForm("currentPassword")
+	newPassword := c.PostForm("newPassword")
+
+	log.Printf("after========%s",md5str (currentPassword ))
+	if admin.LoginPassword != md5str (currentPassword ){
+		c.JSON(http.StatusOK, "当前密码错误")
+	}else{
+		admin.LoginPassword = md5str( newPassword )
+		_, err := models.DbMaster.Id( admin.Id ).Update( admin )
+		if err == nil {
+			c.JSON(http.StatusOK, true)
+		} else{
+			c.JSON(http.StatusOK, fmt.Sprintf("请与管理员联系！%s",err.Error()))
+		}
+	}
+
+
 }
 
 func UserList(c *gin.Context){
