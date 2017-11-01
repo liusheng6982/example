@@ -11,6 +11,7 @@ type Project struct {
     Content       string      `xorm:"varhcar(2000)"`
 	StartDate     models.Time `xorm:"DateTime"`
 	ExpiredDate   models.Date `xorm:"DateTime"`
+	CompanyId	  int64       `xorm:"BIGINT"`
 }
 
 func (p * Project) TableName() string {
