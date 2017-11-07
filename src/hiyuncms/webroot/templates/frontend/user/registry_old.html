@@ -1,0 +1,68 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+
+<div class="container">
+    <div class="row">
+        <div class="content-float register-content-line"></div>
+        <div class="content-float register-content-line-img">
+            <img src="../../../Resource/Images/Sign-in/log_help_icon.png"></div>
+        <div class="content-float register-content-line-img-text"><a href="../../../Help/HelpCenter.shtml#1F" target="_blank" class="color-bao-blue">注册帮助</a></div>
+    </div>
+    <form class="form-horizontal" id="Reg" name="Reg" method="post" novalidate="novalidate">
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">公司类型</label>
+            <div class="col-sm-4" style="padding-top: 7px">
+                <div style="display:inline"><label><input type="radio" value="3" name="radios" checked="">&nbsp;生产商</label></div>
+                <div style="display:inline"><label><input value="4" type="radio" name="radios">&nbsp;代理商</label></div>
+                <div style="display:inline"><label><input value="1" type="radio" name="radios">&nbsp;船厂</label></div>
+                <div style="display:inline"><label><input value="2" type="radio" name="radios">&nbsp;船东</label></div>
+                <div style="display:inline"><label><input value="99" type="radio" name="radios">&nbsp;其他</label></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">公司全名</label>
+            <div class="col-sm-4" style="">
+                <input maxlength="50" class="form-control" id="Company" name="Company" type="text" placeholder="请填写营业执照上的名称">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">联系人</label>
+            <div class="col-sm-4" style="">
+                <input maxlength="50" class="form-control" id="Contract" name="Contract" type="text" placeholder="联系人姓名">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label"><span style="color: red">*</span>登录名</label>
+            <div class="col-sm-4" style="">
+                <input maxlength="50" class="form-control" id="LoginName" name="LoginName" type="text" placeholder="登录名">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-4" style="">
+                <input maxlength="50" class="form-control" id="Password" name="Password" type="text" placeholder="密码">
+            </div>
+        </div>
+
+        <div class="content-row">
+            <div class="register-text-width-lg content-float"></div>
+            <div class="content-float">
+                <div id="Company_RError" class="content-row register-error-img">
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        </div>
+    </form>
+</div>
+
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}

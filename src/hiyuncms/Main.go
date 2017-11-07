@@ -11,6 +11,7 @@ import (
 	"hiyuncms/service"
 	"hiyuncms/routes"
 	"hiyuncms/config"
+	"time"
 )
 
 
@@ -47,5 +48,6 @@ func RegService(){
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	<-sig
 	fmt.Println("服务器以优雅的停止")
+	time.Sleep(2*time.Second)
 	service.UnRegService()
 }

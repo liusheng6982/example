@@ -16,3 +16,15 @@ func UserLogin(c * gin.Context)  {
 		"path":"",
 	})
 }
+
+func RegistryShow(c * gin.Context)  {
+	c.HTML(http.StatusOK, "registry.html", gin.H{
+		"path":"",
+	})
+}
+
+func Registry(c * gin.Context)  {
+	c.HTML(http.StatusOK, "registry.html", gin.H{
+		"path":"",
+	})
+}
