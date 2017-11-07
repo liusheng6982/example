@@ -49,7 +49,7 @@ func GetAllColumnsByPage(page *models.PageRequest) *models.PageResponse{
  */
 func  GetAllColumnsToShow() *[]*Column{
 	columnList := make([]*Column, 0)
-	err := models.DbSlave.Table(Column{}).Where("Show_Flag = 1").Find(&columnList)
+	err := models.DbSlave.Table(Column{}).Where("Show_Flag = 1").OrderBy("order_num asc").Find(&columnList)
 	if err != nil {
 		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
 	}
