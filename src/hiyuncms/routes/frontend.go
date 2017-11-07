@@ -38,7 +38,10 @@ func initRouteFrontend()   *gin.Engine{
 }
 
 func regFrontRoute()  {
-	FrontendRoute.GET("/published/:route", frontend.ArticlesShow)
+	columns := cms.GetAllColumnsToShow()
+	for _,column := range *columns{
+		FrontendRoute.GET( column.Url, frontend.ArticlesShow)
+	}
 	FrontendRoute.GET("/articleShow", frontend.ArticleShow)
 }
 
