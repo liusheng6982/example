@@ -8,6 +8,8 @@ import (
 	"hiyuncms/models"
 	"hiyuncms/controllers/frontend"
 	"strconv"
+	"github.com/gin-gonic/contrib/sessions"
+	"hiyuncms/config"
 )
 
 var FrontendRoute *gin.Engine
@@ -21,6 +23,12 @@ func initRouteFrontend()   *gin.Engine{
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 	engine.Use( gin.Logger() )
+	store := sessions.NewCookieStore([]byte("jsessionid"))
+	store.Options(sessions.Options{
+		MaxAge: int(config.GetInt("hiyuncms.server.frontend.session.timeout")), //30min
+		Path:   "/",
+	})
+	engine.Use( sessions.Sessions(SessionName, store) )
 	engine.SetFuncMap(template.FuncMap{
 		"loadColumn":   loadColumn,
 		"loadArticles": loadArticlesByPage,
@@ -47,9 +55,11 @@ func regFrontRoute()  {
 		FrontendRoute.GET( column.Url, frontend.ArticlesShow)
 	}
 
-	FrontendRoute.GET( "/", func(context *gin.Context) {
-		context.Redirect(http.StatusFound, indexPage)
-	})
+	if indexPage != ""  {
+		FrontendRoute.GET("/", func(context *gin.Context) {
+			context.Redirect(http.StatusFound, indexPage)
+		})
+	}
 	//FrontendRoute.GET("/published/:route", frontend.ArticlesShow)
 	FrontendRoute.GET ("/articleShow", frontend.ArticleShow)
 	FrontendRoute.GET ("/userlogin",frontend.UserLoginShow)

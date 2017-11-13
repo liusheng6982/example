@@ -1,0 +1,33 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+{{template "slider.html" .}}
+<style>
+    #li {list-style-type:none;}
+    .mycontainer{
+        margin: 20px auto;
+    }
+</style>
+<div class="yy-news">
+    <div class="container mycontainer">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="yy-news-list">
+                    <ul class="met-page-ajax">
+                        {{ $page := loadArticles .path .pageSize .pageNo }}
+                        {{range $k,$v := $page.Rows}}
+                            {{ if eq $k 0 }}
+                                {{ $article := printf "%d" $v.Id  | loadArticle }}
+                                 <p>
+                                     {{$article.Content | html}}
+                                 </p>
+                            {{end}}
+                        {{end}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    &nbsp;
+</div>
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}

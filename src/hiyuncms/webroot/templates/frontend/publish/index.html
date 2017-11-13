@@ -10,6 +10,11 @@
         padding: 10px;
     }
 
+    .mycontainer{
+        background-color: white;
+        margin: 20px auto;
+    }
+
     .dongtai-mode {
         margin: 10px;
         padding: 10px;
@@ -18,59 +23,212 @@
     .hosp{
         background-color: white;
         padding: 5px;
+        margin: 10px;
+        /*
         border-radius:6px;
         box-sizing: border-box;
         border: solid 1px #0882a1;
+        */
+        background-color:linen;
+    }
+
+    .supply{
+        background-color: white;
+        padding: 5px;
+        margin: 5px;
+        border-radius:6px;
+        box-sizing: border-box;
+        border: solid 1px #2e2aa1;
+    }
+
+    .project li a {
+        display: block;
+        border-bottom: 1px #eee dashed;
+        overflow: hidden;
+        color: #666;
+    }
+
+    .project{
+        background-color: #ffffff;
+
+    }
+
+    .project li a {
+        display: block;
+        border-bottom: 1px #eee dashed;
+        overflow: hidden;
+        color: #666;
+    }
+
+    .project li .title {
+        float: left;
+        display: table;
+        line-height: 50px;
+        vertical-align: middle;
+        margin-left: 10px;
+        width: 500px;
+        font-size: 15px;
+    }
+
+    .project li .typ {
+        float: left;
+        display: table-cell;
+        margin-left: 10px;
+        width: 100px;
+        text-align: center;
+        color: #b3b3b3;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .project li .data {
+        float: left;
+        display: table-cell;
+        margin-left: 10px;
+        width: 100px;
+        text-align: center;
+        color: #b3b3b3;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .project li .button {
+        margin-top: 8px;
+        display: table-cell;
+        color: #0955c6;
+        float: right;
+        border: 0px #93bcf4 solid;
+        border-radius: 3px;
+        padding: 3px 8px;
+        display: block;
     }
 
     .hosp-title{
-        font-size: 16px;
+        font-size: 48px;
     }
 </style>
 <section class="yy-news">
-    <div class="container-fluid">&nbsp;
-            &nbsp;
-    </div>
-    <div class="container">
+    <div class="container mycontainer">
+
+        <div class="col-md-12">
+            <div class="row dongtai-title">
+                项目动态
+            </div>
+
+            <div class="row dongtai-mode">
+                <div class="col-md-12 ">
+                    <ul class="project">
+                    <li>
+                        <a href="" title="">
+                            <div class="title">
+                                <div class="title">【XXXX项目】招标公告...</div>
+                            </div>
+                            <div class="typ">招标方式<br><span>公开招标</span></div>
+                            <div class="data">报名截止时间<br>
+                                <span>
+				                       2017-09-12
+							 </span>
+                            </div>
+                            <div class="button">查看详情</div>
+                        </a>
+                    </li>
+
+                        <li>
+                            <a href="" title="">
+                                <div class="title">
+                                    <div class="title">【XXXX项目】招标公告...</div>
+                                </div>
+                                <div class="typ">招标方式<br><span>公开招标</span></div>
+                                <div class="data">报名截止时间<br>
+                                    <span>
+				                       2017-09-12
+							 </span>
+                                </div>
+                                <div class="button">查看详情</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="" title="">
+                                <div class="title">
+                                    <div class="title">【XXXX项目】招标公告...</div>
+                                </div>
+                                <div class="typ">招标方式<br><span>公开招标</span></div>
+                                <div class="data">报名截止时间<br>
+                                    <span>
+				                       2017-09-12
+							 </span>
+                                </div>
+                                <div class="button">查看详情</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="" title="">
+                                <div class="title">
+                                    <div class="title">【XXXX项目】招标公告...</div>
+                                </div>
+                                <div class="typ">招标方式<br><span>公开招标</span></div>
+                                <div class="data">报名截止时间<br>
+                                    <span>
+				                       2017-09-12
+							 </span>
+                                </div>
+                                <div class="button">查看详情</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
         <div class="col-md-12">
             <div class="row dongtai-title">
                 医院动态
             </div>
-            <div class="row dongtai-mode">
-
-                <div class="col-md-6 hosp">
-                    <span class="hosp-title"><img height="80px" src="http://42.202.144.67:4489/Resource/images/biz/index/qingdaobeihai.png"></span>
-                    <div style="position:static">
-                        <div class="col-md-4" style="display:inline">采购：5</div>
-                        <div class="col-md-4" style="display:inline">询价：5</div>
-                        <div class="col-md-4" style="display:inline">剩余物资：5</div>
-                    </div>
-                </div>
-                <div class="col-md-6 hosp">
-                    <span class="hosp-title"><img height="80px" src="http://42.202.144.67:4489/Resource/images/biz/index/qingdaobeihai.png"></span>
-                    <div style="position:static">
-                        <div class="col-md-4" style="display:inline">采购：5</div>
-                        <div class="col-md-4" style="display:inline">询价：5</div>
-                        <div class="col-md-4" style="display:inline">剩余物资：5</div>
-                    </div>
-                </div>
-            </div>
 
             <div class="row dongtai-mode">
-                <div class="col-md-6 hosp">
-                    <span class="hosp-title"><img height="80px" src="http://42.202.144.67:4489/Resource/images/biz/index/qingdaobeihai.png"></span>
+                <div class="col-md-6 ">
+                    <div class="hosp col-md-12">
+                        <span class="hosp-title"><img src="">XXXX第一人民医院</span>
+                        <div style="position:static">
+                            <div class="col-md-4" style="display:inline">采购：5</div>
+                            <div class="col-md-4" style="display:inline">询价：5</div>
+                            <div class="col-md-4" style="display:inline">剩余物资：5</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="hosp col-md-12">
+                        <span class="hosp-title"><img height="78px" src="http://42.202.144.67:4489/Resource/images/biz/index/qingdaobeihai.png"></span>
+                        <div style="position:static">
+                            <div class="col-md-4" style="display:inline">采购：5</div>
+                            <div class="col-md-4" style="display:inline">询价：5</div>
+                            <div class="col-md-4" style="display:inline">剩余物资：5</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="hosp col-md-12">
+                    <span class="hosp-title"><img height="78px" src="http://42.202.144.67:4489/Resource/images/biz/index/qingdaobeihai.png"></span>
                     <div style="position:static">
                         <div class="col-md-4" style="display:inline">采购：5</div>
                         <div class="col-md-4" style="display:inline">询价：5</div>
                         <div class="col-md-4" style="display:inline">剩余物资：5</div>
                     </div>
+                    </div>
                 </div>
-                <div class="col-md-6 hosp">
-                    <span class="hosp-title"><img height="80px" src="http://42.202.144.67:4489/Resource/images/biz/index/qingdaobeihai.png"></span>
+                <div class="col-md-6">
+                    <div class="hosp col-md-12">
+                    <span class="hosp-title"><img height="78px" src="http://42.202.144.67:4489/Resource/images/biz/index/qingdaobeihai.png"></span>
                     <div style="position:static">
                         <div class="col-md-4" style="display:inline">采购：5</div>
                         <div class="col-md-4" style="display:inline">询价：5</div>
                         <div class="col-md-4" style="display:inline">剩余物资：5</div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -81,22 +239,98 @@
             <div class="row dongtai-title">
                 品质供应商
             </div>
-            <div class="row dongtai-mode">
-
-                <div class="col-md-6">1</div>
-                <div class="col-md-6">2</div>
-            </div>
-
-
 
             <div class="row dongtai-mode">
-                <div class="col-md-6">1</div>
-                <div class="col-md-6">2</div>
+                <div class="col-md-6 ">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="supply col-md-12">
+                        <span class="hosp-title">XXXXXXXX1供应商</span>
+
+                    </div>
+                </div>
             </div>
 
         </div>
 
     </div>
+    &nbsp;
 </section>
 {{template "bottom.html" .}}
 {{template "footerjs.html" .}}

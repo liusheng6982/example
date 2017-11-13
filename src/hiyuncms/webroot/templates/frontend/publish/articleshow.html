@@ -5,22 +5,26 @@
     li {list-style-type:none;}
 
     .container{
-        
+        margin: 20px auto;
     }
 </style>
 <section class="yy-news">
     {{ $article := loadArticle .articleId }}
-<div class="container">
+    <div class="container">
 
-    <div class="col-md-10 col-md-offset-1 yy-news-body" style="background-color: white">
-           <div style="align-content: center;margin: 0 auto;width: 300px">
-            <h3>
-               {{ $article.Title }}
-           </h3>
-           </div>
-           {{ $article.Content | html }}
+        <div class="col-md-10 col-md-offset-1 yy-news-body" style="background-color: white">
+               <div style="align-content: center;margin: 0 auto;width: 300px;font-size: x-large">
+                   {{ $article.Title }}
+               </div>
+               <div style="margin-bottom: 10px">
+                   日期：{{ $article.Createtime}}
+               </div>
+                <p>
+               {{ $article.Content | html }}
+                </p>
+        </div>
     </div>
-</div>
+    &nbsp;
 </section>
 {{template "bottom.html" .}}
 {{template "footerjs.html" .}}
