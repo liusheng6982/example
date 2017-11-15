@@ -50,7 +50,7 @@
 												验证码：
 												<label class="block input-icon input-icon-right">
 													<input type="text" class="form-control" name="vcode" placeholder="验证码" />
-													<img src="/captcha">
+													<img id="captcha-img" src="/captcha">&nbsp;&nbsp;<span id="refresh-button" style="position:relative;margin-top: -5px;cursor: default">刷新</span>
 												</label>
 
 
@@ -124,6 +124,10 @@
 	 $("#login-button").click(function () {
 		$("form").submit()
      })
+        $("#refresh-button").click(function () {
+            $("#captcha-img").attr("src", "/captcha?" + Date.now())
+        })
+
 	});
 
 

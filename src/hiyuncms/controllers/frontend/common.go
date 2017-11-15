@@ -21,6 +21,7 @@ const(
 type UserSession struct {
 	User    yy.YyUser
 	Company yy.YyCompany
+	AccessToken string
 }
 
 func GetSessionInfo(c * gin.Context)  *UserSession{

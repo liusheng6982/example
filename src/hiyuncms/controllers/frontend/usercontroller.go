@@ -12,6 +12,8 @@ import (
 	"io"
 	"github.com/gin-gonic/contrib/sessions"
 	"encoding/json"
+	"github.com/satori/go.uuid"
+	"hiyuncms/redis"
 )
 
 func UserLoginShow(c * gin.Context)  {
@@ -49,12 +51,14 @@ func UserLogin(c * gin.Context)  {
 		//if admin.LoginPassword == passwd {
 		log.Printf("登录成功！\n")
 
-
-		bus := UserSession{User:*admin, Company:*company}
+		token := fmt.Sprintf("%s-%s",uuid.NewV4(),uuid.NewV4)
+		bus := UserSession{User:*admin, Company:*company, AccessToken:token}
 		session := sessions.Default(c)
 		jsonBytes,_ := json.Marshal(bus)
 		session.Set(FRONT_USER_SESSION,  string(jsonBytes) )
 		session.Save()
+
+		redis.SetToken(token, &bus)
 
 		c.Redirect(http.StatusFound, "/")
 	} else{
