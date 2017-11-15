@@ -145,3 +145,7 @@ func Logout(c *gin.Context)  {
 	ClearSessionInfo(c)
 	c.Redirect(http.StatusFound, "/")
 }
+
+func Verify(c *gin.Context)  {
+
+}
