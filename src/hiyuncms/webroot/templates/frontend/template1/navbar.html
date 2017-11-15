@@ -9,12 +9,18 @@
                 </div>
             </li>
             <li class="sitenav-item sitenav-login">
+                {{ $user := .sessionInfo.User }}
+
+                        {{if eq "" $user.UserName }}
                 <div class="sitenav-item-bd js_nologin">
                     <a rel="nofollow" href="javascript:javascript:location.href='/userlogin';" id="js_login_btn" >登录</a>
                 </div>
-                <div class="sitenav-item-bd js_login" style="display:none;">
-                    <a rel="nofollow" href="#" target="_blank" class="link-name" id="js_user_name2"></a>
+                        {{else}}
+                <div class="sitenav-item-bd js_login" style="display:block;">
+                    <a rel="nofollow" href="#" target="_blank" class="link-name" id="js_user_name2">{{$user.UserName}}</a>
                 </div>
+                        {{end}}
+
             </li>
             <li class="sitenav-item sitenav-register">
                 <div class="sitenav-item-bd js_nologin">
@@ -32,6 +38,7 @@
                     <a href="" target="_blank">我的<i class="arr"></i></a>
                     <div class="sitenav-subcon">
                         <div class="subcon-bd">
+                            {{if eq "" $user.UserName }}
                             <div class="js_nologin">
                                 <div class="sitenav-userimg">
                                     <img src="" alt="">
@@ -47,19 +54,21 @@
                                         <span class="userinfo-item"><a rel="nofollow" href="" target="_blank" ></a></span>
                                     </p>
                                 </div>
+
                             </div>
-                            <div class="js_login" style="display:none">
+                            {{else}}
+                            <div class="js_login" style="display:block">
                                 <div class="sitenav-userimg">
                                     <img src="" alt="" id="js_user_img">
                                 </div>
                                 <div class="sitenav-userinfo">
-                                    <p class="userinfo-name"><a href="" id="js_user_name" target="_blank"></a></p>
+                                    <p class="userinfo-name"><a href="" id="js_user_name" target="_blank">{{$user.UserName}}</a></p>
                                     <p class="userinfo-item-con">
                                         <span class="userinfo-item"><a href="" target="_blank" ><em id="js_user_blance">0</em></a></span>
                                         <!--<span class="userinfo-item">积点<a href="#" target="_blank"><em id="js_user_point">0</em></a></span>-->
                                     </p>
                                     <p class="userinfo-item-con">
-                                        <span class="userinfo-item"><a rel="nofollow" href="" target="_blank" ></a></span>
+                                        <span class="userinfo-item"><a rel="nofollow" href="/logout" target="_blank" >注销</a></span>
                                         <span class="userinfo-item"><a rel="nofollow" href="" target="_blank" ></a></span>
                                     </p>
                                     <p class="userinfo-item-con">
@@ -68,6 +77,7 @@
                                     </p>
                                 </div>
                             </div>
+                            {{end}}
                         </div>
                     </div>
                 </div>

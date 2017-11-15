@@ -1,32 +1,4 @@
-/**
- * 鍔熻兘璇存槑:		杈撳叆楠岃瘉
- * @author:		vivy <lizhizyan@qq.com>
- * @time:		2015-9-25 16:15:30
- * @version:		V1.1.0
- * @浣跨敤鏂规硶:
- * <input class="required" type="text" data-valid="isNonEmpty||isEmail" data-error="email涓嶈兘涓虹┖||閭鏍煎紡涓嶆纭�" id="" />
- * 1銆侀渶瑕侀獙璇佺殑鍏冪礌閮藉姞涓娿€恟equired銆戞牱寮�
- * 2銆丂data-valid		楠岃瘉瑙勫垯锛岄獙璇佸涓鍒欎腑闂寸敤銆恷|銆戦殧寮€锛屾洿澶氶獙璇佽鍒欙紝鐪媟ules鍜宺ule锛屽悗闈㈤亣鍒板彲缁х画澧炲姞
- * 3銆丂data-error		瑙勫垯瀵瑰簲鐨勬彁绀轰俊鎭紝涓€涓€瀵瑰簲
- *
- * @js璋冪敤鏂规硶锛�
- * verifyCheck({
-*  	formId:'verifyCheck',		<楠岃瘉formId鍐卌lass涓簉equired鐨勫厓绱�
-*	onBlur:null,				<琚獙璇佸厓绱犲け鍘荤劍鐐圭殑鍥炶皟鍑芥暟>
-*	onFocus:null,				<琚獙璇佸厓绱犺幏寰楃劍鐐圭殑鍥炶皟鍑芥暟>
-*	onChange: null,				<琚獙璇佸厓鍊兼敼鍙樼殑鍥炶皟鍑芥暟>
-*	successTip: true,			<楠岃瘉閫氳繃鏄惁鎻愮ず>
-*	resultTips:null,			<鏄剧ず鎻愮ず鐨勬柟娉曪紝鍙傛暟obj[褰撳墠鍏冪礌],isRight[鏄惁姝ｇ‘鎻愮ず],value[鎻愮ず淇℃伅]>
-*	clearTips:null,				<娓呴櫎鎻愮ず鐨勬柟娉曪紝鍙傛暟obj[褰撳墠鍏冪礌]>
-*	code:true					<鏄惁闇€瑕佹墜鏈哄彿鐮佽緭鍏ユ帶鍒堕獙璇佺爜鍙婄偣鍑婚獙璇佺爜鍊掕鏃�,鐩墠鍥哄畾鎵嬫満鍙风爜ID涓簆hone,楠岃瘉鐮佷袱涓爣绛緄d鍒嗗埆涓簍ime_box锛宺esend,濉啓楠岃瘉妗唅d涓篶ode>
-*	phone:true					<鏀瑰彉鎵嬫満鍙锋椂鏄惁鎺у埗楠岃瘉鐮�>
-* })
- * $("#submit-botton").click(function(){		<鐐瑰嚮鎻愪氦鎸夐挳鏃堕獙璇�>
-*  	if(!common.verify.btnClick()) return false;
-* })
- *
- * 璇︾粏浠ｇ爜璇风湅register.src.js
- */
+
 (function($) {
     var h, timerC = 60,
         opt;

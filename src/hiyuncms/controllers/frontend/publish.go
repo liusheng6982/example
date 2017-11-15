@@ -25,6 +25,7 @@ func ArticlesShow( c *gin.Context )  {
 		"path":path,
 		"pageNo":pageNo,
 		"pageSize":pageSize ,
+		"sessionInfo":GetSessionInfo(c),
 	})
 }
 
@@ -33,5 +34,6 @@ func ArticleShow( c *gin.Context )  {
 	c.HTML(http.StatusOK, "articleshow.html", gin.H{
 		"articleId":articleId,
 		"path":"",
+		"sessionInfo":GetSessionInfo(c),
 	})
 }

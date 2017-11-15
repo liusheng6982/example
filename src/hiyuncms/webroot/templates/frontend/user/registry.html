@@ -2,7 +2,7 @@
 
 <link href="/static/userregistry/code.css" rel="stylesheet">
 
-<script src="/static/userregistry/registry.js"></script>
+
 
 {{template "navbar.html" .}}
 <div class="login-box f-mt10 f-pb50">
@@ -29,7 +29,7 @@
                 </ul>
             </div>
             <div class="reg-box" id="verifyCheck" style="margin-top:20px;">
-                <form method="POST" action="/registry">
+                <form id="reg-form" method="POST">
                 <div class="part1" style="display: {{if eq .regsuccess true}}none{{end}}">
                     <div class="item col-xs-12">
                         <span class="intelligent-label f-fl"><b class="ftx04">*</b>公司名称：</span>
@@ -118,29 +118,79 @@
 
                 <div class="part2" style="display:none">
                     <!--div class="alert alert-info" style="width:700px">短信已发送至您手机，请输入短信中的验证码，确保您的手机号真实有效。</div-->
-                    <div class="item col-xs-12 f-mb10" style="height:auto">
-                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>会员类型：</span>
-                        <div style="display:inline">
-                            <label><input type="checkbox" value="1"  name="company-type" checked="">生产商</label>&nbsp;
-                            <label><input type="checkbox" value="2"  name="company-type">代理商</label>&nbsp;
-                            <label><input type="checkbox" value="3"  name="company-type">医院</label>&nbsp;
-                        </div>&nbsp;&nbsp;
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>公司类型：</span>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="control-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="company-type" type="checkbox" value="1" class="ace">
+                                        <span class="lbl">生产商</span>
+                                    </label>
+                                </div>
 
-                    </div>
-                    <div class="item col-xs-12">医院原供应商升级包
-                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>会员类型：</span>
-                        <div class="f-fl item-ifo">
-                            <div style="margin: 5px auto">
-                                <label><input type="checkbox" value="3"  name="viptype" checked="">&nbsp;医院原供应商升级包</label>
-                                <label><input type="checkbox" value="4"  name="viptype">合格供应商</label>&nbsp;&nbsp;&nbsp;
-                                <label><input type="checkbox" value="4"  name="viptype">&nbsp;优选供应商</label>&nbsp;&nbsp;&nbsp;
-                            </div>&nbsp;&nbsp;
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="company-type" type="checkbox" value="2" class="ace">
+                                        <span class="lbl">代理商</span>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="company-type" value="3" class="ace ace-checkbox-2" type="checkbox">
+                                        <span class="lbl">医院</span>
+                                    </label>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>三证合一：</span>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="control-group">
+                              <input type="file" name="license-img" id="license-img">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>会员类型：</span>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="vip-type" id="optionsRadios1" value="1" checked>
+                                    医院原供应商升级包
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="vip-type" id="optionsRadios2" value="2">
+                                    合格供应商
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="vip-type" id="optionsRadios3" value="3">
+                                    优选供应商
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="item col-xs-12">
-                        <span class="intelligent-label f-fl">&nbsp;</span>
-                        <div class="f-fl item-ifo">
-                            <a href="javascript:;" class="btn btn-blue f-r3" id="btn_part2">注册</a>
+                        <div class="col-xs-12">
+                            <a href="javascript:;" class="btn btn-blue f-r3" id="btn_part2-0">上一步</a>&nbsp;&nbsp;<a href="javascript:;" class="btn btn-blue f-r3" id="btn_part2">注册</a>
                         </div>
                     </div>
                 </div>
@@ -176,8 +226,8 @@
                     </div>
                 </div>
                 <div class="part4 text-center" style="display:none">
-                    <h3>恭喜cz82465，您已注册成功，现在开始您的投资之旅吧！</h3>
-                    <p class="c-666 f-mt30 f-mb50">页面将在 <strong id="times" class="f-size18">10</strong> 秒钟后，跳转到 <a href="http://www.17sucai.com/" class="c-blue">用户中心</a></p>
+                    <h3>恭喜您已注册成功,请您登录！</h3>
+                    <p class="c-666 f-mt30 f-mb50">页面将在 <strong id="times" class="f-size18">10</strong> 秒钟后，跳转到 <a href="/userlogin" class="c-blue">登录页面</a></p>
                 </div>
             </div>
         </div>
@@ -196,30 +246,75 @@
 
 {{template "bottom.html" .}}
 {{template "footerjs.html" .}}
+
+<script src="/static/plugin/ajaxfileupload.js"></script>
 <script>
     jQuery(function(){
 
         //第一页的确定按钮
         $("#btn_part1").click(function(){
-            alert( "aaaa");
-            //if(!verifyCheck._click()) return;
             $(".part1").hide();
             $(".part2").show();
             $(".step li").eq(1).addClass("on");
         });
+
+        $("#btn_part2-0").click(function () {
+            $(".part1").show();
+            $(".part2").hide();
+        });
         //第二页的确定按钮
         $("#btn_part2").click(function(){
             //if(!verifyCheck._click()) return;
+            var chk_value =[];
+            $('input[name="company-type"]:checked').each(function(){
+                chk_value.push($(this).val());
+            });
+            if( chk_value.length == 0 ){
+                alert("其选择公司类型！")
+                return;
+            }
 
-            $("form").submit();
-            $(".part2").hide();
+            var boj = {
+                        CompanyName  : $("input[name='CompanyName']").val(),
+                        UserName     : $("input[name='UserName']").val(),
+                        UserPhone    : $("input[name='UserPhone']").val(),
+                        UserPassword : $("input[name='UserPassword']").val(),
+                        company_type : chk_value,
+                        vip_type     : $("input[name='vip-type']:checked").val()
+            }
+
+            if( boj.CompanyName == "" ){
+                alert("公司名称必填！")
+                return;
+            }
+
+            if( boj.UserName == "" ){
+                alert("UserName！")
+                return;
+            }
 
 
-
-
-
-
-
+            $.ajaxFileUpload({
+                url:"registry",
+                secureuri:false,
+                fileElementId:$("input[name='license-img']").attr("id"),
+                dataType:'json',
+                data:boj,
+                type:'POST',
+                success:function(data){
+                    if(data.regsuccess){
+                        $(".part2").hide();
+                        $(".part4").show();
+                        $(".step li").eq(2).addClass("on");
+                    }
+                    else {
+                        alert(data.msg)
+                    }
+                },
+                error:function(data){
+                    alert("error"+data.msg);
+                }
+            });
             //$(".part3").show();
         });
         //第三页的确定按钮

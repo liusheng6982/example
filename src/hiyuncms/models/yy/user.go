@@ -8,9 +8,9 @@ import (
 type YyUser struct {
 	Id            	  int64  `xorm:"pk BIGINT autoincr" json:"id"`
 	UserName 	      string `xorm:"varchar(25)"`
-	UserPhone             string `xomr:"varchar(20)"`
+	UserPhone         string `xomr:"varchar(20) unique"`
 	//UserLoginName         string `xorm:"varchar(25) notnull unique"`
-	UserPassword     string `xorm:"varchar(64) null" json:"-"`
+	UserPassword      string `xorm:"varchar(64) null" json:"-"`
 	CompanyId 		  int64  `xorm:"BIGINT"`
 }
 
@@ -18,6 +18,15 @@ type YyUser struct {
 func init()  {
 	err := models.DbMaster.Sync2( YyUser{})
 	log.Println( "init table yy_user ", models.GetErrorInfo(err))
+}
+
+func GetUserByPhone(phone string ) *YyUser {
+	if  phone == "" {
+		return &YyUser{}
+	}
+	user := YyUser{ UserPhone: phone}
+	models.DbSlave.Get(&user)
+	return &user
 }
 
 

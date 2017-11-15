@@ -64,6 +64,8 @@ func regFrontRoute()  {
 	FrontendRoute.GET ("/articleShow", frontend.ArticleShow)
 	FrontendRoute.GET ("/userlogin",frontend.UserLoginShow)
 	FrontendRoute.POST("/userlogin",frontend.UserLogin)
+	FrontendRoute.GET ("/logout", frontend.Logout)
+	FrontendRoute.GET ("/captcha", frontend.Captcha)        //验证码
 
 	FrontendRoute.GET ("/registry",frontend.RegistryShow)
 	FrontendRoute.POST("/registry",frontend.Registry)
