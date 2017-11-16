@@ -9,7 +9,7 @@
                 </div>
             </li>
             <li class="sitenav-item sitenav-login">
-                {{ $user := .sessionInfo.User }}
+                {{ $user := .sessionInfo }}
 
                         {{if eq "" $user.UserName }}
                 <div class="sitenav-item-bd js_nologin">

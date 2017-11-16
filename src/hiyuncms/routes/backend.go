@@ -43,7 +43,9 @@ func MiddleWare() gin.HandlerFunc {
 }
 
 func initRouteBackend() *gin.Engine {
-	//gin.SetMode(gin.ReleaseMode)
+	if !config.GetBool("hiyuncms.application.debug") {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	engine := gin.New()
 
 	engine.Use(gin.Recovery())

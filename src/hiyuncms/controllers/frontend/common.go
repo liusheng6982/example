@@ -10,7 +10,6 @@ import (
 	"reflect"
 	"log"
 	"encoding/json"
-	"hiyuncms/models/yy"
 )
 
 const(
@@ -19,9 +18,13 @@ const(
 	FRONT_CAPTCHA_SESSION = "hiyumcms.front.captcha"
 )
 type UserSession struct {
-	User    yy.YyUser
-	Company yy.YyCompany
-	AccessToken string
+	UserId            int64  		`json:"userId"`
+	UserName 	      string 		`json:"userName"`
+	UserPhone         string 		`json:"userPhone"`
+	CompanyId 		  int64  		`json:"companyId"`
+	CompanyName       string     	`json:"companyName"`
+	AccessToken 	  string		`json:"accessToken"`
+	Success 		  bool          `json:"success"`
 }
 
 func GetSessionInfo(c * gin.Context)  *UserSession{

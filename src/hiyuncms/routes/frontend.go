@@ -20,15 +20,18 @@ func init()  {
 }
 
 func initRouteFrontend()   *gin.Engine{
+	if !config.GetBool("hiyuncms.application.debug") {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 	engine.Use( gin.Logger() )
-	store := sessions.NewCookieStore([]byte("jsessionid"))
+	store := sessions.NewCookieStore([]byte("jsessionid_front_session"))
 	store.Options(sessions.Options{
 		MaxAge: int(config.GetInt("hiyuncms.server.frontend.session.timeout")), //30min
 		Path:   "/",
 	})
-	engine.Use( sessions.Sessions(SessionName, store) )
+	engine.Use( sessions.Sessions("jsessionid", store) )
 	engine.SetFuncMap(template.FuncMap{
 		"loadColumn":   loadColumn,
 		"loadArticles": loadArticlesByPage,
@@ -66,6 +69,7 @@ func regFrontRoute()  {
 	FrontendRoute.POST("/userlogin",frontend.UserLogin)
 	FrontendRoute.GET ("/logout", frontend.Logout)
 	FrontendRoute.GET ("/captcha", frontend.Captcha)        //验证码
+	FrontendRoute.GET ("/verifyToken", frontend.Verify)        //验证码
 
 	FrontendRoute.GET ("/registry",frontend.RegistryShow)
 	FrontendRoute.POST("/registry",frontend.Registry)

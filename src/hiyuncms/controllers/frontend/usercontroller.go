@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/contrib/sessions"
 	"encoding/json"
 	"github.com/satori/go.uuid"
-	"hiyuncms/redis"
+	"hiyuncms/config"
 )
 
 func UserLoginShow(c * gin.Context)  {
@@ -27,7 +27,6 @@ func UserLogin(c * gin.Context)  {
 	vcode := c.PostForm("vcode")
 	session := sessions.Default(c)
 	sessionCode := session.Get( FRONT_CAPTCHA_SESSION )
-	log.Printf("%s----------%v", vcode, sessionCode)
 	if vcode != sessionCode {
 		c.HTML(http.StatusOK, "login.html",gin.H{
 			"msg":"验证码错误！",
@@ -47,18 +46,32 @@ func UserLogin(c * gin.Context)  {
 	if admin.UserPassword == passwdMd5 {
 
 		company := yy.GetById( admin.CompanyId )
-
-		//if admin.LoginPassword == passwd {
-		log.Printf("登录成功！\n")
-
-		token := fmt.Sprintf("%s-%s",uuid.NewV4(),uuid.NewV4)
-		bus := UserSession{User:*admin, Company:*company, AccessToken:token}
+		token := fmt.Sprintf("%s-%s",uuid.NewV4(), uuid.NewV4() )
+		bus := UserSession{
+			UserId:admin.Id,
+			UserPhone:admin.UserPhone,
+			UserName:admin.UserName,
+			AccessToken:token,
+			Success:true,
+			CompanyId:company.Id,
+			CompanyName:company.CompanyName,
+			}
 		session := sessions.Default(c)
 		jsonBytes,_ := json.Marshal(bus)
 		session.Set(FRONT_USER_SESSION,  string(jsonBytes) )
 		session.Save()
 
-		redis.SetToken(token, &bus)
+		cookie := &http.Cookie{
+			Name:     "accessToken",
+			Value:    token,
+			Domain:	  config.GetValue("cookie.domain"),
+			Path:     "/",
+			MaxAge:   config.GetInt("hiyuncms.server.frontend.session.timeout"),
+			HttpOnly: true,
+		}
+		http.SetCookie(c.Writer, cookie)
+
+		SetToken(token, &bus)
 
 		c.Redirect(http.StatusFound, "/")
 	} else{
@@ -147,5 +160,27 @@ func Logout(c *gin.Context)  {
 }
 
 func Verify(c *gin.Context)  {
+	type  Verify struct{
+		AppId string
+		AccessToken string
+	}
 
+	verify := Verify{}
+	c.Bind( &verify )
+	if verify.AppId != config.GetValue("SSO") {
+		c.JSON(http.StatusOK, gin.H{
+			"success":false,
+			"msg":"AppId不正确，没有权限访问！",
+		})
+	} else {
+		sessionUser := GetToken( verify.AccessToken )
+		if sessionUser != nil && sessionUser.UserPhone != "" {
+			c.JSON(http.StatusOK, sessionUser)
+		} else{
+			c.JSON(http.StatusOK, gin.H{
+				"success": false,
+				"msg":     "token已失效！",
+			})
+		}
+	}
 }
