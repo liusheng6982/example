@@ -7,8 +7,8 @@ import (
 )
 
 type YyCompany struct {
-	Id              int64      `xorm:"pk BIGINT autoincr"`
-	CompanyName     string     `xorm:"varchar(50) notnull unique"`
+	Id              		int64      `xorm:"pk BIGINT autoincr"`
+	CompanyName     		string     `xorm:"varchar(50) notnull unique"`
 
 	CompanyType             string 		`xorm:"varchar(50)"`
 	CompanyProvince         string      `xorm:"varchar(30)"`
@@ -37,9 +37,6 @@ func CompanyReg(company *YyCompany, user *YyUser) (error,string){
 
 	msg := "success"
 	session := models.DbMaster.NewSession()
-
-
-
 	defer session.Close()
 	// add Begin() before any action
 	err := session.Begin()

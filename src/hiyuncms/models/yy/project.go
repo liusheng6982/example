@@ -7,9 +7,10 @@ import (
 
 type YyProject struct {
 	Id            int64       `xorm:"pk BIGINT autoincr"`
-	CompanyName          string      `xorm:"varchar(50) notnull"`
-    Content       string      `xorm:"varhcar(2000)"`
-	StartDate     models.Time `xorm:"DateTime"`
+	ProjectName   string      `xorm:"varchar(100) notnull"`
+	ProjectNo	  string 	  `xorm:"varchar(50)"`
+	ProjectType   string 	  `xorm:"varhcar(20)"`
+
 	ExpiredDate   models.Date `xorm:"DateTime"`
 	CompanyId	  int64       `xorm:"BIGINT"`
 }
