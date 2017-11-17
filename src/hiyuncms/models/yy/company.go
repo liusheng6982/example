@@ -38,7 +38,7 @@ func CompanyReg(company *YyCompany, user *YyUser) (error,string){
 	msg := "success"
 	session := models.DbMaster.NewSession()
 	defer session.Close()
-	// add Begin() before any action
+	//add Begin() before any action
 	err := session.Begin()
 	if err != nil {
 		return err, ""
