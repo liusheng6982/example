@@ -1,7 +1,11 @@
 package yy
 
+import "hiyuncms/models"
 
 type  YyTradeInfo struct{
-	ComapnyId string `xorm:"varchar(20)"`
+	CompanyId     string      `xorm:"varchar(20)"`
+
+	TradeDate     models.Date  `xorm:"datetime"`
+	TradeAmount   float64     `xorm:"double"`
 
 }

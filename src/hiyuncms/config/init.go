@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/Unknwon/goconfig"
 	"fmt"
+	"log"
 )
 
 var cfg * goconfig.ConfigFile
@@ -18,17 +19,26 @@ func init()  {
 }
 
 func GetValue(key string) (string) {
-	stringValue, _ := cfg.GetValue(goconfig.DEFAULT_SECTION, key)
+	stringValue, err := cfg.GetValue(goconfig.DEFAULT_SECTION, key)
+	if err != nil {
+		log.Printf("读取配置%s出错%s\n", key, err.Error())
+	}
 	return stringValue
 }
 
 func GetInt(key string)(int)  {
-	intValue, _ := cfg.Int(goconfig.DEFAULT_SECTION, key)
+	intValue, err := cfg.Int(goconfig.DEFAULT_SECTION, key)
+	if err != nil {
+		log.Printf("读取配置%s出错%s\n", key, err.Error())
+	}
 	return intValue
 }
 
 func GetBool(key string)(bool)  {
-	boolValue, _ := cfg.Bool(goconfig.DEFAULT_SECTION, key)
+	boolValue, err := cfg.Bool(goconfig.DEFAULT_SECTION, key)
+	if err != nil {
+		log.Printf("读取配置%s出错%s\n", key, err.Error())
+	}
 	return boolValue
 }
 

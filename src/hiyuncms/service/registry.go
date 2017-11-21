@@ -51,7 +51,7 @@ func getServiceId() string {
 }
 
 func isRegistry() bool {
-	return config.GetBool("consul.server.registry.registry")
+	return config.GetBool("consul.server.registry")
 }
 
 func UnRegService() {

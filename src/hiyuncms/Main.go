@@ -22,24 +22,30 @@ func main() {
 }
 
 func runBackendServer()  {
-	bServer :=func () {
-		err := http.ListenAndServe(fmt.Sprintf(":%d", config.GetInt("hiyuncms.server.backend.port")), routes.BackendRoute)
-		if err != nil {
-			fmt.Printf("init runBackendServer error%s\n", err)
+	if config.GetBool("hiyuncms.server.backend.startup") {
+		bServer := func() {
+			err := http.ListenAndServe(fmt.Sprintf(":%d", config.GetInt("hiyuncms.server.backend.port")), routes.BackendRoute)
+			if err != nil {
+				fmt.Printf("init runBackendServer error%s\n", err)
+			}
 		}
+
+		go bServer()
 	}
-	go bServer()
 }
 
 
 func runFrontendServer(){
-	fServer :=func (){
-		err := http.ListenAndServe(fmt.Sprintf(":%d", config.GetInt("hiyuncms.server.frontend.port")), routes.FrontendRoute)
-		if err != nil {
-			fmt.Printf("%c[0;40;31m%s%s%c[0m\n", 0x1B,  "init runFrontendServer error:",err, 0x1B)
+	if config.GetBool("hiyuncms.server.frontend.startup") {
+		fServer := func() {
+			err := http.ListenAndServe(fmt.Sprintf(":%d", config.GetInt("hiyuncms.server.frontend.port")), routes.FrontendRoute)
+			if err != nil {
+				fmt.Printf("%c[0;40;31m%s%s%c[0m\n", 0x1B, "init runFrontendServer error:", err, 0x1B)
+			}
 		}
+
+		go fServer()
 	}
-	go fServer()
 }
 
 func RegService(){
