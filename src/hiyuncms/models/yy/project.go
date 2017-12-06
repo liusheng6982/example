@@ -6,7 +6,7 @@ import (
 )
 
 type YyPurchase struct {
-	Id             int64       `xorm:"pk BIGINT autoincr"`
+	Id             int64       `xorm:"pk BIGINT autoincr" json:"id"`
 	PurchaseName   string      `xorm:"varchar(100) notnull"`
 	PurchaseNo     string      `xorm:"varchar(50)"`
 	PurchaseType   string      `xorm:"varchar(20)"` //合格供应商，定向，公开
@@ -62,4 +62,16 @@ func init()  {
 
 	err = models.DbMaster.Sync2( YyInviteTender{} )
 	log.Println( "init table yy_invite_tender ", models.GetErrorInfo(err))
+}
+
+func GetAllYyPurchaseByPage(page *models.PageRequest) * models.PageResponse  {
+	purchaseList := make([]*YyPurchase, 0)
+	err := models.DbSlave.Table(YyPurchase{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&purchaseList)
+	if err != nil {
+		log.Printf("获取YyPurchase数据:%s", models.GetErrorInfo(err))
+	}
+
+	records,_:= models.DbSlave.Table(YyPurchase{}).Count(YyPurchase{})
+	pageResponse := models.InitPageResponse(page, purchaseList, records)
+	return pageResponse
 }
