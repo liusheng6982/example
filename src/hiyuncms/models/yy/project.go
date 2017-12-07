@@ -32,11 +32,11 @@ type YyInviteTender  struct {
 	ProjectName    string      `xorm:"varchar(100) notnull"`
 	ProjectNo      string      `xorm:"varchar(50)"`
 	Type           string      `xorm:"varchar(20)"` //合格供应商，定向，公开
-	Contact	   	   string      ``
-	ContactPhone   string 		``
-	SubmitTenderEndTime models.Date
-	OpenTenderTime     models.Date
-	TenderDocument		string  ``
+	Contact	   	   string      `xorm:"varhcar(30)"`
+	ContactPhone   string 	   `xorm:"varhcar(30)"`
+	SubmitTenderEndTime models.Date `xorm:"DateTime"`
+	OpenTenderTime     models.Date  `xorm:"DateTime"`
+	TenderDocument		string      `xorm:"varhcar(130)"`
 
 
 	ProjectContent string      `xorm:"varchar(2000)"`
@@ -62,6 +62,19 @@ func init()  {
 
 	err = models.DbMaster.Sync2( YyInviteTender{} )
 	log.Println( "init table yy_invite_tender ", models.GetErrorInfo(err))
+}
+
+
+func GetAllInviteTenderByPage(page *models.PageRequest) * models.PageResponse  {
+	inviteTenderList := make([]*YyInviteTender, 0)
+	err := models.DbSlave.Table(YyPurchase{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&inviteTenderList)
+	if err != nil {
+		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
+	}
+
+	records,_:= models.DbSlave.Table(YyPurchase{}).Count(YyInviteTender{})
+	pageResponse := models.InitPageResponse(page, inviteTenderList, records)
+	return pageResponse
 }
 
 func GetAllYyPurchaseByPage(page *models.PageRequest) * models.PageResponse  {

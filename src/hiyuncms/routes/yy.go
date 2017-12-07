@@ -2,11 +2,15 @@ package routes
 
 import (
 	"hiyuncms/controllers/yy"
-	"hiyuncms/controllers/backend"
 )
 
 func init(){
 	BackendRoute.GET ("/purchaselist", yy.PurchaseListShow)					   //采购项目列表显示
-	BackendRoute.POST("/purchaselist",yy.PurchaseList)                            //采购项目列表数据
-	BackendRoute.POST("/purchaseedit",backend.OrgEdit) 						   //采购项目操作（增删改）
+	BackendRoute.POST("/purchaselist",yy.PurchaseList)                           //采购项目列表数据
+	BackendRoute.POST("/purchaseedit",yy.PurchaseEdit) 						   //采购项目操作（增删改）
+
+	//InviteTender
+	BackendRoute.GET ("/invitetenderlist", yy.InviteTenderListShow)					   //采购项目列表显示
+	BackendRoute.POST("/invitetenderlist",yy.InviteTenderList)                           //采购项目列表数据
+	BackendRoute.POST("/invitetenderedit",yy.InviteTenderEdit) 						   //采购项目操作（增删改）
 }
