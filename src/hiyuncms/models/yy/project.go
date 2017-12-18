@@ -28,7 +28,7 @@ type YyPurchase struct {
 }
 
 type YyInviteTender  struct {
-	Id             int64       			`xorm:"pk BIGINT autoincr"`
+	Id             int64       			`xorm:"pk BIGINT autoincr" json:"id"`
 	ProjectName    string      			`xorm:"varchar(100) notnull"`
 	ProjectNo      string      			`xorm:"varchar(50)"`
 	Type           string      			`xorm:"varchar(20)"` //合格供应商，定向，公开

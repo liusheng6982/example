@@ -151,24 +151,44 @@ func (t Time) String() string {
 	return time.Time(t).Format(timeFormart)
 }
 
-func (t *Date) UnmarshalJSON(data []byte) (err error) {
-	now, err := time.ParseInLocation(`"`+dateFormart+`"`, string(data), time.Local)
-	*t = Date(now)
-	return
-}
 
-func (t Date) MarshalJSON() ([]byte, error) {
-	b := make([]byte, 0, len(dateFormart)+2)
-	b = append(b, '"')
-	b = time.Time(t).AppendFormat(b, dateFormart)
-	b = append(b, '"')
-	return b, nil
-}
-
-func (t Date) String() string {
-	return time.Time(t).Format(dateFormart)
-}
-
+/************************************** start data ********************************************/
+/**/
+/**/func (t *Date) UnmarshalJSON(data []byte) (err error) {
+/**/	now, err := time.ParseInLocation(`"`+dateFormart+`"`, string(data), time.Local)
+/**/	log.Printf("%+v",now)
+/**/	*t = Date(now)
+/**/	return
+/**/}
+/**/
+/**/func (t Date) MarshalJSON() ([]byte, error) {
+/**/	b := make([]byte, 0, len(dateFormart)+2)
+/**/	b = append(b, '"')
+/**/	b = time.Time(t).AppendFormat(b, dateFormart)
+/**/	b = append(b, '"')
+/**/	return b, nil
+/**/}
+/**/
+/**/func (t Date) MarshalText() ([]byte, error) {
+/**/	b := make([]byte, 0, len(dateFormart))
+/**/	//b = append(b, '"')
+/**/	b = time.Time(t).AppendFormat(b, dateFormart)
+/**/	//b = append(b, '"')
+/**/	return b, nil
+/**/}
+/**/
+/**/func (t *Date) UnmarshalText(data []byte) error {
+/**/	now, err := time.ParseInLocation(dateFormart, string(data), time.Local)
+/**/	*t = Date(now)
+/**/	return err
+/**/}
+/**/
+/**/func (t Date) String() string {
+/**/	return time.Time(t).Format(dateFormart)
+/**/}
+/**/
+/************************************** end data ********************************************/
+/**/
 /*
 type Session struct {
 	xorm.Session

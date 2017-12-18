@@ -84,8 +84,8 @@
                 {name:'',index:'', width:100,editable: true, hidden : true},
                 {name:'ProjectName',index:'name', width:100,editable: true, editrules:{required: true}},
                 {name:'ProjectNo',index:'url', width:70, editable: true,editrules:{required: true}},
-                {name:'Type',index:'order_num', width:90, editable: true,editrules:{required: true, integer: true}},
-                {name:'Contact',index:'Show_Flag', width:70, editable: true,formatter: "select",edittype:"select",editoptions: {value:"1:是;2:否"},unformat: aceSwitch},
+                {name:'Type',index:'order_num', width:90, editable: true,editrules:{required: true, integer: true},formatter: "select",edittype:"select",editoptions: {value:"1:公开;2:定向;3:合格供应商"}},
+                {name:'Contact',index:'Show_Flag', width:70, editable: true,unformat: aceSwitch},
                 {name:'ContactPhone',index:'Template_Path', width:70, editable: true},
                 {name:'SubmitTenderEndTime',index:'Template_Path', width:70, editable: true,unformat:pickDate},
                 {name:'OpenTenderTime',index:'Template_Path', width:70, editable: true,unformat:pickDate},
@@ -127,7 +127,7 @@
         function pickDate( cellvalue, options, cell ) {
             setTimeout(function(){
                 $(cell) .find('input[type=text]')
-                    .datetimepicker({format:'YYYY-MM-DD hh:mm:ss'});
+                    .datepicker({format:'yyyy-mm-dd' , autoclose:true});
             }, 0);
         }
 
@@ -220,8 +220,8 @@
 
         function style_edit_form(form) {
             //enable datepicker on "sdate" field and switches for "stock" field
-            form.find('input[name=SubmitTenderEndTime]').datetimepicker({format:'YYYY-MM-DD hh:mm:ss' })
-            form.find('input[name=OpenTenderTime]').datetimepicker({format:'YYYY-MM-DD hh:mm:ss' })
+            form.find('input[name=SubmitTenderEndTime]').datepicker({format:'yyyy-mm-dd' })
+            form.find('input[name=OpenTenderTime]').datepicker({format:'yyyy-mm-dd' })
 
             form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
             //don't wrap inside a label element, the checkbox value won't be submitted (POST'ed)
