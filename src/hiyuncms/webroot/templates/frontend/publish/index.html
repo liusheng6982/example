@@ -109,10 +109,17 @@
 </style>
 <section class="yy-news">
     <div class="container mycontainer">
+        <div class="row">
+            <div class="col-md-8">
+                {{template "dynamicproject.html" .}}
+            </div>
+            <div class="col-md-4">
+                {{template "excellentcompany.html" .}}
+            </div>
+        </div>
 
-        {{template "dynamicproject.html" .}}
 
-        <div class="col-md-12">
+        <!--div class="col-md-12">
             <div class="row dongtai-title">
                 医院动态
             </div>
@@ -161,9 +168,9 @@
                 </div>
             </div>
 
-        </div>
+        </div-->
 
-        <div class="col-md-12">
+        <!--div class="col-md-12">
             <div class="row dongtai-title">
                 品质供应商
             </div>
@@ -255,7 +262,7 @@
                 </div>
             </div>
 
-        </div>
+        </div-->
 
     </div>
     &nbsp;
