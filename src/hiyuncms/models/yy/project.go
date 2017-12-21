@@ -25,6 +25,8 @@ type YyPurchase struct {
 	Detail       		string      	`xorm:"text"`
 	Published    		int         	`xorm:"int"`
 	ImpFlag				int 			`xorm:"int"`
+	ImpId          string               `xorm:"varchar(100)"`
+	CreateTime				models.Date `xorm:"DateTime"`
 }
 
 type YyInviteTender  struct {
@@ -39,6 +41,12 @@ type YyInviteTender  struct {
 	TenderDocument		string      	`xorm:"varchar(130)"`
 	Published           int         	`xorm:"int"`
 	ImpFlag				int 			`xorm:"int"`
+	CreateTime				models.Date `xorm:"DateTime"`
+	ImpId            string             `xorm:"varchar(100)"`
+	Recommend        int             	`xorm:"int"`
+	WinBidFlag       int				`xorm:"int"`
+	WinBidCompany    string             `xorm:"varchar(100)"`
+
 }
 
 func init()  {
@@ -49,6 +57,32 @@ func init()  {
 	log.Println( "init table yy_invite_tender ", models.GetErrorInfo(err))
 }
 
+func GetTopInviteTender(size int) []*YyInviteTender {
+	inviteTenderList := make([]*YyInviteTender, 0)
+	err := models.DbSlave.Table(YyInviteTender{}).Limit(size,0).Find(&inviteTenderList)
+	if err != nil {
+		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
+	}
+	return inviteTenderList
+}
+
+func GetTopRecommendInviteTender(size int) []*YyInviteTender {
+	inviteTenderList := make([]*YyInviteTender, 0)
+	err := models.DbSlave.Table(YyInviteTender{}).Where("recommend = 1").Limit(size,0).Find(&inviteTenderList)
+	if err != nil {
+		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
+	}
+	return inviteTenderList
+}
+
+func GetTopWinBidInviteTender(size int) []*YyInviteTender {
+	inviteTenderList := make([]*YyInviteTender, 0)
+	err := models.DbSlave.Table(YyInviteTender{}).Where("win_bid_flag = 1").Limit(size,0).Find(&inviteTenderList)
+	if err != nil {
+		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
+	}
+	return inviteTenderList
+}
 
 func GetAllInviteTenderByPage(page *models.PageRequest) * models.PageResponse  {
 	inviteTenderList := make([]*YyInviteTender, 0)
@@ -59,6 +93,15 @@ func GetAllInviteTenderByPage(page *models.PageRequest) * models.PageResponse  {
 	records,_:= models.DbSlave.Table(YyInviteTender{}).Count(YyInviteTender{})
 	pageResponse := models.InitPageResponse(page, inviteTenderList, records)
 	return pageResponse
+}
+
+func GetTopPurchase(size int) []*YyPurchase {
+	yyPurchaseList := make([]*YyPurchase, 0)
+	err := models.DbSlave.Table(YyPurchase{}).Limit(size,0).Find(&yyPurchaseList)
+	if err != nil {
+		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
+	}
+	return yyPurchaseList
 }
 
 func GetAllYyPurchaseByPage(page *models.PageRequest) * models.PageResponse  {

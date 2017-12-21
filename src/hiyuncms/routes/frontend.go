@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"github.com/gin-gonic/contrib/sessions"
 	"hiyuncms/config"
+	"hiyuncms/models/yy"
 )
 
 var FrontendRoute *gin.Engine
@@ -39,6 +40,10 @@ func initRouteFrontend()   *gin.Engine{
 		"loadArticle" : loadArticle,
 		"html"  : html,
 		"addNum": addNum,
+		"loadTopInviteTender" : yy.GetTopInviteTender,
+		"loadTopPurchase":yy.GetTopPurchase,
+		"loadTopRecommend":yy.GetTopRecommendInviteTender,
+		"loadTopWinBid":yy.GetTopWinBidInviteTender,
 	})
 	engine.LoadHTMLGlob("webroot/templates/frontend/**/*")
 	engine.GET("/ping", func(c *gin.Context) {

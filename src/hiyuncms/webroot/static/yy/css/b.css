@@ -1,5 +1,5 @@
 
-.right_box{width:100%;float:right;margin-top:50px; }
+.right_box{width:100%;float:right;margin-top:20px;margin-right: 10px}
 .right_box .news_box{width:100%;float:right;border:1px solid #C0E3FF;border-top:none;}
 .right_box .news_box .tit{height:35px;background:url(../Images/list_ban_tit.jpg);font-size:14px;line-height:35px;padding-left:10px;}
 .right_box .news_box .tit b{font-size:12px;font-weight:100;float:right;margin-right:10px;}
@@ -16,7 +16,7 @@
 
 .right_box .zb_news {width:100%;float:right;border:1px solid #E2E5EC;}
 .right_box .zb_news .title{height:50px;}
-.right_box .zb_news .title span{height:50px;line-height:50px;background:url(../Images/title_bg.png) 20px center no-repeat;display:block; color: rgb(84, 85, 87);font-size:16px;font-weight:bold;float:left;padding-left:40px;}
+.right_box .zb_news .title span{height:50px;line-height:50px;background:url(/static/yy/img/title_bg.png) 20px center no-repeat;display:block; color: rgb(84, 85, 87);font-size:16px;font-weight:bold;float:left;padding-left:40px;}
 .right_box .zb_news .title a{height:50px;line-height:50px;font-size:12px;float:right;display:block;margin-right:13px;font-weight:100;color: rgb(84, 85, 87);}
 .right_box .zb_news .title a font{color:#62A2FF;}
 .right_box .zb_news .center{width:100%;overflow:hidden;}

@@ -41,6 +41,7 @@ func InviteTenderEdit(c * gin.Context){
 			log.Printf("更新Purchase报错:%s\n",models.GetErrorInfo(err))
 		}
 	}else if "add" == oper {
+		tender.CreateTime = models.Date{}
 		_, err := models.DbMaster.Insert( &tender)
 		if err != nil {
 			log.Printf("新增Purchase报错:%s\n",models.GetErrorInfo(err))
