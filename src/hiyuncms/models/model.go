@@ -41,10 +41,12 @@ func init()  {
 	maxConn := config.GetInt("db.master.max.conn")
 	DbMaster.SetMaxIdleConns( maxIdle )
 	DbMaster.SetMaxOpenConns( maxConn )
+
 	showSql := config.GetBool("db.master.show.sql")
 	DbMaster.ShowSQL( showSql )
 	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
 	DbMaster.SetTableMapper(tbMapper)
+	DbMaster.Ping()
 	//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
 	//DbMaster.SetDefaultCacher(cacher)
 
@@ -72,7 +74,7 @@ func initSlave()  {
 	DbSlave.ShowSQL( showSql )
 	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
 	DbSlave.SetTableMapper(tbMapper)
-
+	DbSlave.Ping()
 	//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
 	//DbSlave.SetDefaultCacher(cacher)
 }

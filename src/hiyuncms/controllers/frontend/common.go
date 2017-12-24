@@ -25,6 +25,7 @@ type UserSession struct {
 	CompanyName       string     	`json:"companyName"`
 	AccessToken 	  string		`json:"accessToken"`
 	Success 		  bool          `json:"success"`
+	VipLevel          int           `json:"vipLevel"`
 }
 
 func GetSessionInfo(c * gin.Context)  *UserSession{

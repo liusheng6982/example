@@ -55,7 +55,8 @@ func UserLogin(c * gin.Context)  {
 			Success:true,
 			CompanyId:company.Id,
 			CompanyName:company.CompanyName,
-			}
+			VipLevel:company.VipLevel,
+		}
 		session := sessions.Default(c)
 		jsonBytes,_ := json.Marshal(bus)
 		session.Set(FRONT_USER_SESSION,  string(jsonBytes) )
