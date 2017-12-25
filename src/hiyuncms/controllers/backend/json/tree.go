@@ -6,6 +6,6 @@ type TreeNode struct {
 	Name     string                 `json:"text"`
 	Children bool                   `json:"children"`
     Icon     string                 `json:"icon"`
-	Type     string                 `json:type`
+	Type     string                 `json:"type"`
 	State    map[string]interface{} `json:"state"`
 }

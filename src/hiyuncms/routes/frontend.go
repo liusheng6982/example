@@ -44,6 +44,7 @@ func initRouteFrontend()   *gin.Engine{
 		"loadTopPurchase":yy.GetTopPurchase,
 		"loadTopRecommend":yy.GetTopRecommendInviteTender,
 		"loadTopWinBid":yy.GetTopWinBidInviteTender,
+		"loadAllProject":loadAllProject,
 	})
 	engine.LoadHTMLGlob("webroot/templates/frontend/**/*")
 	engine.GET("/ping", func(c *gin.Context) {
@@ -98,6 +99,12 @@ func loadArticlesByPage(path string, pageSize int, pageNo int ) * models.PageRes
 	page := models.PageRequest{Rows:pageSize, Page:pageNo}
 	response := cms.GetArticlesByPath(&page, path)
 	response.Path = path
+	return response
+}
+
+func loadAllProject(pageSize int, pageNo int ) * models.PageResponse {
+	page := models.PageRequest{Rows:pageSize, Page:pageNo}
+	response := yy.GetAllInviteTenderByPage(&page)
 	return response
 }
 

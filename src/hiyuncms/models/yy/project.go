@@ -95,6 +95,8 @@ func GetAllInviteTenderByPage(page *models.PageRequest) * models.PageResponse  {
 	return pageResponse
 }
 
+
+
 func GetTopPurchase(size int) []*YyPurchase {
 	yyPurchaseList := make([]*YyPurchase, 0)
 	err := models.DbSlave.Table(YyPurchase{}).Limit(size,0).Find(&yyPurchaseList)
