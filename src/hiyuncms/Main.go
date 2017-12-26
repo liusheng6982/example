@@ -12,13 +12,17 @@ import (
 	"hiyuncms/routes"
 	"hiyuncms/config"
 	//"time"
+	//"hiyuncms/util"
 )
 
 
 func main() {
+	//util.TestSms()
+
 	runFrontendServer()
 	runBackendServer()
 	RegService()
+
 }
 
 func runBackendServer()  {
