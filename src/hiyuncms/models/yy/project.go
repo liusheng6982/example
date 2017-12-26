@@ -84,6 +84,15 @@ func GetTopWinBidInviteTender(size int) []*YyInviteTender {
 	return inviteTenderList
 }
 
+func GetInviteTenderById(id int64) * YyInviteTender  {
+	inviteTender := &YyInviteTender{}
+	_, err := models.DbSlave.ID(id).Get(inviteTender)
+	if err != nil {
+		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
+	}
+	return inviteTender
+}
+
 func GetAllInviteTenderByPage(page *models.PageRequest) * models.PageResponse  {
 	inviteTenderList := make([]*YyInviteTender, 0)
 	err := models.DbSlave.Table(YyInviteTender{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&inviteTenderList)

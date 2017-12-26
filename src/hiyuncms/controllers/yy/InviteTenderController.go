@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"hiyuncms/models"
 	"hiyuncms/models/yy"
+	"hiyuncms/controllers/frontend"
 	"strconv"
 	"log"
 )
@@ -15,6 +16,17 @@ func InviteTenderListShow(c *gin.Context){
 		"bodyCss":"no-skin",
 		"mainMenu" :"招标项目管理",
 		"user":controllers.GetSessionUser(c),
+	})
+}
+
+func InviteTenderDetail(c *gin.Context){
+	projectId, _ := c.GetQuery("projectId")
+	projectIdInt64, _ := strconv.ParseInt(projectId, 10, 64)
+	projectDetail := yy.GetInviteTenderById( projectIdInt64 )
+	c.HTML(http.StatusOK, "projectdetail.html", gin.H{
+		"projectDetail" : projectDetail,
+		"path":"",
+		"sessionInfo":frontend.GetSessionInfo(c),
 	})
 }
 
