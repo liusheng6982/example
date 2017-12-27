@@ -20,7 +20,7 @@
             <ul class="list_ul">
                 {{ $allPorjectPage := loadAllProject .pageSize .pageNo }}
                 {{  range $k,$v := $allPorjectPage.Rows }}
-                <li><span>[]</span><a href="projectdetail.html" target="_blank" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a>
+                <li><span>[]</span><a href="/projectdetail?id={{$v.Id}}" target="_blank" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a>
                     <span>[Vip项目]</span>
                     <b>{{$v.CreateTime}}</b></li>
                 {{end}}

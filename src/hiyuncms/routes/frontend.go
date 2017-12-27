@@ -79,6 +79,7 @@ func regFrontRoute()  {
 
 	FrontendRoute.GET ("/registry",frontend.RegistryShow)
 	FrontendRoute.POST("/registry",frontend.Registry)
+	
 }
 
 func addNum(x int, y int )int{

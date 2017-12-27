@@ -20,9 +20,16 @@ func InviteTenderListShow(c *gin.Context){
 }
 
 func InviteTenderDetail(c *gin.Context){
-	projectId, _ := c.GetQuery("projectId")
+	projectId, _ := c.GetQuery("id")
+	log.Printf("projectId=%s\n", projectId)
 	projectIdInt64, _ := strconv.ParseInt(projectId, 10, 64)
 	projectDetail := yy.GetInviteTenderById( projectIdInt64 )
+	sessionInfo := frontend.GetSessionInfo(c)
+	if sessionInfo.UserName == "" {
+		c.Redirect(http.StatusFound, "/userlogin")
+		return
+	}
+	log.Printf("%+v", projectDetail)
 	c.HTML(http.StatusOK, "projectdetail.html", gin.H{
 		"projectDetail" : projectDetail,
 		"path":"",

@@ -1,128 +1,123 @@
-{{template "headerjs.html" .}}
-{{template "navbar.html" .}}
+{{template "headerjs.html" .}} {{template "navbar.html" .}} {{template "slider.html" .}}
 <style>
+  #main {
+    padding: 20px 20px 20px 20px;
+    width: 900px;
+    margin-left: 10px;
+    float: left;
+    background-color: white
+  }
 
-   
+  .blockContent {
+    margin: 20px 0 20px 0;
+  }
+
+  .blockContent tr th, .blockContent tr td {
+    padding-left: 20px;
+    vertical-align: top;
+    line-height: 30px;
+}
+.blockContent th {
+    text-align: right;
+    width: 80px;
+    font-weight: normal;
+    color: #999;
+    vertical-align: top;
+    height: 30px;
+}
+
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+  #main h3 {border-bottom: 1px #eee solid;padding-bottom: 14px;
+  }
+
+  h3, .h3 {
+    font-size: 24px;
+  }
 </style>
 <section class="yy-news">
-    <div class="container mycontainer">
-        <div id="main">
-        <div class="block">
-          <h3>项目概况</h3>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
-            <tbody>
-              <tr>
-                <th>招标方式</th>
-                <td width="400px;">公开招标</td>
-                <th>资格审查</th>
-                <td>资格后审</td>
-              </tr>
-              <tr>
-                <th>所属行业</th>
-                <td>农、林、牧、渔业</td>
-                <th>项目区域</th>
-                <td>海南省</td>
-              </tr>
-              <tr>
-                <th>概况</th>
-                <td colspan="3">111</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-		  <div class="block">
-          <h3>招标人及招标代理</h3>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
-            <tbody>
-              <tr>
-                <th>招标人</th>
-                <td colspan="3">万先生</td>
-              </tr>
-              <tr>
-                <!--<th>地址</th>
+  <div class="container mycontainer">
+    <div id="main">
+      <div class="block">
+        {{ $projectInfo := .projectDetail }}
+        <h3>项目概况</h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
+          <tbody>
+            <tr>
+              <th>编号</th>
+              <td width="400px;">{{$projectInfo.ProjectNo}}</td>
+              <th>名称</th>
+              <td>{{ $projectInfo.ProjectName}}</td>
+            </tr>
+            <tr>
+              <th>所属行业</th>
+              <td>农、林、牧、渔业</td>
+              <th>项目区域</th>
+              <td>海南省</td>
+            </tr>
+            <tr>
+              <th>概况</th>
+              <td colspan="3">111</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="block">
+        <h3>招标人及招标代理</h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
+          <tbody>
+            <tr>
+              <th>招标人</th>
+              <td colspan="3">万先生</td>
+            </tr>
+            <tr>
+              <!--<th>地址</th>
                 <td colspan="3">北京市海淀区</td>-->
-              </tr>
-            </tbody>
-          </table>
-          <hr>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
-            <tbody>
-              <tr>
-                <th>代理机构</th>
-                <td colspan="3">国信招标集团股份有限公司</td>
-              </tr>
-              <tr>
-                <th>地址</th>
-                <td colspan="3">北京市海淀区首体南路22号国兴大厦10层</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="block">
-          <h3>公告内容</h3>
-			   <a id="viewerPlaceHolder" style="width: 100%; height: 660px; display: block"><object width="100%" height="100%" id="_340031718" name="_340031718" data="http://172.16.7.139/FlexPaperViewer.swf" type="application/x-shockwave-flash"><param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always"><param name="quality" value="high"><param name="flashvars" value="SwfFile=http%3A//125.208.29.69/project//58a7909c-a96e-42d1-af5e-1948fdc76b99.swf&amp;Scale=0.6&amp;ZoomTransition=easeOut&amp;ZoomTime=0.5&amp;ZoomInterval=0.2&amp;FitPageOnLoad=true&amp;FitWidthOnLoad=true&amp;ProgressiveLoading=true&amp;MinZoomSize=0.2&amp;MaxZoomSize=5&amp;InitViewMode=Portrait&amp;ViewModeToolsVisible=true&amp;ZoomToolsVisible=true&amp;NavToolsVisible=true&amp;CursorToolsVisible=true&amp;SearchToolsVisible=true&amp;localeChain=zh_CN"><param name="wmode" value="transparent"></object></a>
-			   <script type="text/javascript">
-				 var fp = new FlexPaperViewer(
-					'http://172.16.7.139/FlexPaperViewer',
-					'viewerPlaceHolder', {
-						config : {
-							SwfFile : escape('http://125.208.29.69/project//58a7909c-a96e-42d1-af5e-1948fdc76b99.swf'),
-							EncodeURI : true,
-							Scale : 0.6,
-							ZoomTransition : 'easeOut',
-							ZoomTime : 0.5,
-							ZoomInterval : 0.2,
-							FitPageOnLoad : true,
-							FitWidthOnLoad : true,
-							PrintEnabled: false,//是否支持打印
-							FullScreenAsMaxWindow : false,
-							ProgressiveLoading : true,
-							MinZoomSize : 0.2,
-							MaxZoomSize : 5,
-							SearchMatchAll : false,
-							InitViewMode : 'Portrait',
-							ViewModeToolsVisible : true,
-							ZoomToolsVisible : true,
-							NavToolsVisible : true,
-							CursorToolsVisible : true,
-							SearchToolsVisible : true,
-							localeChain : 'zh_CN'
-						}
-					});
-			   </script>				
-		  </div>
-        <div class="block">
-          <h3>附件信息下载</h3>
-          <ul class="downloadList" id="attrationidSpan22">
-
-
-
-
-
-
-
-
-
-
-<title>文件</title>
-
-
-
-	<table>
-	
-	</table>
-
-
-</ul>
-        </div>
-        <a href="http://125.208.29.69/nmgxdzzb/tBServiceBaseController.do?getCaServiceList"><img src="http://125.208.29.27/resource/site_9//gxcx/img/CApoint.png" width="880" height="90" alt=""></a> </div>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
+          <tbody>
+            <tr>
+              <th>代理机构</th>
+              <td colspan="3">国信招标集团股份有限公司</td>
+            </tr>
+            <tr>
+              <th>地址</th>
+              <td colspan="3">北京市海淀区首体南路22号国兴大厦10层</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="block">
+        <h3>公告内容</h3>
        
 
+      </div>
+      <div class="block">
+        <h3>附件信息下载</h3>
+        <ul class="downloadList" id="attrationidSpan22">
+          <title>文件</title>
+
+          <table>
+
+          </table>
 
 
-
+        </ul>
+      </div>
+     
     </div>
-    &nbsp;
+
+
+
+
+
+  </div>
+  &nbsp;
 </section>
-{{template "bottom.html" .}}
-{{template "footerjs.html" .}}
+{{template "bottom.html" .}} {{template "footerjs.html" .}}
