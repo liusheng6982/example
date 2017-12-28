@@ -35,7 +35,7 @@ td, th {
   }
 
   h3, .h3 {
-    font-size: 24px;
+    font-size: 20px;
   }
 </style>
 <section class="yy-news">
@@ -50,20 +50,22 @@ td, th {
               <th>编号</th>
               <td width="400px;">{{$projectInfo.ProjectNo}}</td>
               <th>名称</th>
-              <td>{{ $projectInfo.ProjectName}}</td>
+              <td>{{ $projectInfo.ProjectName }}</td>
             </tr>
+            {{ if eq $projectInfo.ProjectType 1}}
             <tr>
               <th>开标时间</th>
-              <td>{{$projectInfo.OpenTenderTime}}</td>
+              <td>{{$projectInfo.InviteOpenTenderTime}}</td>
               <th>招标截止日期</th>
-              <td>{{$projectInfo.SubmitTenderEndTime}}</td>
+              <td>{{$projectInfo.InviteSubmitTenderEndTime}}</td>
             </tr>
+            {{ end }}
             <tr>
                 <th>联系人</th>
                 <td colspan="3">{{$projectInfo.Contact}}</td>
             </tr>
             <tr>
-                <<th>联系电话</th>
+                <th>联系电话</th>
                 <td colspan="3">{{$projectInfo.ContactPhone}}</td>
             </tr>
           </tbody>
@@ -73,7 +75,7 @@ td, th {
       <div class="block">
         <h3>公告内容</h3>
         <p>
-            {{$projectInfo.Content}}
+            {{$projectInfo.ProjectContent}}
         </p>
 
       </div>
