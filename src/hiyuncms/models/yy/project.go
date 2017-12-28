@@ -17,8 +17,6 @@ type YyPorject struct {
 	CompanyName       					string   	    `xorm:"varchar(50)"`    //公司名称
 	ContactPhone   						string 	   		`xorm:"varchar(30)"`    //联系人电话
 	Contact	   	   						string          `xorm:"varchar(30)"`    //联系人
-	Published        					int         	`xorm:"int"`            //是否发布
-	CreateTime          				models.Date 	`xorm:"DateTime"`       //创建时间
 
 	ImpFlag          					int         	`xorm:"int"`			//是否导入
 	ImpId            					string      	`xorm:"varchar(100)"`   //导入ID
@@ -36,6 +34,11 @@ type YyPorject struct {
 	InviteOpenTenderTime      			models.Date  	`xorm:"DateTime"`      //开标时间
 
 	Recommended							int             `xorm:"int"`           //是否是推荐项目
+	Published        					int         	`xorm:"int"`           //是否发布
+	PublishedTime						models.Date  	`xorm:"DateTime"`      //发布时间
+	CreateTime          				models.Date 	`xorm:"DateTime"`      //创建时间
+
+	BusinessCategory					string			`xorm:"varchar(20)"`   //建设、理疗器械、后勤物资、行政物资
 }
 
 
