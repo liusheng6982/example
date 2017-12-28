@@ -53,63 +53,31 @@ td, th {
               <td>{{ $projectInfo.ProjectName}}</td>
             </tr>
             <tr>
-              <th>所属行业</th>
-              <td>农、林、牧、渔业</td>
-              <th>项目区域</th>
-              <td>海南省</td>
+              <th>开标时间</th>
+              <td>{{$projectInfo.OpenTenderTime}}</td>
+              <th>招标截止日期</th>
+              <td>{{$projectInfo.SubmitTenderEndTime}}</td>
             </tr>
             <tr>
-              <th>概况</th>
-              <td colspan="3">111</td>
+                <th>联系人</th>
+                <td colspan="3">{{$projectInfo.Contact}}</td>
+            </tr>
+            <tr>
+                <<th>联系电话</th>
+                <td colspan="3">{{$projectInfo.ContactPhone}}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="block">
-        <h3>招标人及招标代理</h3>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
-          <tbody>
-            <tr>
-              <th>招标人</th>
-              <td colspan="3">万先生</td>
-            </tr>
-            <tr>
-              <!--<th>地址</th>
-                <td colspan="3">北京市海淀区</td>-->
-            </tr>
-          </tbody>
-        </table>
-        <hr>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
-          <tbody>
-            <tr>
-              <th>代理机构</th>
-              <td colspan="3">国信招标集团股份有限公司</td>
-            </tr>
-            <tr>
-              <th>地址</th>
-              <td colspan="3">北京市海淀区首体南路22号国兴大厦10层</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
       <div class="block">
         <h3>公告内容</h3>
-       
+        <p>
+            {{$projectInfo.Content}}
+        </p>
 
       </div>
-      <div class="block">
-        <h3>附件信息下载</h3>
-        <ul class="downloadList" id="attrationidSpan22">
-          <title>文件</title>
 
-          <table>
-
-          </table>
-
-
-        </ul>
-      </div>
      
     </div>
 

@@ -18,7 +18,6 @@ import (
 
 func main() {
 	//util.TestSms()
-
 	runFrontendServer()
 	runBackendServer()
 	RegService()

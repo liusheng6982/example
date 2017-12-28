@@ -5,88 +5,79 @@ import (
 	"hiyuncms/models"
 )
 
-type YyPurchase struct {
-	Id             int64       			`xorm:"pk BIGINT autoincr" json:"id"`
-	PurchaseName   string      			`xorm:"varchar(100) notnull"`
-	PurchaseNo     string      			`xorm:"varchar(50)"`
-	PurchaseType   string      			`xorm:"varchar(20)"` //合格供应商，定向，公开
-	ProjectContent      string      `xorm:"varchar(2000)"`
-	ProjectImage        string      `xorm:"varchar(200)"`
-	ExpiredDate         models.Date `xorm:"DateTime"`
-	CompanyId           int64       `xorm:"BIGINT"`
-	CompanyName         string      `xorm:"varchar(50)"`
-	QuotePriceEndTime   models.Date `xorm:"DateTime"`
-	QuotePriceTaxRate   int         `xorm:"int"`
-	QuotePriceLogistics int         `xorm:"int"`
-	RequireImage        string      `xorm:"varchar(200)"`
-	Remark              string      `xorm:"varchar(2000)"`
-	DeliveryTime        models.Date `xorm:"DateTime"`
-	Material            string      `xorm:"varchar(20)"`
-	Detail              string      `xorm:"text"`
-	Published           int         `xorm:"int"`
-	ImpFlag             int         `xorm:"int"`
-	ImpId               string      `xorm:"varchar(100)"`
-	CreateTime          models.Date `xorm:"DateTime"`
+type YyPorject struct {
+	Id             						int64 			`xorm:"pk BIGINT autoincr" json:"id"`
+	ProjectName    						string			`xorm:"varchar(100) notnull"`
+	ProjectNo      						string			`xorm:"varchar(50)"`    //项目编号
+	ProjectType    						int				`xorm:"int"`            //1:招标 2：采购
+	ProjectContent 						string			`xorm:"text"`  			//内容
+	ProjectFile	        				string      	`xorm:"varchar(200)"`   //项目文件
+	ProjectRemark						string          `xorm:"varchar(2000)"`  //备注
+	CompanyId         					int64    	    `xorm:"BIGINT"`         //公司ID
+	CompanyName       					string   	    `xorm:"varchar(50)"`    //公司名称
+	ContactPhone   						string 	   		`xorm:"varchar(30)"`    //联系人电话
+	Contact	   	   						string          `xorm:"varchar(30)"`    //联系人
+	Published        					int         	`xorm:"int"`            //是否发布
+	CreateTime          				models.Date 	`xorm:"DateTime"`       //创建时间
+
+	ImpFlag          					int         	`xorm:"int"`			//是否导入
+	ImpId            					string      	`xorm:"varchar(100)"`   //导入ID
+	ImpPlatform							string          `xorm:"varchar(30)"`    //导入的平台
+
+	PurchaseType   						string			`xorm:"varchar(20)"`   //合格供应商，定向，公开
+	PurchaseExpiredDate                 models.Date 	`xorm:"DateTime"`      //采购有效期
+	PurchaseQuotePriceEndTime   		models.Date		`xorm:"DateTime"`      //报价截止时间
+	PurchaseDeliveryTime                models.Date		`xorm:"DateTime"`      //交货时间
+
+	InviteType          	 			string      	`xorm:"varchar(20)"`   //合格供应商，定向，公开
+	InviteWinBidFlag       				int				`xorm:"int"`           //是否中标
+	InviteWinBidCompany    				string     		`xorm:"varchar(100)"`  //中标公司
+	InviteSubmitTenderEndTime 			models.Date 	`xorm:"DateTime"`      //投标截止时间
+	InviteOpenTenderTime      			models.Date  	`xorm:"DateTime"`      //开标时间
+
+	Recommended							int             `xorm:"int"`           //是否是推荐项目
 }
 
-type YyInviteTender  struct {
-	Id             int64       			`xorm:"pk BIGINT autoincr" json:"id"`
-	ProjectName    string      			`xorm:"varchar(100) notnull"`
-	ProjectNo      string      			`xorm:"varchar(50)"`
-	Type           string      			`xorm:"varchar(20)"` //合格供应商，定向，公开
-	Contact	   	   string      			`xorm:"varchar(30)"`
-	ContactPhone   string 	   			`xorm:"varchar(30)"`
-	SubmitTenderEndTime models.Date 	`xorm:"DateTime"`
-	OpenTenderTime      models.Date  	`xorm:"DateTime"`
-	TenderDocument		string      	`xorm:"varchar(130)"`
-	Published           int         	`xorm:"int"`
-	ImpFlag				int 			`xorm:"int"`
-	CreateTime				models.Date `xorm:"DateTime"`
-	ImpId            string             `xorm:"varchar(100)"`
-	Recommend        int             	`xorm:"int"`
-	WinBidFlag       int				`xorm:"int"`
-	WinBidCompany    string             `xorm:"varchar(100)"`
 
-}
+
 
 func init()  {
-	err := models.DbMaster.Sync2( YyPurchase{} )
-	log.Println( "init table yy_purchase ", models.GetErrorInfo(err))
+	err := models.DbMaster.Sync2( YyPorject{} )
+	log.Println( "init table yy_project ", models.GetErrorInfo(err))
 
-	err = models.DbMaster.Sync2( YyInviteTender{} )
-	log.Println( "init table yy_invite_tender ", models.GetErrorInfo(err))
+
 }
 
-func GetTopInviteTender(size int) []*YyInviteTender {
-	inviteTenderList := make([]*YyInviteTender, 0)
-	err := models.DbSlave.Table(YyInviteTender{}).Limit(size,0).Find(&inviteTenderList)
+func GetTopInviteTender(size int) []*YyPorject {
+	inviteTenderList := make([]*YyPorject, 0)
+	err := models.DbSlave.Table(YyPorject{}).Limit(size,0).Where("project_type=1").Find(&inviteTenderList)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
 	}
 	return inviteTenderList
 }
 
-func GetTopRecommendInviteTender(size int) []*YyInviteTender {
-	inviteTenderList := make([]*YyInviteTender, 0)
-	err := models.DbSlave.Table(YyInviteTender{}).Where("recommend = 1").Limit(size,0).Find(&inviteTenderList)
+func GetTopRecommendInviteTender(size int) []*YyPorject {
+	inviteTenderList := make([]*YyPorject, 0)
+	err := models.DbSlave.Table(YyPorject{}).Where("Recommended = 1").Where("project_type=1").Limit(size,0).Find(&inviteTenderList)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
 	}
 	return inviteTenderList
 }
 
-func GetTopWinBidInviteTender(size int) []*YyInviteTender {
-	inviteTenderList := make([]*YyInviteTender, 0)
-	err := models.DbSlave.Table(YyInviteTender{}).Where("win_bid_flag = 1").Limit(size,0).Find(&inviteTenderList)
+func GetTopWinBidInviteTender(size int) []*YyPorject {
+	inviteTenderList := make([]*YyPorject, 0)
+	err := models.DbSlave.Table(YyPorject{}).Where("invite_tender_win_bid_flag = 1").Where("project_type=1").Limit(size,0).Find(&inviteTenderList)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
 	}
 	return inviteTenderList
 }
 
-func GetInviteTenderById(id int64) * YyInviteTender  {
+func GetInviteTenderById(id int64) * YyPorject  {
 	log.Printf("id=%d\n", id)
-	inviteTender := YyInviteTender{}
+	inviteTender := YyPorject{}
 	_, err := models.DbSlave.ID(id).Get(&inviteTender)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
@@ -95,21 +86,21 @@ func GetInviteTenderById(id int64) * YyInviteTender  {
 }
 
 func GetAllInviteTenderByPage(page *models.PageRequest) * models.PageResponse  {
-	inviteTenderList := make([]*YyInviteTender, 0)
-	err := models.DbSlave.Table(YyInviteTender{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&inviteTenderList)
+	inviteTenderList := make([]*YyPorject, 0)
+	err := models.DbSlave.Table(YyPorject{}).Where("project_type=1").Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&inviteTenderList)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
 	}
-	records,_:= models.DbSlave.Table(YyInviteTender{}).Count(YyInviteTender{})
+	records,_:= models.DbSlave.Table(YyPorject{}).Where("project_type=1").Count(YyPorject{})
 	pageResponse := models.InitPageResponse(page, inviteTenderList, records)
 	return pageResponse
 }
 
 
 
-func GetTopPurchase(size int) []*YyPurchase {
-	yyPurchaseList := make([]*YyPurchase, 0)
-	err := models.DbSlave.Table(YyPurchase{}).Limit(size,0).Find(&yyPurchaseList)
+func GetTopPurchase(size int) []*YyPorject {
+	yyPurchaseList := make([]*YyPorject, 0)
+	err := models.DbSlave.Table(YyPorject{}).Where("project_type=2").Limit(size,0).Find(&yyPurchaseList)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
 	}
@@ -117,12 +108,12 @@ func GetTopPurchase(size int) []*YyPurchase {
 }
 
 func GetAllYyPurchaseByPage(page *models.PageRequest) * models.PageResponse  {
-	purchaseList := make([]*YyPurchase, 0)
-	err := models.DbSlave.Table(YyPurchase{}).Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&purchaseList)
+	purchaseList := make([]*YyPorject, 0)
+	err := models.DbSlave.Table(YyPorject{}).Where("project_type=2").Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&purchaseList)
 	if err != nil {
 		log.Printf("获取YyPurchase数据:%s", models.GetErrorInfo(err))
 	}
-	records,_:= models.DbSlave.Table(YyPurchase{}).Count(YyPurchase{})
+	records,_:= models.DbSlave.Table(YyPorject{}).Count(YyPorject{})
 	pageResponse := models.InitPageResponse(page, purchaseList, records)
 	return pageResponse
 }

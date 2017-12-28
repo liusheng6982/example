@@ -45,12 +45,13 @@ func InviteTenderList(c *gin.Context){
 }
 
 func InviteTenderEdit(c * gin.Context){
-	tender := yy.YyInviteTender{}
+	tender := yy.YyPorject{}
 	c.Bind( &tender)
-	openTenderTime := c.PostForm("OpenTenderTime")
-	tender.OpenTenderTime.UnmarshalText( []byte(openTenderTime))
-	submitTenderEndTime := c.PostForm("SubmitTenderEndTime");
-	tender.SubmitTenderEndTime.UnmarshalText([]byte(submitTenderEndTime))
+	tender.ProjectType = 1
+	openTenderTime := c.PostForm("InviteOpenTenderTime")
+	tender.InviteOpenTenderTime.UnmarshalText( []byte(openTenderTime))
+	submitTenderEndTime := c.PostForm("InviteSubmitTenderEndTime")
+	tender.InviteSubmitTenderEndTime.UnmarshalText([]byte(submitTenderEndTime))
 	oper, _ := c.GetPostForm("oper")
 	if "edit" == oper {
 		id, _:= c.GetPostForm("id")

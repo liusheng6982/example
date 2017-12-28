@@ -10,8 +10,8 @@ var (
 	accessKeyId = "LTAIDICSO5JOkFV2"
 	accessKeySecret = "wL64iUsD1CRm7hme4J5ATuWxfApaL3"
 	phoneNumbers = "13918015069"
-	signName = "阿里云短信测试专用"
-	templateCode = "SMS_118250052"
+	signName = "e医链"
+	templateCode = "SMS_119086797"
 	templateParam = "{\"code\":\"1234\"}"
 )
 

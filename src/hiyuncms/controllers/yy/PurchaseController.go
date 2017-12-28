@@ -26,12 +26,18 @@ func PurchaseList(c *gin.Context){
 }
 
 func PurchaseEdit(c * gin.Context){
-	purchase := yy.YyPurchase{}
+	purchase := yy.YyPorject{}
+	purchase.ProjectType = 2
 	bindErr := c.Bind( &purchase)
-	quotePriceEndDate := c.PostForm("QuotePriceEndTime")
-	convertErr := purchase.QuotePriceEndTime.UnmarshalText( []byte(quotePriceEndDate))
+	quotePriceEndDate := c.PostForm("PurchaseQuotePriceEndTime")
+	convertErr := purchase.PurchaseQuotePriceEndTime.UnmarshalText( []byte(quotePriceEndDate))
 	if convertErr != nil {
 		log.Printf("quotePriceEndDate 绑定数据出错:%s\n",models.GetErrorInfo(convertErr))
+	}
+	purchaseDeliveryTime := c.PostForm("PurchaseDeliveryTime")
+	convert2Err := purchase.PurchaseDeliveryTime.UnmarshalText( []byte(purchaseDeliveryTime))
+	if convert2Err != nil {
+		log.Printf("quotePriceEndDate 绑定数据出错:%s\n",models.GetErrorInfo(convert2Err))
 	}
 	log.Printf("quotePriceEndDate=%s\n",quotePriceEndDate)
 	if bindErr != nil {
