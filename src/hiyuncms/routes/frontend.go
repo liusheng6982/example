@@ -133,4 +133,7 @@ func loadColumn() *[]*cms.Column{
 	return cms.GetAllColumnsToShow()
 }
 
+func loadSubColumn(parentPath string)  *[]*cms.Column{
+	return cms.GetSubColumnsToShow(parentPath)
+}
 

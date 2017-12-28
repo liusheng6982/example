@@ -56,6 +56,18 @@ func  GetAllColumnsToShow() *[]*Column{
 	return &columnList
 }
 
+func  GetSubColumnsToShow(parentPath string) *[]*Column{
+	parentColumn := GetColumnByPath(parentPath)
+	columnList := make([]*Column, 0)
+	err := models.DbSlave.Table(Column{}).
+		Where("Show_Flag = 1").
+		Where(fmt.Sprintf("parent_id=%d", parentColumn.Id)).OrderBy("order_num asc").Find(&columnList)
+	if err != nil {
+		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
+	}
+	return &columnList
+}
+
 /**
 根据路径，获取栏目对象
  */
