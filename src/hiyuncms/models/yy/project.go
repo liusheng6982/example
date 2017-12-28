@@ -28,6 +28,8 @@ type YyPorject struct {
 	PurchaseDeliveryTime                models.Date		`xorm:"DateTime"`      //交货时间
 
 	InviteType          	 			string      	`xorm:"varchar(20)"`   //合格供应商，定向，公开
+	InviteEnterStartTime				models.Date     `xorm:"DateTime"`      //报名开始时间
+	InviteEnterEndTime					models.Date     `xorm:"DateTime"`      //报名结束时间
 	InviteWinBidFlag       				int				`xorm:"int"`           //是否中标
 	InviteWinBidCompany    				string     		`xorm:"varchar(100)"`  //中标公司
 	InviteSubmitTenderEndTime 			models.Date 	`xorm:"DateTime"`      //投标截止时间

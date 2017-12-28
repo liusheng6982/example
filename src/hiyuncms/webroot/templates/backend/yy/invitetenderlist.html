@@ -69,7 +69,7 @@
 			mtype:'POST',
             //datatype: "local",
             height: 400,
-            colNames:[' ', 'ID', '', '招标名称',  '项目编号',  '招标方式', '招标联系人', '招标联系电话',"投标截止时间","开标时间","项目内容","推荐项目","已中标","中标公司"],
+            colNames:[' ', 'ID', '', '招标名称',  '项目编号',  '招标方式', '招标联系人', '招标联系电话',"投标截止时间","开标时间","项目内容","推荐项目","已中标","中标公司","性质"],
             colModel:[
                 {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                     formatter:'actions',
@@ -93,6 +93,10 @@
                 {name:'Recommended',index:'stock', width:70, editable: true,edittype:"checkbox",editoptions: {value:"1:0"},unformat: aceSwitch},
                 {name:'InviteWinBidFlag',index:'stock', width:70, editable: true,edittype:"checkbox",editoptions: {value:"1:0"},unformat: aceSwitch},
                 {name:'InviteWinBidCompany',index:'stock', width:70, editable: true},
+                {name:'BusinessCategory',index:'order_num', width:90, editable: true,editrules:{required: true, integer: true},formatter: "select",edittype:"select",
+                    editoptions: {value:"1:建设;2:理疗器械;3:后勤物资;4:行政物资"}
+                },
+                
             ],
 
             viewrecords : true,
