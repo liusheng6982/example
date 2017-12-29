@@ -1,0 +1,26 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+{{template "slider.html" .}}
+
+{{ $columns := loadSubColumn .path}}
+<nav id="nav">
+    <ul>
+       <li><a href="#" class="active">首页</a></li>
+       <li><a href="#">分类</a></li>
+       <li><a href="#">特色百科</a></li>
+       <li><a href="#">用户</a></li>
+       <li><a href="#">权威合作</a></li>
+       <li><a href="#">手机百科</a></li>
+    </ul>
+  </nav>
+
+<ul class="main-nav nav navbar-nav navbar-right">
+   
+    {{ $path := .path }}
+    {{ range $k,$v :=  $columns }}
+        <li class="wow fadeInDown" data-wow-delay="0s"><a class="{{ if eq $v.Url $path }}active{{end}}" href="{{$v.Url}}">{{$v.Name}}</a></li>
+    {{end}}
+</ul>
+
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}

@@ -38,6 +38,7 @@ func initRouteFrontend()   *gin.Engine{
 		"loadArticles": loadArticlesByPage,
 		"loadArticlesTop": loadArticlesTop,
 		"loadArticle" : loadArticle,
+		"loadSubColumn": loadSubColumn,
 		"html"  : html,
 		"addNum": addNum,
 		"loadTopInviteTender" : yy.GetTopInviteTender,
