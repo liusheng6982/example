@@ -19,7 +19,7 @@
 }
 .blockContent th {
     text-align: right;
-    width: 80px;
+    width: 100px;
     font-weight: normal;
     color: #999;
     vertical-align: top;
@@ -35,7 +35,7 @@ td, th {
   }
 
   h3, .h3 {
-    font-size: 24px;
+    font-size: 20px;
   }
 </style>
 <section class="yy-news">
@@ -46,25 +46,31 @@ td, th {
         <h3>项目概况</h3>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
           <tbody>
+              <tr>
+                  <th>医院</th>
+                  <td width="380px;">{{$projectInfo.CompanyName}}</td>
+                  <th></th>
+                  <td></td>
+                </tr>
             <tr>
               <th>编号</th>
-              <td width="400px;">{{$projectInfo.ProjectNo}}</td>
+              <td width="380px;">{{$projectInfo.ProjectNo}}</td>
               <th>名称</th>
-              <td>{{ $projectInfo.ProjectName}}</td>
+              <td>{{ $projectInfo.ProjectName }}</td>
             </tr>
+            {{ if eq $projectInfo.ProjectType 1}}
             <tr>
               <th>开标时间</th>
-              <td>{{$projectInfo.OpenTenderTime}}</td>
+              <td>{{$projectInfo.InviteOpenTenderTime}}</td>
               <th>招标截止日期</th>
-              <td>{{$projectInfo.SubmitTenderEndTime}}</td>
+              <td>{{$projectInfo.InviteSubmitTenderEndTime}}</td>
             </tr>
+            {{ end }}
             <tr>
                 <th>联系人</th>
-                <td colspan="3">{{$projectInfo.Contact}}</td>
-            </tr>
-            <tr>
-                <<th>联系电话</th>
-                <td colspan="3">{{$projectInfo.ContactPhone}}</td>
+                <td>{{$projectInfo.Contact}}</td>
+                <th>联系电话</th>
+                <td>{{$projectInfo.ContactPhone}}</td>
             </tr>
           </tbody>
         </table>
@@ -73,7 +79,7 @@ td, th {
       <div class="block">
         <h3>公告内容</h3>
         <p>
-            {{$projectInfo.Content}}
+            {{$projectInfo.ProjectContent}}
         </p>
 
       </div>
