@@ -178,7 +178,7 @@
                 {{ $columns := loadColumn }}
                 {{ $path := .path }}
                 {{ range $k,$v :=  $columns }}
-                    <li class="wow fadeInDown" data-wow-delay="0s"><a class="{{ if eq $v.Url $path }}active{{end}}" href="{{$v.Url}}">{{$v.Name}}</a></li>
+                    <li class="wow fadeInDown" data-wow-delay="0s"><a class="{{ if hasPrefix $path $v.Url }}active{{end}}" href="{{$v.Url}}">{{$v.Name}}</a></li>
                 {{end}}
             </ul>
         </div><!-- /.navbar-collapse -->

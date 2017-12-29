@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"strings"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"html/template"
@@ -46,6 +47,8 @@ func initRouteFrontend()   *gin.Engine{
 		"loadTopRecommend":yy.GetTopRecommendInviteTender,
 		"loadTopWinBid":yy.GetTopWinBidInviteTender,
 		"loadAllProject":loadAllProject,
+		"hasPrefix": HasPrefix,
+		"substring": Substring,
 	})
 	engine.LoadHTMLGlob("webroot/templates/frontend/**/*")
 	engine.GET("/ping", func(c *gin.Context) {
@@ -56,7 +59,7 @@ func initRouteFrontend()   *gin.Engine{
 }
 
 func regFrontRoute()  {
-	columns := cms.GetAllColumnsToShow()
+	columns := cms.GetAllColumnsToRoute()
 	indexPage := ""
 	for k,column := range *columns{
 		if k == 0 {
@@ -81,6 +84,18 @@ func regFrontRoute()  {
 	FrontendRoute.GET ("/registry",frontend.RegistryShow)
 	FrontendRoute.POST("/registry",frontend.Registry)
 	
+}
+
+func Substring(str, split string) string{
+	index := strings.LastIndex(str, split)
+	if( index > 0 ){
+		return str[0:index]
+	}
+	return str
+}
+
+func HasPrefix(str, substr string) bool{
+	return strings.HasPrefix(str, substr)
 }
 
 func addNum(x int, y int )int{

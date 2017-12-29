@@ -2,25 +2,75 @@
 {{template "navbar.html" .}}
 {{template "slider.html" .}}
 
-{{ $columns := loadSubColumn .path}}
-<nav id="nav">
-    <ul>
-       <li><a href="#" class="active">首页</a></li>
-       <li><a href="#">分类</a></li>
-       <li><a href="#">特色百科</a></li>
-       <li><a href="#">用户</a></li>
-       <li><a href="#">权威合作</a></li>
-       <li><a href="#">手机百科</a></li>
-    </ul>
-  </nav>
+{{$path := .path}}
+{{ $columns := substring $path "/" | loadSubColumn  }}
+<style>
+.csort{
+    margin: 10px auto;
+    padding: 30px;
+    border: 0px solid;
+}
 
-<ul class="main-nav nav navbar-nav navbar-right">
+.csort ul{
+    list-style:none;
+    margin: 5px;
+    padding: 5px;
+}
+
+.csort ul li{
+    height: 30px;
+    float:left;
+    border: 1px solid gray;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+.csort ul li a:active, .csort ul li a{
+    height: 100%;
+
+}
+
+.thisclass{
+    background-color: brown;
+}
+
+
    
-    {{ $path := .path }}
-    {{ range $k,$v :=  $columns }}
-        <li class="wow fadeInDown" data-wow-delay="0s"><a class="{{ if eq $v.Url $path }}active{{end}}" href="{{$v.Url}}">{{$v.Name}}</a></li>
-    {{end}}
-</ul>
 
+
+</style>
+<div class="container">
+    <div class="case-warp csort">
+        <div class="case-sort">
+            <ul class="case-fenlei">
+                {{ range $k,$v :=  $columns }}
+                    <li class="cat-item"><a class="{{ if eq $v.Url $path }}thisclass{{end}}" href="{{$v.Url}}">{{$v.Name}}</a></li>
+                {{end}}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+        <div class="col-md-offset-1 col-md-9 yy-news-body">
+            <div class="row">
+                <div class="yy-news-list">
+                    <ul class="met-page-ajax">
+                            {{ $page := loadArticles .path .pageSize .pageNo }}
+                            {{range $k,$v := $page.Rows}}
+                                {{ if eq $k 0 }}
+                                    {{ $article := printf "%d" $v.Id  | loadArticle }}
+                                     <p>
+                                         {{$article.Content | html}}
+                                     </p>
+                                {{end}}
+                            {{end}}
+                    </ul>
+                </div>
+            </div>
+            <div class="row" style="margin: 15px">
+            </div>
+        </div>
+</div>
 {{template "bottom.html" .}}
 {{template "footerjs.html" .}}
