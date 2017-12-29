@@ -44,7 +44,7 @@
         <div class="case-sort">
             <ul class="case-fenlei">
                 {{ range $k,$v :=  $columns }}
-                    <li class="cat-item"><a class="{{ if eq $v.Url $path }}thisclass{{end}}" href="{{$v.Url}}">{{$v.Name}}</a></li>
+                    <li class="cat-item {{ if eq $v.Url $path }}thisclass{{end}}"><a class="" href="{{$v.Url}}">{{$v.Name}}</a></li>
                 {{end}}
             </ul>
         </div>
