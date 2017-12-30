@@ -18,12 +18,12 @@
         <div class="col-md-offset-1 col-md-9 yy-news-body">
             <div class="row">
                 <div class="yy-news-list">
-                    <ul class="met-page-ajax">
+                    <ul class="met-page-ajax" style="margin:10px auto;padding:5px;border:1px solid #E4E5E9;overflow:hidden;">
                             {{ $page := loadArticles .path .pageSize .pageNo }}
                             {{range $k,$v := $page.Rows}}
                                 {{ if eq $k 0 }}
                                     {{ $article := printf "%d" $v.Id  | loadArticle }}
-                                     <p>
+                                     <p >
                                          {{$article.Content | html}}
                                      </p>
                                 {{end}}
