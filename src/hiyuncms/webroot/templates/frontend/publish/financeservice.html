@@ -5,51 +5,14 @@
 {{$path := .path}}
 {{ $columns := substring $path "/" | loadSubColumn  }}
 <style>
-.csort{
-    margin: 10px auto;
-    padding: 30px;
-    border: 0px solid;
-}
-
-.csort ul{
-    list-style:none;
-    margin: 5px;
-    padding: 5px;
-}
-
-.csort ul li{
-    height: 30px;
-    float:left;
-    border: 1px solid gray;
-    margin-left: 5px;
-    padding: 5px;
-}
-
-.csort ul li a:active, .csort ul li a{
-    height: 100%;
-
-}
-
-.thisclass{
-    background-color: brown;
-}
-
-
    
-
-
 </style>
 <div class="container">
-    <div class="case-warp csort">
-        <div class="case-sort">
-            <ul class="case-fenlei">
-                {{ range $k,$v :=  $columns }}
-                    <li class="cat-item {{ if eq $v.Url $path }}thisclass{{end}}"><a class="" href="{{$v.Url}}">{{$v.Name}}</a></li>
-                {{end}}
-            </ul>
-        </div>
-    </div>
-</div>
+        {{ range $k,$v :=  $columns }}
+        <a href="{{$v.Url}}"><button type="button" class="btn {{ if eq $v.Url $path }}btn-primary{{end}}">{{$v.Name}}</button></a>
+        {{end}}
+      </div>
+
 
 <div class="container">
         <div class="col-md-offset-1 col-md-9 yy-news-body">
