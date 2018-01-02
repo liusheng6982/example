@@ -11,25 +11,27 @@
             <li class="sitenav-item sitenav-login">
                 {{ $user := .sessionInfo }}
 
-                        {{if eq "" $user.UserName }}
+                {{if eq "" $user.UserName }}
                 <div class="sitenav-item-bd js_nologin">
                     <a rel="nofollow" href="javascript:javascript:location.href='/userlogin';" id="js_login_btn" >登录</a>
                 </div>
-                        {{else}}
+                {{else}}
                 <div class="sitenav-item-bd js_login" style="display:block;">
                     <a rel="nofollow" href="#" target="_blank" class="link-name" id="js_user_name2">{{$user.UserName}}</a>
                 </div>
-                        {{end}}
+                {{end}}
 
             </li>
             <li class="sitenav-item sitenav-register">
+                {{if eq "" $user.UserName }}
                 <div class="sitenav-item-bd js_nologin">
-
                     <a rel="nofollow" href="javascript:location.href='/registry';" id="js_register_btn">注册</a>
                 </div>
+                {{else}}
                 <div class="sitenav-item-bd js_login" style="display:none;">
-                    <a rel="nofollow" href="" class="link-loginout" id="js_loginout">退出</a>
+                    <a rel="nofollow" href="/userlogout" class="link-loginout" id="js_loginout">退出</a>
                 </div>
+                {{end}}
             </li>
         </ul>
         <ul class="site-nav-fr">
