@@ -2,6 +2,7 @@ package routes
 
 import (
 	"hiyuncms/controllers/yy"
+	"hiyuncms/controllers/frontend"
 )
 
 func init(){
@@ -16,5 +17,7 @@ func init(){
 	
 	FrontendRoute.GET ("/projectdetail",  yy.InviteTenderDetail)
 
+	FrontendRoute.GET ("/novip",  frontend.NoVip)
+	FrontendRoute.GET ("/vipexpired", frontend.VipExpired)
 }
 

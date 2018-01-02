@@ -15,7 +15,7 @@ func InviteTenderListShow(c *gin.Context){
 	c.HTML(http.StatusOK, "invitetenderlist.html", gin.H{
 		"bodyCss":"no-skin",
 		"mainMenu" :"招标项目管理",
-		"user":controllers.GetSessionUser(c),
+		"sessionInfo":controllers.GetSessionUser(c),
 	})
 }
 
@@ -27,6 +27,14 @@ func InviteTenderDetail(c *gin.Context){
 	sessionInfo := frontend.GetSessionInfo(c)
 	if sessionInfo.UserName == "" {
 		c.Redirect(http.StatusFound, "/userlogin")
+		return
+	}
+	if sessionInfo.VipLevel == 0  {
+		c.Redirect(http.StatusFound, "/novip")
+		return
+	}
+	if sessionInfo.VipExpired == 1{
+		c.Redirect(http.StatusFound, "/vipexpired")
 		return
 	}
 	log.Printf("%+v", projectDetail)

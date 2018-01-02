@@ -16,6 +16,9 @@ import (
 	"hiyuncms/config"
 )
 
+/**
+用户登录界面
+ */
 func UserLoginShow(c * gin.Context)  {
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"path":"",
@@ -23,6 +26,9 @@ func UserLoginShow(c * gin.Context)  {
 	})
 }
 
+/**
+用户登录动作
+ */
 func UserLogin(c * gin.Context)  {
 	vcode := c.PostForm("vcode")
 	session := sessions.Default(c)
@@ -85,6 +91,9 @@ func UserLogin(c * gin.Context)  {
 	}
 }
 
+/**
+用户注册界面显示
+ */
 func RegistryShow(c * gin.Context)  {
 	c.HTML(http.StatusOK, "registry.html", gin.H{
 		"path":"",
@@ -93,6 +102,9 @@ func RegistryShow(c * gin.Context)  {
 	})
 }
 
+/**
+用户注册
+ */
 func Registry(c * gin.Context)  {
 	isSuccess := true
 	msg := ""
@@ -155,11 +167,39 @@ func Registry(c * gin.Context)  {
 	})
 }
 
+/**
+用户登出
+ */
 func Logout(c *gin.Context)  {
 	ClearSessionInfo(c)
 	c.Redirect(http.StatusFound, "/")
 }
 
+/**
+用户没有成为VIP
+ */
+func NoVip(c *gin.Context){
+	c.HTML(http.StatusOK, "novip.html", gin.H{
+		"path":"",
+		"sessionInfo":GetSessionInfo(c),
+		"regsuccess":false,
+	})
+}
+
+/**
+VIP过期
+ */
+func VipExpired(c *gin.Context)  {
+	c.HTML(http.StatusOK, "vipexpired.html", gin.H{
+		"path":"",
+		"sessionInfo":GetSessionInfo(c),
+		"regsuccess":false,
+	})
+}
+
+/**
+单点登录token验证
+ */
 func Verify(c *gin.Context)  {
 	type  Verify struct{
 		AppId string

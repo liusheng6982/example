@@ -1,0 +1,110 @@
+{{template "headerjs.html" .}}
+
+<link href="/static/userregistry/code.css" rel="stylesheet">
+
+
+
+{{template "navbar.html" .}}
+<div class="login-box f-mt10 f-pb50">
+    <div class="main bgf">
+        选择会员类型
+    </div>
+</div>
+<div class="m-sPopBg" style="z-index:998;"></div>
+
+
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}
+
+<script src="/static/plugin/ajaxfileupload.js"></script>
+<script>
+    jQuery(function(){
+
+        //第一页的确定按钮
+        $("#btn_part1").click(function(){
+            $(".part1").hide();
+            $(".part2").show();
+            $(".step li").eq(1).addClass("on");
+        });
+
+        $("#btn_part2-0").click(function () {
+            $(".part1").show();
+            $(".part2").hide();
+        });
+        //第二页的确定按钮
+        $("#btn_part2").click(function(){
+            //if(!verifyCheck._click()) return;
+            var chk_value =[];
+            $('input[name="company-type"]:checked').each(function(){
+                chk_value.push($(this).val());
+            });
+            if( chk_value.length == 0 ){
+                alert("其选择公司类型！")
+                return;
+            }
+
+            var boj = {
+                        CompanyName  : $("input[name='CompanyName']").val(),
+                        UserName     : $("input[name='UserName']").val(),
+                        UserPhone    : $("input[name='UserPhone']").val(),
+                        UserPassword : $("input[name='UserPassword']").val(),
+                        company_type : chk_value,
+                        vip_type     : $("input[name='vip-type']:checked").val()
+            }
+
+            if( boj.CompanyName == "" ){
+                alert("公司名称必填！")
+                return;
+            }
+
+            if( boj.UserName == "" ){
+                alert("UserName！")
+                return;
+            }
+
+
+            $.ajaxFileUpload({
+                url:"registry",
+                secureuri:false,
+                fileElementId:$("input[name='license-img']").attr("id"),
+                dataType:'json',
+                data:boj,
+                type:'POST',
+                success:function(data){
+                    if(data.regsuccess){
+                        $(".part2").hide();
+                        $(".part4").show();
+                        $(".step li").eq(2).addClass("on");
+                    }
+                    else {
+                        alert(data.msg)
+                    }
+                },
+                error:function(data){
+                    alert("error"+data.msg);
+                }
+            });
+            //$(".part3").show();
+        });
+        //第三页的确定按钮
+        $("#btn_part3").click(function(){
+            //if(!verifyCheck._click()) return;
+            $(".part3").hide();
+            $(".part4").show();
+            $(".step li").eq(2).addClass("on");
+            countdown({
+                maxTime:10,
+                ing:function(c){
+                    $("#times").text(c);
+                },
+                after:function(){
+                    window.location.href="my.html";
+                }
+            });
+        });
+    });
+    function showoutc(){$(".m-sPopBg,.m-sPopCon").show();}
+    function closeClause(){
+        $(".m-sPopBg,.m-sPopCon").hide();
+    }
+</script>
