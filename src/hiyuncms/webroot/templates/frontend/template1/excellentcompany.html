@@ -20,8 +20,9 @@
         <div class="title">
             <span>优质供应商</span>
         </div>
+    {{ $user := .sessionInfo }}
         <div class="center">
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
+            <label><a href="http://42.202.144.67:7732/BIZ/Purchase/BizPurchase/PurchaseYYGTest?AccessToken={{$user.AccessToken}}" target="_blank"><img src=""><span>立即访问</span></a></label>
             <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
             <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
             <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
