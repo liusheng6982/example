@@ -17,6 +17,13 @@ func init() {
 	}
 }
 
+func DelToken(token string)  {
+	_, err := redisConn.Do("DEl" , token)
+	if err != nil {
+		log.Printf("set token出错！%s\n", err.Error() )
+	}
+}
+
 func SetToken(token string, sessionInfo * UserSession)  {
 	bytes, _ := json.Marshal( sessionInfo )
 	_, err := redisConn.Do("SET" , token, string(bytes))

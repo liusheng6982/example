@@ -171,7 +171,9 @@ func Registry(c * gin.Context)  {
 用户登出
  */
 func Logout(c *gin.Context)  {
+	sessionInfo := GetSessionInfo(c)
 	ClearSessionInfo(c)
+	DelToken( sessionInfo.AccessToken )
 	c.Redirect(http.StatusFound, "/")
 }
 
