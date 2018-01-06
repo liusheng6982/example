@@ -292,6 +292,10 @@
                 alert("UserName！")
                 return;
             }
+            if( $("input[name='license-img']").val() == ''){
+                alert("请上传营业执照");
+                return;
+            }
 
 
             $.ajaxFileUpload({

@@ -9,20 +9,22 @@ var (
 	gatewayUrl = "http://dysmsapi.aliyuncs.com/"
 	accessKeyId = "LTAIDICSO5JOkFV2"
 	accessKeySecret = "wL64iUsD1CRm7hme4J5ATuWxfApaL3"
-	phoneNumbers = "13918015069"
 	signName = "e医链"
 	templateCode = "SMS_119086797"
-	templateParam = "{\"code\":\"1234\"}"
-)
+)	
 
-func TestSms() {
+func SendSms( code,mobile string ){
+	templateParam1 := fmt.Sprintf("{\"code\":\"%s\"}", code)
 	smsClient := app.NewSmsClient(gatewayUrl)
-	if result, err := smsClient.Execute(accessKeyId, accessKeySecret, phoneNumbers, signName, templateCode, templateParam); err != nil {
+	if result, err := smsClient.Execute(accessKeyId, accessKeySecret, mobile, signName, templateCode, templateParam1); err != nil {
 		fmt.Println("error:", err.Error())
 	} else {
 		for key, value := range result {
 			fmt.Println("key:", key, " value:",value)
 		}
 	}
+}
 
+func TestSms() {
+	SendSms("1235", "13918015069")
 }

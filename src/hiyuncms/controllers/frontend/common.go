@@ -16,6 +16,7 @@ const(
 
 	FRONT_USER_SESSION    = "hiyuncms.front.User"
 	FRONT_CAPTCHA_SESSION = "hiyumcms.front.captcha"
+	FRONT_SMS = "hiyumcms.front.sms"
 )
 type UserSession struct {
 	UserId            int64  		`json:"userId"`
@@ -46,6 +47,22 @@ func ClearSessionInfo(c * gin.Context){
 	session.Save()
 }
 
+func SendSMS(c * gin.Context){
+	d := make([]byte, 6)
+	mobile := c.PostForm("UserPone")
+	ss := ""
+	rd := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for v := range d {
+		d[v] = byte(rd.Intn(10))
+		ss = fmt.Sprintf("%s%d", ss, d[v])
+	}
+	session := sessions.Default(c)
+	sessionSmsKey := fmt.Sprintf("%s%s",FRONT_SMS,mobile)
+	session.Delete(sessionSmsKey)
+	session.Set(sessionSmsKey, ss)
+	session.Save()
+	util.SendSms(ss, mobile)
+}
 
 func Captcha(c * gin.Context) {
 	d := make([]byte, 4)

@@ -102,6 +102,10 @@ func RegistryShow(c * gin.Context)  {
 	})
 }
 
+func SendMsg(c * gin.Context){
+	
+}
+
 /**
 用户注册
  */
@@ -116,6 +120,8 @@ func Registry(c * gin.Context)  {
 
 	companyType := c.PostForm("company_type")
 	vipType := c.PostForm("vip_type")
+
+	
 
 	file, header, err := c.Request.FormFile("license-img")
 	if err != nil {
