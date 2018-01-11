@@ -9,6 +9,7 @@ import (
 	"hiyuncms/controllers/frontend"
 	"strconv"
 	"log"
+	"fmt"
 )
 
 func InviteTenderListShow(c *gin.Context){
@@ -88,4 +89,9 @@ func InviteTenderEdit(c * gin.Context){
 		}
 		c.String(http.StatusOK, "%s", "success")
 	}
+}
+
+func pushInviteTenderProject( c * gin.Context ){
+	projectNo,_ := c.Get("projectNo")
+	fmt.Printf("proejctNo=%s", projectNo)
 }
