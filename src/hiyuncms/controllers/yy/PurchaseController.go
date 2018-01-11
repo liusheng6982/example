@@ -73,3 +73,41 @@ func PurchaseEdit(c * gin.Context){
 		c.String(http.StatusOK, "%s", "success")
 	}
 }
+
+func PushPurchaseProject( c * gin.Context ){
+	type YyPorjectTemp struct {
+		ProjectName    						string			`form:"projectName"`
+		ProjectNo      						string			`form:"projectNo"`    //项目编号
+		ProjectContent 						string			`form:"projectContent"`  //内容
+		CompanyId         					int64    	    `form:"companyId"`         //公司ID
+		CompanyName       					string   	    `form:"companyName"`    //公司名称
+		ContactPhone   						string 	   		`form:"contactPhone"`    //联系人电话
+		Contact	   	   						string          `form:"contact"`    	//联系人
+		PurchaseType   						string			`form:"varchar(20)"`   //合格供应商，定向，公开
+		PurchaseExpiredDate                 models.Date 	`form:"DateTime"`      //采购有效期
+		PurchaseQuotePriceEndTime   		models.Date		`form:"DateTime"`      //报价截止时间
+		PurchaseDeliveryTime                models.Date		`form:"DateTime"`      //交货时间
+		BusinessCategory					string			`form:"varchar(20)"`   //建设、理疗器械、后勤物资、行政物资
+	}
+	purchase := yy.YyPorject{}
+	purchase.ProjectType = 2
+	purchase.ImpFlag = 1
+	purchaseTemp := YyPorjectTemp{}
+	bindErr := c.Bind( &purchaseTemp)
+	if bindErr != nil {
+		log.Printf("bind form出错:%s\n",models.GetErrorInfo(bindErr))
+	}
+	models.CopyStruct(purchaseTemp,purchase)
+	_, err := models.DbMaster.Insert( &purchase)
+	if err != nil {
+		log.Printf("bind form出错:%s\n",models.GetErrorInfo(bindErr))
+		c.JSON(http.StatusOK, gin.H{
+			"success":"false",
+			"msg":"推送失败",
+		})
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"success":"true",
+		"msg":"推送成功",
+	})
+}

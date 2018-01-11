@@ -21,5 +21,6 @@ func init(){
 	FrontendRoute.GET ("/vipexpired", frontend.VipExpired)
 
 	FrontendRoute.POST("/sendSms", frontend.SendSMS )
+	FrontendRoute.POST("PushProject", yy.PushPurchaseProject)
 }
 
