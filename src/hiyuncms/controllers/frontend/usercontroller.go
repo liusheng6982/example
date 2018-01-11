@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"github.com/satori/go.uuid"
 	"hiyuncms/config"
+	"net/url"
+	"io/ioutil"
 )
 
 /**
@@ -162,6 +164,50 @@ func Registry(c * gin.Context)  {
 		log.Printf("%s\n", err.Error() )
 		isSuccess = false
 	}
+
+	{
+		data := make(url.Values)
+		data["type"] = []string{"YYG"}
+		companyInfo := fmt.Sprintf("{\"orgId\":\"%d\", \"orgName\":\"%s\", \"orgRoleName\":\"10\"}", company.Id, company.CompanyName)
+		data["data"] = []string{companyInfo}
+
+		res, err := http.PostForm("http://219.239.33.98:8080/yyg/organizationHS.do?submitSupplierOrgInfo", data)
+		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
+		if err == nil {
+			body, err1 := ioutil.ReadAll(res.Body)
+			log.Printf("%s\n", body)
+			if err1 != nil {
+				log.Printf("err1=%s\n", err1)
+			}
+		} else {
+			log.Printf("err=%s\n", err)
+		}
+	}
+
+	{
+		data := make(url.Values)
+		data["type"] = []string{"YYG"}
+		data["userId"] = []string{fmt.Sprintf("%d",user.Id)}
+		data["userPhone"] = []string{user.UserPhone}
+		data["username"] = []string{user.UserName}
+		data["companyId"] = []string{fmt.Sprintf("%d",company.Id)}
+		data["companyName"] = []string{company.CompanyName}
+		data["companyType"] = []string{company.CompanyType}
+		data["password"] = []string{user.UserPassword}
+
+		res, err := http.PostForm("http://219.239.33.98:8080/yyg/organizationHS.do?submitUserInfo", data)
+		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
+		if err == nil {
+			body, err1 := ioutil.ReadAll(res.Body)
+			log.Printf("%s\n", body)
+			if err1 != nil {
+				log.Printf("err1=%s\n", err1)
+			}
+		} else {
+			log.Printf("err=%s\n", err)
+		}
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"path":"",
 		"regsuccess":isSuccess,
