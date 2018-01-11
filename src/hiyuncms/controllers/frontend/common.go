@@ -10,6 +10,7 @@ import (
 	"reflect"
 	"log"
 	"encoding/json"
+	"net/http"
 )
 
 const(
@@ -61,7 +62,16 @@ func SendSMS(c * gin.Context){
 	session.Delete(sessionSmsKey)
 	session.Set(sessionSmsKey, ss)
 	session.Save()
-	util.SendSms(ss, mobile)
+	err := util.SendSms(ss, mobile)
+	if err == nil {
+		c.JSON(http.StatusOK, gin.H{
+			"success": true,
+		})
+	}else{
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+		})
+	}
 }
 
 func Captcha(c * gin.Context) {

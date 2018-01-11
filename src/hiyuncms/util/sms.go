@@ -13,7 +13,7 @@ var (
 	templateCode = "SMS_119086797"
 )	
 
-func SendSms( code,mobile string ){
+func SendSms( code,mobile string ) error{
 	templateParam1 := fmt.Sprintf("{\"code\":\"%s\"}", code)
 	smsClient := app.NewSmsClient(gatewayUrl)
 	if result, err := smsClient.Execute(accessKeyId, accessKeySecret, mobile, signName, templateCode, templateParam1); err != nil {

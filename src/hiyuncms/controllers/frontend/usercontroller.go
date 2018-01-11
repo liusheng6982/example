@@ -102,9 +102,6 @@ func RegistryShow(c * gin.Context)  {
 	})
 }
 
-func SendMsg(c * gin.Context){
-	
-}
 
 /**
 用户注册

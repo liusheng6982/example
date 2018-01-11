@@ -47,7 +47,7 @@
                             <input name="UserName" type="text" maxlength="20" class="txt03 f-r3 required" tabindex="1" data-valid="isNonEmpty||between:3-20||isUname" data-error="用户名不能为空||用户名长度3-20位||只能输入中文、字母、数字、下划线，且以中文或字母开头" id="adminNo" />
                             <span class="ie8 icon-close close hide"></span>
                             <label class="icon-sucessfill blank hide"></label>
-                            <label class="focus"><span>3-20位，中文、字母、数字、下划线的组合，以中文或字母开头</span></label>
+                            <label class="focus"><span>用户姓名</span></label>
                             <label class="focus valid"></label>
                         </div>
                     </div>
@@ -89,25 +89,22 @@
                         </div>
                     </div>
                     <div class="item col-xs-12">
-                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>验证码：</span>
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>手机验证码：</span>
                         <div class="f-fl item-ifo">
-                            <input type="text" maxlength="4" class="txt03 f-r3 f-fl required" tabindex="4" style="width:167px" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" />
+                            <input type="text" maxlength="6" class="txt03 f-r3 f-fl required" tabindex="4" style="" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" />
                             <span class="ie8 icon-close close hide"></span>
-                            <label class="f-size12 c-999 f-fl f-pl10">
-                                <img src="images/yzm.jpg" />
-                            </label>
                             <label class="icon-sucessfill blank hide" style="left:380px"></label>
-                            <label class="focusa">看不清？<a href="javascript:;" class="c-blue">换一张</a></label>
+                            <label class="focusa"><a id="smssender" href="javascript:;" class="c-blue">点击获取</a></label>
                             <label class="focus valid" style="left:370px"></label>
                         </div>
                     </div>
-                    <div class="item col-xs-12" style="height:auto">
+                    <!--div class="item col-xs-12" style="height:auto">
                         <span class="intelligent-label f-fl">&nbsp;</span>
                         <p class="f-size14 required"  data-valid="isChecked" data-error="请先同意条款">
                             <input type="checkbox" checked /><a href="javascript:showoutc();" class="f-ml5">我已阅读并同意条款</a>
                         </p>
                         <label class="focus valid"></label>
-                    </div>
+                    </div-->
                     <div class="item col-xs-12">
                         <span class="intelligent-label f-fl">&nbsp;</span>
                         <div class="f-fl item-ifo">
@@ -148,6 +145,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">&nbsp;</div>
 
                     <div class="row">
                         <div class="col-md-2">
@@ -159,7 +157,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="row">&nbsp;</div>
 
                     <div class="row">
                         <div class="col-md-2">
@@ -342,4 +340,18 @@
     function closeClause(){
         $(".m-sPopBg,.m-sPopCon").hide();
     }
+
+    $("#smssender").click(function () {
+        if( $("input[name='UserPhone']").val() == null ){
+            alert("请你输入手机号！")
+            return;
+        }
+        $.post({
+            url:"/sendSms",
+            data:{"UserPone": $("input[name='UserPhone']").val()},
+            success:function (data, textStatus, jqXHR) {
+
+            },
+            dataType:"json"});
+    })
 </script>

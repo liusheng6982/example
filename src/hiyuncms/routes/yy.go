@@ -19,5 +19,7 @@ func init(){
 
 	FrontendRoute.GET ("/novip",  frontend.NoVip)
 	FrontendRoute.GET ("/vipexpired", frontend.VipExpired)
+
+	FrontendRoute.POST("/sendSms", frontend.SendSMS )
 }
 
