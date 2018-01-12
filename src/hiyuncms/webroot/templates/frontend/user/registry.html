@@ -94,7 +94,7 @@
                             <input type="text" maxlength="6" class="txt03 f-r3 f-fl required" tabindex="4" style="" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" />
                             <span class="ie8 icon-close close hide"></span>
                             <label class="icon-sucessfill blank hide" style="left:380px"></label>
-                            <label class="focusa"><a id="smssender" href="javascript:;" class="c-blue">点击获取</a></label>
+                            <label class="focusa"><input class="btn btn-default" type="button" id="btn" value="免费获取验证码" onclick="sendemail()" /> </label>
                             <label class="focus valid" style="left:370px"></label>
                         </div>
                     </div>
@@ -341,17 +341,38 @@
         $(".m-sPopBg,.m-sPopCon").hide();
     }
 
-    $("#smssender").click(function () {
-        if( $("input[name='UserPhone']").val() == null ){
+    var countdown=60;
+     function sendemail() {
+         countdown = 60;
+         console.log("adfasdfasdfasdf");
+         if( $("input[name='UserPhone']").val() == '' ){
             alert("请你输入手机号！")
             return;
         }
-        $.post({
-            url:"/sendSms",
-            data:{"UserPone": $("input[name='UserPhone']").val()},
-            success:function (data, textStatus, jqXHR) {
-
+        $.post("/sendSms", {"UserPone": $("input[name='UserPhone']").val()},
+            function (data, textStatus, jqXHR) {
+                if( data.success ){
+                    var obj = $("#btn");
+                    settime(obj);
+                }
             },
-            dataType:"json"});
-    })
+            "json");
+    }
+
+    function settime(obj) { //发送验证码倒计时
+        if (countdown == 0) {
+            obj.attr('disabled',false);
+            //obj.removeattr("disabled");
+            obj.val("免费获取验证码");
+            countdown = 60;
+            return;
+        } else {
+            obj.attr('disabled',true);
+            obj.val("重新发送(" + countdown + ")");
+            countdown--;
+        }
+        setTimeout(function() {
+                    settime(obj) }
+                ,1000)
+    }
 </script>
