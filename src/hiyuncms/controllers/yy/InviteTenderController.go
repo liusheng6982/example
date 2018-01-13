@@ -218,16 +218,3 @@ func PushInviteTenderProject( c * gin.Context ){
 		"msg":fmt.Sprintf("调用成功,projectNo=%s", project.ProjectNo),
 	})
 }
-
-var EnableDecoderUseNumber = false
-
-func Bind(req *http.Response, obj interface{}) error {
-	decoder := json.NewDecoder(req.Body)
-	if EnableDecoderUseNumber {
-		decoder.UseNumber()
-	}
-	if err := decoder.Decode(obj); err != nil {
-		return err
-	}
-	return nil
-}
