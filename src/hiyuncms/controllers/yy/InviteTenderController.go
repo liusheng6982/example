@@ -10,6 +10,9 @@ import (
 	"strconv"
 	"log"
 	"fmt"
+	"net/url"
+	"encoding/json"
+	"io/ioutil"
 )
 
 func InviteTenderListShow(c *gin.Context){
@@ -91,7 +94,140 @@ func InviteTenderEdit(c * gin.Context){
 	}
 }
 
-func pushInviteTenderProject( c * gin.Context ){
-	projectNo,_ := c.Get("projectNo")
-	fmt.Printf("proejctNo=%s", projectNo)
+
+
+func PushInviteTenderProject( c * gin.Context ){
+	type ProjectInfo struct{
+		isSaleBidServicefee string
+		preBidServicePayStatus string
+		signUpStartTime string
+		industryName string
+		BidStartTime string `json:"bidStartTime"`
+		PreDocDownloadStartTime string `json:"preDocDownloadStartTime"`
+		isSignUp string `json:"is_sign_up"`
+		preTechnicalOpenBidStartTime string
+		projectAreaName string
+		preisSaleDocfee string
+		bidServicePayStatusMemo string
+		agenciesId string
+		bidServicePayStatus string
+		preBidServiceFeeOrderNo string
+		preSignUpEndTime string
+		preStageId string
+		bidStatus string
+		preSignUpStartTime string
+		docSaleEndTime string
+		bidServiceFeeOrderNo string
+		docDownloadStartTime string
+		bidDocFeeOrderNo string
+		bidDocPayStatusMemo string
+		agentCode string
+		isPack string
+		stageType string
+		palceAddress string
+		limitPrice string
+		useStatus string
+		docSaleStartTime string
+		preBidStartTime string
+		createTime string
+		buyersid string
+		purchaserCode string
+		tenderMethod string
+		packInfoList string
+		stageId string
+		qualificationMethod string
+		preIsSaleBidServicefee string
+		isTwoBidOpening string
+		tenderNo string
+		preBidDocPayStatus string
+		tenderType string
+		archiveStatus string
+		preBidServicePayStatusMemo string
+		preDocSaleEndTime string
+		openBidStartTime string
+		preOpenBidStartTime string
+		prebidStatus string
+		budgetMoney string
+		isSaleDocfee string
+		docDownloadEndTime string
+		tenderId string
+		purchaserName string
+		preBidDocPayStatusMemo string
+		purcategoryNames string
+		preIsHaveBidDoc string
+		preIsSignUp string
+		isRemoteOpening string
+		preBidDocFeeOrderNo string
+		tenderNoNumber string
+		agentName string
+		BuyersName string `json:"buyersName"`
+		BidEndTime string `json:"bidEndTime"`
+		IsHaveBidDoc string `json:"isHaveBidDoc"`
+		BidDocPayStatus string `json:"bidDocPayStatus"`
+		TenderName string `json:"tenderName"`
+		PreDocSaleStartTime string `json:"preDocSaleStartTime"`
+		bidBond string
+		signUpEndTime string
+		openBidUnPriceStartTime string
+		preBidEndTime string
+		preDocDownloadEndTime string
+	}
+	type Data struct {
+		TenderProjectInfo  ProjectInfo `json:"tenderProjectInfo"`
+	}
+	type ProjecgNo struct {
+		ProjectNo string `json:"projectNo"`
+	}
+	project := ProjecgNo{}
+
+	err := c.BindJSON( &project)
+	if err != nil {
+		log.Printf("获取项目时绑定参数出错%s\n",models.GetErrorInfo(err))
+	}
+
+	fmt.Printf("proejctNo=%s", project.ProjectNo)
+
+
+	{//项目同步
+		data := make(url.Values)
+		data["tenderNo"] = []string{fmt.Sprintf("%d",project.ProjectNo)}
+		data["userName"] = []string{"daili"}
+		data["password"] = []string{"MTIzNDU2"}
+		data["tenderNoNumber"] = []string{"9f26ce0f5ce44146b42340ea31331fcf"}
+
+		res, err := http.PostForm("http://219.239.33.98:8080/yyg/tenderProjectInfoHS.do?getProjectInfoByCode", data)
+		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
+		if err == nil {
+			data := Data{}
+			//projectInfo := ProjectInfo{}
+			//data.TenderProjectInfo = projectInfo
+			//err1 := Bind(res, &data)
+			body, err1 := ioutil.ReadAll(res.Body)
+			json.Unmarshal(body, &data)
+			log.Printf("data=%v\n", data)
+			if err1 != nil {
+				log.Printf("err1=%s\n", err1)
+			}
+		} else {
+			log.Printf("err=%s\n", err)
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"success":true,
+		"msg":fmt.Sprintf("调用成功,projectNo=%s", project.ProjectNo),
+	})
+}
+
+var EnableDecoderUseNumber = false
+
+func Bind(req *http.Response, obj interface{}) error {
+	decoder := json.NewDecoder(req.Body)
+	if EnableDecoderUseNumber {
+		decoder.UseNumber()
+	}
+	if err := decoder.Decode(obj); err != nil {
+		return err
+	}
+	return nil
 }

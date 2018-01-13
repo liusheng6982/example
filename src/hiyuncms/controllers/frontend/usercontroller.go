@@ -165,7 +165,8 @@ func Registry(c * gin.Context)  {
 		isSuccess = false
 	}
 
-	{
+
+	{//组织结构同步
 		data := make(url.Values)
 		data["type"] = []string{"YYG"}
 		companyInfo := fmt.Sprintf("{\"orgId\":\"%d\", \"orgName\":\"%s\", \"orgRoleName\":\"10\"}", company.Id, company.CompanyName)
@@ -184,7 +185,7 @@ func Registry(c * gin.Context)  {
 		}
 	}
 
-	{
+	{//用户同步
 		data := make(url.Values)
 		data["type"] = []string{"YYG"}
 		data["userId"] = []string{fmt.Sprintf("%d",user.Id)}
