@@ -98,79 +98,79 @@ func InviteTenderEdit(c * gin.Context){
 
 func PushInviteTenderProject( c * gin.Context ){
 	type ProjectInfo struct{
-		isSaleBidServicefee string
-		preBidServicePayStatus string
-		signUpStartTime string
-		industryName string
+		IsSaleBidServicefee string `json:"isSaleBidServicefee"`
+		PreBidServicePayStatus string `json:"preBidServicePayStatus"`
+		SignUpStartTime string `json:"signUpStartTime"`
+		IndustryName string `json:"industryName"`
 		BidStartTime string `json:"bidStartTime"`
 		PreDocDownloadStartTime string `json:"preDocDownloadStartTime"`
-		isSignUp string `json:"is_sign_up"`
-		preTechnicalOpenBidStartTime string
-		projectAreaName string
-		preisSaleDocfee string
-		bidServicePayStatusMemo string
-		agenciesId string
-		bidServicePayStatus string
-		preBidServiceFeeOrderNo string
-		preSignUpEndTime string
-		preStageId string
-		bidStatus string
-		preSignUpStartTime string
-		docSaleEndTime string
-		bidServiceFeeOrderNo string
-		docDownloadStartTime string
-		bidDocFeeOrderNo string
-		bidDocPayStatusMemo string
-		agentCode string
-		isPack string
-		stageType string
-		palceAddress string
-		limitPrice string
-		useStatus string
-		docSaleStartTime string
-		preBidStartTime string
-		createTime string
-		buyersid string
-		purchaserCode string
-		tenderMethod string
-		packInfoList string
-		stageId string
-		qualificationMethod string
-		preIsSaleBidServicefee string
-		isTwoBidOpening string
-		tenderNo string
-		preBidDocPayStatus string
-		tenderType string
-		archiveStatus string
-		preBidServicePayStatusMemo string
-		preDocSaleEndTime string
-		openBidStartTime string
-		preOpenBidStartTime string
-		prebidStatus string
-		budgetMoney string
-		isSaleDocfee string
-		docDownloadEndTime string
-		tenderId string
-		purchaserName string
-		preBidDocPayStatusMemo string
-		purcategoryNames string
-		preIsHaveBidDoc string
-		preIsSignUp string
-		isRemoteOpening string
-		preBidDocFeeOrderNo string
-		tenderNoNumber string
-		agentName string
+		IsSignUp string `json:"isSignUp"`
+		PreTechnicalOpenBidStartTime string `json:"preTechnicalOpenBidStartTime"`
+		ProjectAreaName string `json:"projectAreaName"`
+		PreisSaleDocfee string `json:"preisSaleDocfee"`
+		BidServicePayStatusMemo string `json:"bidServicePayStatusMemo"`
+		AgenciesId string `json:"agenciesId"`
+		BidServicePayStatus string `json:"bidServicePayStatus"`
+		PreBidServiceFeeOrderNo string `json:"preBidServiceFeeOrderNo"`
+		PreSignUpEndTime string `json:"preSignUpEndTime"`
+		PreStageId string `json:"preStageId"`
+		BidStatus string `json:"bidStatus"`
+		PreSignUpStartTime string `json:"preSignUpStartTime"`
+		DocSaleEndTime string `json:"docSaleEndTime"`
+		BidServiceFeeOrderNo string `json:"bidServiceFeeOrderNo"`
+		DocDownloadStartTime string `json:"docDownloadStartTime"`
+		BidDocFeeOrderNo string `json:"bidDocFeeOrderNo"`
+		BidDocPayStatusMemo string `json:"bidDocPayStatusMemo"`
+		AgentCode string `json:"agentCode"`
+		IsPack string `json:"isPack"`
+		StageType string `json:"stageType"`
+		PalceAddress string `json:"palceAddress"`
+		LimitPrice string `json:"limitPrice"`
+		UseStatus string `json:"useStatus"`
+		DocSaleStartTime string `json:"docSaleStartTime"`
+		PreBidStartTime string `json:"preBidStartTime"`
+		CreateTime string 	`json:"createTime"`
+		Buyersid string	`json:"buyersid"`
+		PurchaserCode string	`json:"purchaserCode"`
+		TenderMethod string	`json:"tenderMethod"`
+		PackInfoList string	`json:"packInfoList"`
+		StageId string	`json:"stageId"`
+		QualificationMethod string	`json:"qualificationMethod"`
+		PreIsSaleBidServicefee string	`json:"preIsSaleBidServicefee"`
+		IsTwoBidOpening string	`json:"isTwoBidOpening"`
+		TenderNo string	`json:"tenderNo"`
+		PreBidDocPayStatus string	`json:"preBidDocPayStatus"`
+		TenderType string	`json:"tenderType"`
+		ArchiveStatus string	`json:"archiveStatus"`
+		PreBidServicePayStatusMemo string	`json:"preBidServicePayStatusMemo"`
+		PreDocSaleEndTime string	`json:"preDocSaleEndTime"`
+		OpenBidStartTime string	`json:"openBidStartTime"`
+		PreOpenBidStartTime string	`json:"preOpenBidStartTime"`
+		PrebidStatus string	`json:"prebidStatus"`
+		BudgetMoney string	`json:"budgetMoney"`
+		IsSaleDocfee string	`json:"isSaleDocfee"`
+		DocDownloadEndTime string	`json:"docDownloadEndTime"`
+		TenderId string	`json:"tenderId"`
+		PurchaserName string	`json:"purchaserName"`
+		PreBidDocPayStatusMemo string	`json:"preBidDocPayStatusMemo"`
+		PurcategoryNames string	`json:"purcategoryNames"`
+		PreIsHaveBidDoc string	`json:"preIsHaveBidDoc"`
+		PreIsSignUp string	`json:"preIsSignUp"`
+		IsRemoteOpening string	`json:"isRemoteOpening"`
+		PreBidDocFeeOrderNo string	`json:"preBidDocFeeOrderNo"`
+		TenderNoNumber string	`json:"tenderNoNumber"`
+		AgentName string	`json:"agentName"`
 		BuyersName string `json:"buyersName"`
 		BidEndTime string `json:"bidEndTime"`
 		IsHaveBidDoc string `json:"isHaveBidDoc"`
 		BidDocPayStatus string `json:"bidDocPayStatus"`
 		TenderName string `json:"tenderName"`
 		PreDocSaleStartTime string `json:"preDocSaleStartTime"`
-		bidBond string
-		signUpEndTime string
-		openBidUnPriceStartTime string
-		preBidEndTime string
-		preDocDownloadEndTime string
+		BidBond string  `json:"bidBond"`
+		SignUpEndTime string `json:"signUpEndTime"`
+		OpenBidUnPriceStartTime string `json:"openBidUnPriceStartTime"`
+		PreBidEndTime string `json:"preBidEndTime"`
+		PreDocDownloadEndTime string `json:"preDocDownloadEndTime"`
 	}
 	type Data struct {
 		TenderProjectInfo  ProjectInfo `json:"tenderProjectInfo"`
