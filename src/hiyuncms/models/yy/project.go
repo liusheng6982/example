@@ -13,6 +13,7 @@ type YyPorject struct {
 	ProjectContent 						string			`xorm:"text"`  			//内容
 	ProjectFile	        				string      	`xorm:"varchar(200)"`   //项目文件
 	ProjectRemark						string          `xorm:"varchar(2000)"`  //备注
+	ProjectAreaName 					string          `xorm:"varchar(100)"`  //备注
 	CompanyId         					int64    	    `xorm:"BIGINT"`         //公司ID
 	CompanyName       					string   	    `xorm:"varchar(50)"`    //公司名称
 	ContactPhone   						string 	   		`xorm:"varchar(30)"`    //联系人电话
@@ -39,6 +40,7 @@ type YyPorject struct {
 	Published        					int         	`xorm:"int"`           //是否发布
 	PublishedTime						models.Date  	`xorm:"DateTime"`      //发布时间
 	CreateTime          				models.Date 	`xorm:"DateTime"`      //创建时间
+
 
 	BusinessCategory					string			`xorm:"varchar(20)"`   //建设、理疗器械、后勤物资、行政物资
 }

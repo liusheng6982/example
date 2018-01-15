@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"encoding/json"
 	"io/ioutil"
+	"time"
 )
 
 func InviteTenderListShow(c *gin.Context){
@@ -97,7 +98,7 @@ func InviteTenderEdit(c * gin.Context){
 
 
 func PushInviteTenderProject( c * gin.Context ){
-	type ProjectInfo struct{
+	type TenderProjectInfo struct{
 		IsSaleBidServicefee string `json:"isSaleBidServicefee"`
 		PreBidServicePayStatus string `json:"preBidServicePayStatus"`
 		SignUpStartTime string `json:"signUpStartTime"`
@@ -133,7 +134,7 @@ func PushInviteTenderProject( c * gin.Context ){
 		Buyersid string	`json:"buyersid"`
 		PurchaserCode string	`json:"purchaserCode"`
 		TenderMethod string	`json:"tenderMethod"`
-		PackInfoList string	`json:"packInfoList"`
+		PackInfoList []string	`json:"packInfoList"`
 		StageId string	`json:"stageId"`
 		QualificationMethod string	`json:"qualificationMethod"`
 		PreIsSaleBidServicefee string	`json:"preIsSaleBidServicefee"`
@@ -173,7 +174,10 @@ func PushInviteTenderProject( c * gin.Context ){
 		PreDocDownloadEndTime string `json:"preDocDownloadEndTime"`
 	}
 	type Data struct {
-		TenderProjectInfo  ProjectInfo `json:"tenderProjectInfo"`
+		TenderProjectInfo  TenderProjectInfo `json:"tenderProjectInfo"`
+	}
+	type Temp struct {
+		Data Data `json:"data"`
 	}
 	type ProjecgNo struct {
 		ProjectNo string `json:"projectNo"`
@@ -190,7 +194,7 @@ func PushInviteTenderProject( c * gin.Context ){
 
 	{//项目同步
 		data := make(url.Values)
-		data["tenderNo"] = []string{fmt.Sprintf("%d",project.ProjectNo)}
+		data["tenderNo"] = []string{project.ProjectNo}
 		data["userName"] = []string{"daili"}
 		data["password"] = []string{"MTIzNDU2"}
 		data["tenderNoNumber"] = []string{"9f26ce0f5ce44146b42340ea31331fcf"}
@@ -198,16 +202,39 @@ func PushInviteTenderProject( c * gin.Context ){
 		res, err := http.PostForm("http://219.239.33.98:8080/yyg/tenderProjectInfoHS.do?getProjectInfoByCode", data)
 		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
 		if err == nil {
-			data := Data{}
-			//projectInfo := ProjectInfo{}
-			//data.TenderProjectInfo = projectInfo
-			//err1 := Bind(res, &data)
+			temp := Temp{}
 			body, err1 := ioutil.ReadAll(res.Body)
-			json.Unmarshal(body, &data)
-			log.Printf("data=%v\n", data)
 			if err1 != nil {
 				log.Printf("err1=%s\n", err1)
 			}
+			log.Printf("body=%s\n", body)
+			err2 := json.Unmarshal(body, &temp)
+			if err2 != nil {
+				log.Printf("err2=%s\n", err2)
+			}
+			log.Printf("data=%+v\n", temp)
+
+			project := yy.YyPorject{}
+			tProject :=  temp.Data.TenderProjectInfo
+			project.ProjectNo = tProject.TenderNo
+			project.ProjectName = tProject.TenderName
+			project.ProjectAreaName = tProject.ProjectAreaName
+			project.BusinessCategory = tProject.IndustryName
+			project.ImpId = tProject.TenderId
+			project.PurchaseType = tProject.TenderType
+			project.InviteType = tProject.TenderType
+			project.CompanyName = tProject.BuyersName
+			//project.CompanyId = tProject.Buyersid
+			project.InviteEnterStartTime.UnmarshalText([]byte(tProject.SignUpStartTime))
+			project.InviteEnterEndTime.UnmarshalText([]byte(tProject.SignUpEndTime))
+			project.InviteWinBidFlag  =   0
+			project.InviteWinBidCompany   = ""
+			project.InviteSubmitTenderEndTime.UnmarshalText([]byte(tProject.BidStartTime))
+			project.InviteOpenTenderTime .UnmarshalText([]byte(tProject.BidEndTime))
+
+
+
+
 		} else {
 			log.Printf("err=%s\n", err)
 		}
