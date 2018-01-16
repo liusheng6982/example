@@ -13,7 +13,6 @@ import (
 	"net/url"
 	"encoding/json"
 	"io/ioutil"
-	"time"
 )
 
 func InviteTenderListShow(c *gin.Context){
