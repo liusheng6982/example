@@ -9,3 +9,4 @@ bin
 pkg
 .vscode
 .cache
+/src/hiyuncms/webroot/license
