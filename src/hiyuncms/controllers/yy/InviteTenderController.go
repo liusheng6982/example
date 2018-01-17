@@ -15,6 +15,92 @@ import (
 	"io/ioutil"
 )
 
+type TenderProjectInfo struct{
+	IsSaleBidServicefee string `json:"isSaleBidServicefee"`
+	PreBidServicePayStatus string `json:"preBidServicePayStatus"`
+	SignUpStartTime string `json:"signUpStartTime"`
+	IndustryName string `json:"industryName"`
+	BidStartTime string `json:"bidStartTime"`
+	PreDocDownloadStartTime string `json:"preDocDownloadStartTime"`
+	IsSignUp string `json:"isSignUp"`
+	PreTechnicalOpenBidStartTime string `json:"preTechnicalOpenBidStartTime"`
+	ProjectAreaName string `json:"projectAreaName"`
+	PreisSaleDocfee string `json:"preisSaleDocfee"`
+	BidServicePayStatusMemo string `json:"bidServicePayStatusMemo"`
+	AgenciesId string `json:"agenciesId"`
+	BidServicePayStatus string `json:"bidServicePayStatus"`
+	PreBidServiceFeeOrderNo string `json:"preBidServiceFeeOrderNo"`
+	PreSignUpEndTime string `json:"preSignUpEndTime"`
+	PreStageId string `json:"preStageId"`
+	BidStatus string `json:"bidStatus"`
+	PreSignUpStartTime string `json:"preSignUpStartTime"`
+	DocSaleEndTime string `json:"docSaleEndTime"`
+	BidServiceFeeOrderNo string `json:"bidServiceFeeOrderNo"`
+	DocDownloadStartTime string `json:"docDownloadStartTime"`
+	BidDocFeeOrderNo string `json:"bidDocFeeOrderNo"`
+	BidDocPayStatusMemo string `json:"bidDocPayStatusMemo"`
+	AgentCode string `json:"agentCode"`
+	IsPack string `json:"isPack"`
+	StageType string `json:"stageType"`
+	PalceAddress string `json:"palceAddress"`
+	LimitPrice string `json:"limitPrice"`
+	UseStatus string `json:"useStatus"`
+	DocSaleStartTime string `json:"docSaleStartTime"`
+	PreBidStartTime string `json:"preBidStartTime"`
+	CreateTime string 	`json:"createTime"`
+	Buyersid string	`json:"buyersid"`
+	PurchaserCode string	`json:"purchaserCode"`
+	TenderMethod string	`json:"tenderMethod"`
+	PackInfoList []string	`json:"packInfoList"`
+	StageId string	`json:"stageId"`
+	QualificationMethod string	`json:"qualificationMethod"`
+	PreIsSaleBidServicefee string	`json:"preIsSaleBidServicefee"`
+	IsTwoBidOpening string	`json:"isTwoBidOpening"`
+	TenderNo string	`json:"tenderNo"`
+	PreBidDocPayStatus string	`json:"preBidDocPayStatus"`
+	TenderType string	`json:"tenderType"`
+	ArchiveStatus string	`json:"archiveStatus"`
+	PreBidServicePayStatusMemo string	`json:"preBidServicePayStatusMemo"`
+	PreDocSaleEndTime string	`json:"preDocSaleEndTime"`
+	OpenBidStartTime string	`json:"openBidStartTime"`
+	PreOpenBidStartTime string	`json:"preOpenBidStartTime"`
+	PrebidStatus string	`json:"prebidStatus"`
+	BudgetMoney string	`json:"budgetMoney"`
+	IsSaleDocfee string	`json:"isSaleDocfee"`
+	DocDownloadEndTime string	`json:"docDownloadEndTime"`
+	TenderId string	`json:"tenderId"`
+	PurchaserName string	`json:"purchaserName"`
+	PreBidDocPayStatusMemo string	`json:"preBidDocPayStatusMemo"`
+	PurcategoryNames string	`json:"purcategoryNames"`
+	PreIsHaveBidDoc string	`json:"preIsHaveBidDoc"`
+	PreIsSignUp string	`json:"preIsSignUp"`
+	IsRemoteOpening string	`json:"isRemoteOpening"`
+	PreBidDocFeeOrderNo string	`json:"preBidDocFeeOrderNo"`
+	TenderNoNumber string	`json:"tenderNoNumber"`
+	AgentName string	`json:"agentName"`
+	BuyersName string `json:"buyersName"`
+	BidEndTime string `json:"bidEndTime"`
+	IsHaveBidDoc string `json:"isHaveBidDoc"`
+	BidDocPayStatus string `json:"bidDocPayStatus"`
+	TenderName string `json:"tenderName"`
+	PreDocSaleStartTime string `json:"preDocSaleStartTime"`
+	BidBond string  `json:"bidBond"`
+	SignUpEndTime string `json:"signUpEndTime"`
+	OpenBidUnPriceStartTime string `json:"openBidUnPriceStartTime"`
+	PreBidEndTime string `json:"preBidEndTime"`
+	PreDocDownloadEndTime string `json:"preDocDownloadEndTime"`
+}
+type Data struct {
+	TenderProjectInfo  TenderProjectInfo `json:"tenderProjectInfo"`
+}
+type Temp struct {
+	Data Data `json:"data"`
+}
+type ProjecgNo struct {
+	ProjectNo string `json:"projectNo"`
+	TenderNoNumber string `json:"tenderNoNumber"`
+}
+
 func InviteTenderListShow(c *gin.Context){
 	c.HTML(http.StatusOK, "invitetenderlist.html", gin.H{
 		"bodyCss":"no-skin",
@@ -97,90 +183,7 @@ func InviteTenderEdit(c * gin.Context){
 
 
 func PushInviteTenderProject( c * gin.Context ){
-	type TenderProjectInfo struct{
-		IsSaleBidServicefee string `json:"isSaleBidServicefee"`
-		PreBidServicePayStatus string `json:"preBidServicePayStatus"`
-		SignUpStartTime string `json:"signUpStartTime"`
-		IndustryName string `json:"industryName"`
-		BidStartTime string `json:"bidStartTime"`
-		PreDocDownloadStartTime string `json:"preDocDownloadStartTime"`
-		IsSignUp string `json:"isSignUp"`
-		PreTechnicalOpenBidStartTime string `json:"preTechnicalOpenBidStartTime"`
-		ProjectAreaName string `json:"projectAreaName"`
-		PreisSaleDocfee string `json:"preisSaleDocfee"`
-		BidServicePayStatusMemo string `json:"bidServicePayStatusMemo"`
-		AgenciesId string `json:"agenciesId"`
-		BidServicePayStatus string `json:"bidServicePayStatus"`
-		PreBidServiceFeeOrderNo string `json:"preBidServiceFeeOrderNo"`
-		PreSignUpEndTime string `json:"preSignUpEndTime"`
-		PreStageId string `json:"preStageId"`
-		BidStatus string `json:"bidStatus"`
-		PreSignUpStartTime string `json:"preSignUpStartTime"`
-		DocSaleEndTime string `json:"docSaleEndTime"`
-		BidServiceFeeOrderNo string `json:"bidServiceFeeOrderNo"`
-		DocDownloadStartTime string `json:"docDownloadStartTime"`
-		BidDocFeeOrderNo string `json:"bidDocFeeOrderNo"`
-		BidDocPayStatusMemo string `json:"bidDocPayStatusMemo"`
-		AgentCode string `json:"agentCode"`
-		IsPack string `json:"isPack"`
-		StageType string `json:"stageType"`
-		PalceAddress string `json:"palceAddress"`
-		LimitPrice string `json:"limitPrice"`
-		UseStatus string `json:"useStatus"`
-		DocSaleStartTime string `json:"docSaleStartTime"`
-		PreBidStartTime string `json:"preBidStartTime"`
-		CreateTime string 	`json:"createTime"`
-		Buyersid string	`json:"buyersid"`
-		PurchaserCode string	`json:"purchaserCode"`
-		TenderMethod string	`json:"tenderMethod"`
-		PackInfoList []string	`json:"packInfoList"`
-		StageId string	`json:"stageId"`
-		QualificationMethod string	`json:"qualificationMethod"`
-		PreIsSaleBidServicefee string	`json:"preIsSaleBidServicefee"`
-		IsTwoBidOpening string	`json:"isTwoBidOpening"`
-		TenderNo string	`json:"tenderNo"`
-		PreBidDocPayStatus string	`json:"preBidDocPayStatus"`
-		TenderType string	`json:"tenderType"`
-		ArchiveStatus string	`json:"archiveStatus"`
-		PreBidServicePayStatusMemo string	`json:"preBidServicePayStatusMemo"`
-		PreDocSaleEndTime string	`json:"preDocSaleEndTime"`
-		OpenBidStartTime string	`json:"openBidStartTime"`
-		PreOpenBidStartTime string	`json:"preOpenBidStartTime"`
-		PrebidStatus string	`json:"prebidStatus"`
-		BudgetMoney string	`json:"budgetMoney"`
-		IsSaleDocfee string	`json:"isSaleDocfee"`
-		DocDownloadEndTime string	`json:"docDownloadEndTime"`
-		TenderId string	`json:"tenderId"`
-		PurchaserName string	`json:"purchaserName"`
-		PreBidDocPayStatusMemo string	`json:"preBidDocPayStatusMemo"`
-		PurcategoryNames string	`json:"purcategoryNames"`
-		PreIsHaveBidDoc string	`json:"preIsHaveBidDoc"`
-		PreIsSignUp string	`json:"preIsSignUp"`
-		IsRemoteOpening string	`json:"isRemoteOpening"`
-		PreBidDocFeeOrderNo string	`json:"preBidDocFeeOrderNo"`
-		TenderNoNumber string	`json:"tenderNoNumber"`
-		AgentName string	`json:"agentName"`
-		BuyersName string `json:"buyersName"`
-		BidEndTime string `json:"bidEndTime"`
-		IsHaveBidDoc string `json:"isHaveBidDoc"`
-		BidDocPayStatus string `json:"bidDocPayStatus"`
-		TenderName string `json:"tenderName"`
-		PreDocSaleStartTime string `json:"preDocSaleStartTime"`
-		BidBond string  `json:"bidBond"`
-		SignUpEndTime string `json:"signUpEndTime"`
-		OpenBidUnPriceStartTime string `json:"openBidUnPriceStartTime"`
-		PreBidEndTime string `json:"preBidEndTime"`
-		PreDocDownloadEndTime string `json:"preDocDownloadEndTime"`
-	}
-	type Data struct {
-		TenderProjectInfo  TenderProjectInfo `json:"tenderProjectInfo"`
-	}
-	type Temp struct {
-		Data Data `json:"data"`
-	}
-	type ProjecgNo struct {
-		ProjectNo string `json:"projectNo"`
-	}
+
 	project := ProjecgNo{}
 
 	err := c.BindJSON( &project)
@@ -188,7 +191,7 @@ func PushInviteTenderProject( c * gin.Context ){
 		log.Printf("获取项目时绑定参数出错%s\n",models.GetErrorInfo(err))
 	}
 
-	fmt.Printf("proejctNo=%s", project.ProjectNo)
+	fmt.Printf("proejctNo=%s tenderNoNumber=%s", project.ProjectNo, project.TenderNoNumber)
 
 
 	{//项目同步
@@ -196,7 +199,7 @@ func PushInviteTenderProject( c * gin.Context ){
 		data["tenderNo"] = []string{project.ProjectNo}
 		data["userName"] = []string{"daili"}
 		data["password"] = []string{"MTIzNDU2"}
-		data["tenderNoNumber"] = []string{"9f26ce0f5ce44146b42340ea31331fcf"}
+		data["tenderNoNumber"] = []string{ project.TenderNoNumber }
 
 		res, err := http.PostForm("http://219.239.33.98:8080/yyg/tenderProjectInfoHS.do?getProjectInfoByCode", data)
 		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
@@ -204,12 +207,12 @@ func PushInviteTenderProject( c * gin.Context ){
 			temp := Temp{}
 			body, err1 := ioutil.ReadAll(res.Body)
 			if err1 != nil {
-				log.Printf("err1=%s\n", err1)
+				log.Printf("读取网路数据报错 err1=%s\n", err1)
 			}
 			log.Printf("body=%s\n", body)
 			err2 := json.Unmarshal(body, &temp)
 			if err2 != nil {
-				log.Printf("err2=%s\n", err2)
+				log.Printf("解析json出错err2=%s\n", err2)
 			}
 			log.Printf("data=%+v\n", temp)
 
@@ -231,7 +234,10 @@ func PushInviteTenderProject( c * gin.Context ){
 			project.InviteSubmitTenderEndTime.UnmarshalText([]byte(tProject.BidStartTime))
 			project.InviteOpenTenderTime .UnmarshalText([]byte(tProject.BidEndTime))
 
-
+			_, err := models.DbMaster.Insert( &project )
+			if err != nil {
+				log.Printf("插入数据库报错 err=%s\n", err)
+			}
 
 
 		} else {
@@ -241,6 +247,6 @@ func PushInviteTenderProject( c * gin.Context ){
 
 	c.JSON(http.StatusOK, gin.H{
 		"success":true,
-		"msg":fmt.Sprintf("调用成功,projectNo=%s", project.ProjectNo),
+		"msg":fmt.Sprintf("调用成功,projectNo=%s, tenderNoNumber=%s", project.ProjectNo, project.TenderNoNumber),
 	})
 }
