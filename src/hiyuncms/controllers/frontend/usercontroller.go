@@ -16,6 +16,7 @@ import (
 	"hiyuncms/config"
 	"net/url"
 	"io/ioutil"
+	"sync"
 )
 
 /**
@@ -165,6 +166,26 @@ func Registry(c * gin.Context)  {
 		isSuccess = false
 	}
 
+	U := func(){//用户同步
+		url := config.GetValue("sync.user.chuanyiwang.url")
+		getUrl := fmt.Sprintf("%s?userId=%d&userPhone=%s&userName=%s&companyId=%d&companyName=%s&companyType=%s",
+			url, user.Id, user.UserPhone, user.UserName, company.Id, company.CompanyName, company.CompanyType)
+
+
+		res, err := http.Get(getUrl)
+		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
+		if err == nil {
+			body, err1 := ioutil.ReadAll(res.Body)
+			log.Printf("%s\n", body)
+			if err1 != nil {
+				log.Printf("err1=%s\n", err1)
+			}
+		} else {
+			log.Printf("err=%s\n", err)
+		}
+	}
+	go U()
+
 
 	{//组织结构同步
 		data := make(url.Values)
@@ -172,7 +193,7 @@ func Registry(c * gin.Context)  {
 		companyInfo := fmt.Sprintf("{\"orgId\":\"%d\", \"orgName\":\"%s\", \"orgRoleName\":\"10\"}", company.Id, company.CompanyName)
 		data["data"] = []string{companyInfo}
 
-		res, err := http.PostForm("http://219.239.33.98:8080/yyg/organizationHS.do?submitSupplierOrgInfo", data)
+		res, err := http.PostForm(config.GetValue("sync.org.guoxin.url"), data)
 		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
 		if err == nil {
 			body, err1 := ioutil.ReadAll(res.Body)
@@ -196,7 +217,7 @@ func Registry(c * gin.Context)  {
 		data["companyType"] = []string{company.CompanyType}
 		data["password"] = []string{user.UserPassword}
 
-		res, err := http.PostForm("http://219.239.33.98:8080/yyg/organizationHS.do?submitUserInfo", data)
+		res, err := http.PostForm(config.GetValue("sync.user.guoxin.url"), data)
 		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
 		if err == nil {
 			body, err1 := ioutil.ReadAll(res.Body)

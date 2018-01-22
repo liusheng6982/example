@@ -13,6 +13,8 @@ import (
 	"net/url"
 	"encoding/json"
 	"io/ioutil"
+	"hiyuncms/config"
+	"sync"
 )
 
 type TenderProjectInfo struct{
@@ -201,7 +203,7 @@ func PushInviteTenderProject( c * gin.Context ){
 		data["password"] = []string{"MTIzNDU2"}
 		data["tenderNoNumber"] = []string{ project.TenderNoNumber }
 
-		res, err := http.PostForm("http://219.239.33.98:8080/yyg/tenderProjectInfoHS.do?getProjectInfoByCode", data)
+		res, err := http.PostForm(config.GetValue("sync.project.guoxin.url"), data)
 		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
 		if err == nil {
 			temp := Temp{}
