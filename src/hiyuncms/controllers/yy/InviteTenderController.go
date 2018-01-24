@@ -14,7 +14,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"hiyuncms/config"
-	"sync"
 )
 
 type TenderProjectInfo struct{
@@ -91,6 +90,7 @@ type TenderProjectInfo struct{
 	OpenBidUnPriceStartTime string `json:"openBidUnPriceStartTime"`
 	PreBidEndTime string `json:"preBidEndTime"`
 	PreDocDownloadEndTime string `json:"preDocDownloadEndTime"`
+	ProjectDesc string `json:"projectDesc"`
 }
 type Data struct {
 	TenderProjectInfo  TenderProjectInfo `json:"tenderProjectInfo"`
@@ -235,7 +235,7 @@ func PushInviteTenderProject( c * gin.Context ){
 			project.InviteWinBidCompany   = ""
 			project.InviteSubmitTenderEndTime.UnmarshalText([]byte(tProject.BidStartTime))
 			project.InviteOpenTenderTime .UnmarshalText([]byte(tProject.BidEndTime))
-
+			project.ProjectContent = tProject.ProjectDesc
 			_, err := models.DbMaster.Insert( &project )
 			if err != nil {
 				log.Printf("插入数据库报错 err=%s\n", err)

@@ -16,7 +16,6 @@ import (
 	"hiyuncms/config"
 	"net/url"
 	"io/ioutil"
-	"sync"
 )
 
 /**
