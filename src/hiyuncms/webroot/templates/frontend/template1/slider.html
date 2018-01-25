@@ -11,38 +11,45 @@
             {{end}}
         </div>
     </div>
-    <div class="container slider-content">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                <!--h2>关注小马购车</h2>
-                <p>全国第一家什么的网站</p>
-                <div class="search-form wow pulse" data-wow-delay="0.8s">
-                    <form action="" class=" form-inline">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Job Key Word">
-                        </div>
-                        <div class="form-group">
-                            <select name="" id="" class="form-control">
-                                <option>Select Your City</option>
-                                <option selected>New york, CA</option>
-                                <option>New york, CA</option>
-                                <option>New york, CA</option>
-                                <option>New york, CA</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                            <select name="" id="" class="form-control">
-                                <option>Select Your Category</option>
-                                <option selected>Graphic Design</option>
-                                <option>Web Design</option>
-                                <option>App Design</option>
-                            </select>
-                        </div>
-                        <input type="submit" class="btn" value="Search">
+    <div class="slider-content">
+        <div class="">
+            <div class="col-sm-12">
+                {{ $user := .sessionInfo }}
 
+                {{if eq "" $user.UserName }}
+                {{else}}
+                        <h5>工作台</h5>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a  href="">
+                                <img src="/static/yy/img/job-logo1.png"><br>
+                                    电子招标
+                                </a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a  href="">
+                                <img src="/static/yy/img/job-logo2.png"><br>
+                                    电商
+                                </a>
+                            </div>
+                        </div>
+                        <div>&nbsp;</div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a  href="">
+                                <img src="/static/yy/img/job-logo3.png"><br>
+                                    CA申请
+                                </a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a  href="">
+                                    <img src="/static/yy/img/job-logo3.png"><br>
+                                    发布招标信息
+                                </a>
+                            </div>
+                        </div>
 
-                    </form>
-                </div-->
+                {{end}}
             </div>
         </div>
     </div>
