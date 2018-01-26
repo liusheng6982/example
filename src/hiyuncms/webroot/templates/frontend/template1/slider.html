@@ -11,13 +11,14 @@
             {{end}}
         </div>
     </div>
+    {{ $user := .sessionInfo }}
+
+    {{if eq "" $user.UserName }}
+                {{else}}
     <div class="slider-content">
         <div class="">
             <div class="col-sm-12">
-                {{ $user := .sessionInfo }}
 
-                {{if eq "" $user.UserName }}
-                {{else}}
                         <h5>工作台</h5>
                         <div class="row">
                             <div class="col-sm-6">
@@ -49,8 +50,9 @@
                             </div>
                         </div>
 
-                {{end}}
+
             </div>
         </div>
     </div>
+    {{end}}
 </div>
