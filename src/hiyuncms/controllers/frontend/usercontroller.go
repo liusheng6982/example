@@ -16,6 +16,7 @@ import (
 	"hiyuncms/config"
 	"net/url"
 	"io/ioutil"
+	"hiyuncms/models"
 )
 
 /**
@@ -104,6 +105,102 @@ func RegistryShow(c * gin.Context)  {
 	})
 }
 
+/**
+用户注册界面显示
+ */
+func RegistryVerify(c * gin.Context)  {
+	isSuccess := true
+	msg := ""
+	user := yy.YyUser{}
+	company := yy.YyCompany{}
+
+	verifyCode, _ := c.GetPostForm("VerifyCode")
+
+	fmt.Printf("http verify code = %s\n", verifyCode)
+
+	c.Bind( &user )
+	c.Bind( &company )
+
+	if company.CompanyName == ""{
+		isSuccess = false
+		msg = "公司名称不能为空！"
+
+		c.JSON(http.StatusOK,gin.H{
+			"isSuccess":isSuccess,
+			"msg":msg,
+		})
+		return
+	}
+
+	if user.UserPhone == ""{
+		isSuccess = false
+		msg = "手机号不能为空！"
+
+		c.JSON(http.StatusOK,gin.H{
+			"isSuccess":isSuccess,
+			"msg":msg,
+		})
+		return
+	}
+
+
+	if verifyCode == ""{
+		isSuccess = false
+		msg = "手机短信验证码不能为空！"
+
+		c.JSON(http.StatusOK,gin.H{
+			"isSuccess":isSuccess,
+			"msg":msg,
+		})
+		return
+	}
+
+	count1, err := models.DbSlave.Count(&user)
+	if err != nil {
+		isSuccess = false
+		msg = err.Error()
+	}
+	if count1 > 0 {
+		isSuccess = false
+		msg = "手机号码注册过！"
+
+		c.JSON(http.StatusOK,gin.H{
+			"isSuccess":isSuccess,
+			"msg":msg,
+		})
+		return
+	}
+
+
+	count, err := models.DbSlave.Count(&company)
+	if err != nil {
+		isSuccess = false
+		msg = err.Error()
+	}
+	if count > 0 {
+		isSuccess = false
+		msg = "公司名称已存在！"
+
+		c.JSON(http.StatusOK,gin.H{
+			"isSuccess":isSuccess,
+			"msg":msg,
+		})
+		return
+	}
+	session := sessions.Default(c)
+	sessionSmsKey := fmt.Sprintf("%s%s",FRONT_SMS, user.UserPhone)
+	tempVerifyCode := session.Get( sessionSmsKey )
+	fmt.Printf("session verify code = %s", tempVerifyCode)
+	if tempVerifyCode != verifyCode {
+		isSuccess = false
+		msg ="验证码不正确！"
+	}
+	c.JSON(http.StatusOK,gin.H{
+		"isSuccess":isSuccess,
+		"msg":msg,
+	})
+}
+
 
 /**
 用户注册
@@ -116,6 +213,24 @@ func Registry(c * gin.Context)  {
 
 	c.Bind( &user )
 	c.Bind( &company )
+
+	verifyCode, _ := c.GetPostForm("VerifyCode")
+
+	session := sessions.Default(c)
+	sessionSmsKey := fmt.Sprintf("%s%s",FRONT_SMS, user.UserPhone)
+	tempVerifyCode := session.Get( sessionSmsKey )
+	fmt.Printf("session verify code = %s", tempVerifyCode)
+	if tempVerifyCode != verifyCode {
+		isSuccess = false
+		msg ="验证码不正确！"
+		c.JSON(http.StatusOK, gin.H{
+			"path":"",
+			"regsuccess":isSuccess,
+			"sessionInfo":GetSessionInfo(c),
+			"msg": msg,
+		})
+		return
+	}
 
 	companyType := c.PostForm("company_type")
 	vipType := c.PostForm("vip_type")

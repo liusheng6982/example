@@ -23,5 +23,7 @@ func init(){
 	FrontendRoute.POST("/sendSms", frontend.SendSMS )
 	FrontendRoute.POST("/pushPurchasePorject", yy.PushPurchaseProject)
 	FrontendRoute.POST( "/notifyProjectNo", yy.PushInviteTenderProject)
+
+	FrontendRoute.POST("/RegistryVerify", frontend.RegistryVerify)
 }
 

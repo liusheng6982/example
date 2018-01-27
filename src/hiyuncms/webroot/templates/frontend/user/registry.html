@@ -34,7 +34,7 @@
                     <div class="item col-xs-12">
                         <span class="intelligent-label f-fl"><b class="ftx04">*</b>公司名称：</span>
                         <div class="f-fl item-ifo">
-                            <input name="CompanyName" type="text" maxlength="20" class="txt03 f-r3 required" tabindex="1" data-valid="isNonEmpty||between:3-20||isUname" data-error="用户名不能为空||用户名长度3-20位||只能输入中文、字母、数字、下划线，且以中文或字母开头" id="adminNo" />
+                            <input name="CompanyName" type="text" maxlength="20" class="txt03 f-r3 required" tabindex="1" data-valid="isNonEmpty||between:3-20||isUname" data-error="公司名称不能为空||用户名长度3-20位||只能输入中文、字母、数字、下划线，且以中文或字母开头" />
                             <span class="ie8 icon-close close hide"></span>
                             <label class="icon-sucessfill blank hide"></label>
                             <label class="focus"><span>填写营业执照上的名称</span></label>
@@ -44,7 +44,7 @@
                     <div class="item col-xs-12">
                         <span class="intelligent-label f-fl"><b class="ftx04">*</b>用户名：</span>
                         <div class="f-fl item-ifo">
-                            <input name="UserName" type="text" maxlength="20" class="txt03 f-r3 required" tabindex="1" data-valid="isNonEmpty||between:3-20||isUname" data-error="用户名不能为空||用户名长度3-20位||只能输入中文、字母、数字、下划线，且以中文或字母开头" id="adminNo" />
+                            <input name="UserName" type="text" maxlength="20" class="txt03 f-r3 required" tabindex="1" data-valid="isNonEmpty||between:3-20||isUname" data-error="用户名不能为空||用户名长度3-20位||只能输入中文、字母、数字、下划线，且以中文或字母开头" />
                             <span class="ie8 icon-close close hide"></span>
                             <label class="icon-sucessfill blank hide"></label>
                             <label class="focus"><span>用户姓名</span></label>
@@ -54,10 +54,10 @@
                     <div class="item col-xs-12">
                         <span class="intelligent-label f-fl"><b class="ftx04">*</b>手机号：</span>
                         <div class="f-fl item-ifo">
-                            <input name="UserPhone" type="text" class="txt03 f-r3 required" keycodes="tel" tabindex="2" data-valid="isNonEmpty||isPhone" data-error="手机号码不能为空||手机号码格式不正确" maxlength="11" id="phone" />
+                            <input name="UserPhone" type="text" class="txt03 f-r3 required" keycodes="tel" tabindex="2" data-valid="isNonEmpty||isPhone" data-error="手机号码不能为空||手机号码格式不正确" maxlength="11"/>
                             <span class="ie8 icon-close close hide"></span>
                             <label class="icon-sucessfill blank hide"></label>
-                            <label class="focus">请填写11位有效的手机号码</label>
+                            <label class="focus">请填写11位有效的手机号码,登录名</label>
                             <label class="focus valid"></label>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                     <div class="item col-xs-12">
                         <span class="intelligent-label f-fl"><b class="ftx04">*</b>确认密码：</span>
                         <div class="f-fl item-ifo">
-                            <input type="password" maxlength="20" class="txt03 f-r3 required" tabindex="4" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-16||isRepeat:password" data-error="密码不能为空||密码长度6-16位||两次密码输入不一致" id="rePassword" />
+                            <input name="SecondPassword" type="password" maxlength="20" class="txt03 f-r3 required" tabindex="4" style="ime-mode:disabled;" onpaste="return  false" autocomplete="off" data-valid="isNonEmpty||between:6-16||isRepeat:password" data-error="密码不能为空||密码长度6-16位||两次密码输入不一致"/>
                             <span class="ie8 icon-close close hide" style="right:55px"></span>
                             <span class="showpwd" data-eye="rePassword"></span>
                             <label class="icon-sucessfill blank hide"></label>
@@ -91,7 +91,7 @@
                     <div class="item col-xs-12">
                         <span class="intelligent-label f-fl"><b class="ftx04">*</b>手机验证码：</span>
                         <div class="f-fl item-ifo">
-                            <input type="text" maxlength="6" class="txt03 f-r3 f-fl required" tabindex="4" style="" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" />
+                            <input name="VerifyCode" type="text" maxlength="6" class="txt03 f-r3 f-fl required" tabindex="4" style="" id="randCode" data-valid="isNonEmpty" data-error="验证码不能为空" />
                             <span class="ie8 icon-close close hide"></span>
                             <label class="icon-sucessfill blank hide" style="left:380px"></label>
                             <label class="focusa"><input class="btn btn-default" type="button" id="btn" value="免费获取验证码" onclick="sendemail()" /> </label>
@@ -251,14 +251,39 @@
 
         //第一页的确定按钮
         $("#btn_part1").click(function(){
-            $(".part1").hide();
-            $(".part2").show();
-            $(".step li").eq(1).addClass("on");
+
+            var boj = {
+                CompanyName  : $("input[name='CompanyName']").val(),
+                UserPhone    : $("input[name='UserPhone']").val(),
+                VerifyCode   : $("input[name='VerifyCode']").val()
+            }
+
+            if( $("input[name='SecondPassword']").val() !=  $("input[name='UserPassword']").val() ){
+                alert("两次密码输入不一致！")
+                return;
+            }
+
+            if( $("input[name='UserPassword']").val().length < 6 ){
+                alert("密码不能少于6位！")
+                return;
+            }
+
+
+            jQuery.post("/RegistryVerify",boj,function(data, textStatus, jqXHR){
+                if(data.isSuccess){
+                    $(".part1").hide();
+                    $(".part2").show();
+                    $(".step li").eq(1).addClass("on");
+                }else{
+                    alert( data.msg )
+                }
+            },"json")
         });
 
         $("#btn_part2-0").click(function () {
             $(".part1").show();
             $(".part2").hide();
+            $(".step li").eq(1).removeClass("on");
         });
         //第二页的确定按钮
         $("#btn_part2").click(function(){
