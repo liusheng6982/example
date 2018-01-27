@@ -123,24 +123,25 @@
                             <div class="control-group">
                                 <div class="checkbox">
                                     <label>
-                                        <input name="company-type" type="checkbox" value="1" class="ace">
-                                        <span class="lbl">生产商</span>
+                                        <input name="company-type" value="1" class="ace ace-checkbox-2" type="radio" checked>
+                                        <span class="lbl">医院</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="company-type" type="radio" value="2" class="ace">
+                                        <span class="lbl">供应商</span>
                                     </label>
                                 </div>
 
-                                <div class="checkbox">
+                                <!--div class="checkbox">
                                     <label>
                                         <input name="company-type" type="checkbox" value="2" class="ace">
                                         <span class="lbl">代理商</span>
                                     </label>
-                                </div>
+                                </div-->
 
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="company-type" value="3" class="ace ace-checkbox-2" type="checkbox">
-                                        <span class="lbl">医院</span>
-                                    </label>
-                                </div>
+
 
                             </div>
                         </div>
@@ -267,8 +268,6 @@
                 alert("密码不能少于6位！")
                 return;
             }
-
-
             jQuery.post("/RegistryVerify",boj,function(data, textStatus, jqXHR){
                 if(data.isSuccess){
                     $(".part1").hide();
@@ -288,6 +287,7 @@
         //第二页的确定按钮
         $("#btn_part2").click(function(){
             //if(!verifyCheck._click()) return;
+            /*
             var chk_value =[];
             $('input[name="company-type"]:checked').each(function(){
                 chk_value.push($(this).val());
@@ -295,7 +295,7 @@
             if( chk_value.length == 0 ){
                 alert("其选择公司类型！")
                 return;
-            }
+            }*/
 
             var boj = {
                         CompanyName  : $("input[name='CompanyName']").val(),
@@ -303,7 +303,7 @@
                         UserPhone    : $("input[name='UserPhone']").val(),
                         UserPassword : $("input[name='UserPassword']").val(),
                         VerifyCode   : $("input[name='VerifyCode']").val(),
-                        company_type : chk_value,
+                        company_type : $("input[name='company-type']:checked"),
                         vip_type     : $("input[name='vip-type']:checked").val()
             }
 

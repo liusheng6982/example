@@ -280,7 +280,7 @@ func Registry(c * gin.Context)  {
 		isSuccess = false
 	}
 
-	U := func(){//用户同步
+	chuanyiwangSync := func(){ //用户同步
 		url := config.GetValue("sync.user.chuanyiwang.url")
 		getUrl := fmt.Sprintf("%s?userId=%d&userPhone=%s&userName=%s&companyId=%d&companyName=%s&companyType=%s",
 			url, user.Id, user.UserPhone, user.UserName, company.Id, company.CompanyName, company.CompanyType)
@@ -298,51 +298,61 @@ func Registry(c * gin.Context)  {
 			log.Printf("err=%s\n", err)
 		}
 	}
-	go U()
+	go chuanyiwangSync()
 
 
-	{//组织结构同步
-		data := make(url.Values)
-		data["type"] = []string{"YYG"}
-		companyInfo := fmt.Sprintf("{\"orgId\":\"%d\", \"orgName\":\"%s\", \"orgRoleName\":\"10\"}", company.Id, company.CompanyName)
-		data["data"] = []string{companyInfo}
-
-		res, err := http.PostForm(config.GetValue("sync.org.guoxin.url"), data)
-		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
-		if err == nil {
-			body, err1 := ioutil.ReadAll(res.Body)
-			log.Printf("%s\n", body)
-			if err1 != nil {
-				log.Printf("err1=%s\n", err1)
+	guoxinSync := func() {
+		{ //组织结构同步
+			data := make(url.Values)
+			data["type"] = []string{"YYG"}
+			orgRoleName := ""
+			if companyType == "1" {
+				orgRoleName = "11"
 			}
-		} else {
-			log.Printf("err=%s\n", err)
+			if companyType == "2"{
+				orgRoleName = "12"
+			}
+			companyInfo := fmt.Sprintf("{\"orgId\":\"%d\", \"orgName\":\"%s\", \"orgRoleName\":\"%s\"}", company.Id, company.CompanyName, orgRoleName)
+			data["data"] = []string{companyInfo}
+
+			res, err := http.PostForm(config.GetValue("sync.org.guoxin.url"), data)
+			log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
+			if err == nil {
+				body, err1 := ioutil.ReadAll(res.Body)
+				log.Printf("%s\n", body)
+				if err1 != nil {
+					log.Printf("err1=%s\n", err1)
+				}
+			} else {
+				log.Printf("err=%s\n", err)
+			}
+		}
+
+		{ //用户同步
+			data := make(url.Values)
+			data["type"] = []string{"YYG"}
+			data["userId"] = []string{fmt.Sprintf("%d", user.Id)}
+			data["userPhone"] = []string{user.UserPhone}
+			data["username"] = []string{user.UserName}
+			data["companyId"] = []string{fmt.Sprintf("%d", company.Id)}
+			data["companyName"] = []string{company.CompanyName}
+			data["companyType"] = []string{company.CompanyType}
+			data["password"] = []string{user.UserPassword}
+
+			res, err := http.PostForm(config.GetValue("sync.user.guoxin.url"), data)
+			log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
+			if err == nil {
+				body, err1 := ioutil.ReadAll(res.Body)
+				log.Printf("%s\n", body)
+				if err1 != nil {
+					log.Printf("err1=%s\n", err1)
+				}
+			} else {
+				log.Printf("err=%s\n", err)
+			}
 		}
 	}
-
-	{//用户同步
-		data := make(url.Values)
-		data["type"] = []string{"YYG"}
-		data["userId"] = []string{fmt.Sprintf("%d",user.Id)}
-		data["userPhone"] = []string{user.UserPhone}
-		data["username"] = []string{user.UserName}
-		data["companyId"] = []string{fmt.Sprintf("%d",company.Id)}
-		data["companyName"] = []string{company.CompanyName}
-		data["companyType"] = []string{company.CompanyType}
-		data["password"] = []string{user.UserPassword}
-
-		res, err := http.PostForm(config.GetValue("sync.user.guoxin.url"), data)
-		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
-		if err == nil {
-			body, err1 := ioutil.ReadAll(res.Body)
-			log.Printf("%s\n", body)
-			if err1 != nil {
-				log.Printf("err1=%s\n", err1)
-			}
-		} else {
-			log.Printf("err=%s\n", err)
-		}
-	}
+	go guoxinSync()
 
 	c.JSON(http.StatusOK, gin.H{
 		"path":"",

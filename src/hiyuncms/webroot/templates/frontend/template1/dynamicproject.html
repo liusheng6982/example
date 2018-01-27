@@ -175,7 +175,7 @@
     <div class="small-slider-area">
     <div class="slider">
         <div id="small-slider" class="owl-carousel owl-theme">
-            {{ $articles := loadArticlesTop "/published/haha" 0 3 }}
+            {{ $articles := loadArticlesTop "/published/haha1" 0 5 }}
             {{range $k,$v := $articles}}
                 <div class="item"><img src="{{$v.FirstImage}}"></div>
             {{end}}
