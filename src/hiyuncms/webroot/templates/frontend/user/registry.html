@@ -225,7 +225,7 @@
                 </div>
                 <div class="part4 text-center" style="display:none">
                     <h3>恭喜您已注册成功,请您登录！</h3>
-                    <p class="c-666 f-mt30 f-mb50">页面将在 <strong id="times" class="f-size18">10</strong> 秒钟后，跳转到 <a href="/userlogin" class="c-blue">登录页面</a></p>
+                    <p class="c-666 f-mt30 f-mb50">页面将在 <strong id="times" class="f-size18">5</strong> 秒钟后，跳转到 <a href="/userlogin" class="c-blue">登录页面</a></p>
                 </div>
             </div>
         </div>
@@ -302,6 +302,7 @@
                         UserName     : $("input[name='UserName']").val(),
                         UserPhone    : $("input[name='UserPhone']").val(),
                         UserPassword : $("input[name='UserPassword']").val(),
+                        VerifyCode   : $("input[name='VerifyCode']").val(),
                         company_type : chk_value,
                         vip_type     : $("input[name='vip-type']:checked").val()
             }
@@ -333,6 +334,7 @@
                         $(".part2").hide();
                         $(".part4").show();
                         $(".step li").eq(2).addClass("on");
+                        setTimeout("window.location.href='/userlogin'",5000)
                     }
                     else {
                         alert(data.msg)
@@ -383,6 +385,7 @@
             },
             "json");
     }
+    
 
     function settime(obj) { //发送验证码倒计时
         if (countdown == 0) {
@@ -400,4 +403,5 @@
                     settime(obj) }
                 ,1000)
     }
+
 </script>
