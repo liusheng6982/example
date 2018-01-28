@@ -110,7 +110,7 @@
                <ul>
                {{ $inviteTenders := loadTopInviteTender 10 }}
                {{range $k,$v := $inviteTenders}}
-                   <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                   <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                {{end}}
                </ul>
            </div>
@@ -127,7 +127,7 @@
                 <ul>
                 {{ $purchase := loadTopPurchase 10 }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -146,7 +146,7 @@
                 <ul>
                 {{ $purchase := loadTopWinBid 10 }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -163,7 +163,7 @@
                 <ul>
                 {{ $purchase := loadTopRecommend 10 }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                 {{end}}
                 </ul>
             </div>
