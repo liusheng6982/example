@@ -47,15 +47,18 @@ func UserLogin(c * gin.Context)  {
 	userName := c.PostForm("UserPhone")
 	passwd := c.PostForm("UserPassword")
 	admin := yy.GetUserByPhone(userName)
-
-
 	passwdMd5 := backend.Md5str(passwd)
-
-
 	if admin.UserPassword == passwdMd5 {
-
 		company := yy.GetById( admin.CompanyId )
 		token := fmt.Sprintf("%s-%s",uuid.NewV4(), uuid.NewV4() )
+		now := time.Now()
+
+		expired := 1
+		if now.Before( time.Time(company.VipExpired) ) || now.Equal( time.Time(company.VipExpired) ) {
+			log.Printf("asdfasdfasdfasdfasdfasdf\n")
+			expired = 0
+		}
+		log.Printf("asdfasdfasdfasdfasdfasdf expired=%d\n", expired)
 		bus := UserSession{
 			UserId:admin.Id,
 			UserPhone:admin.UserPhone,
@@ -64,6 +67,7 @@ func UserLogin(c * gin.Context)  {
 			Success:true,
 			CompanyId:company.Id,
 			CompanyName:company.CompanyName,
+			VipExpired:expired,
 			VipLevel:company.VipLevel,
 		}
 		session := sessions.Default(c)

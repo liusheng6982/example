@@ -13,11 +13,13 @@ import (
 	"hiyuncms/config"
 	//"time"
 	//"hiyuncms/util"
+	"hiyuncms/payment"
 )
 
 
 func main() {
 	//util.TestSms()
+	//payment.Test()
 	runFrontendServer()
 	runBackendServer()
 	RegService()

@@ -117,16 +117,18 @@ func InviteTenderDetail(c *gin.Context){
 	projectIdInt64, _ := strconv.ParseInt(projectId, 10, 64)
 	projectDetail := yy.GetInviteTenderById( projectIdInt64 )
 	sessionInfo := frontend.GetSessionInfo(c)
+	log.Printf("session=%+v\n", sessionInfo)
 	if sessionInfo.UserName == "" {
 		c.Redirect(http.StatusFound, "/userlogin")
 		return
 	}
+	/*
 	if sessionInfo.VipLevel == 0  {
 		c.Redirect(http.StatusFound, "/novip")
 		return
-	}
+	}*/
 	if sessionInfo.VipExpired == 1{
-		c.Redirect(http.StatusFound, "/vipexpired")
+		c.Redirect(http.StatusFound, "/novip")
 		return
 	}
 	log.Printf("%+v", projectDetail)
