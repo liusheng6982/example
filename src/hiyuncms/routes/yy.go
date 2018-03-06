@@ -25,5 +25,10 @@ func init(){
 	FrontendRoute.POST( "/notifyProjectNo", yy.PushInviteTenderProject)
 
 	FrontendRoute.POST("/RegistryVerify", frontend.RegistryVerify)
+
+	FrontendRoute.POST("/aliprepay",    yy.AliPrePay)
+	FrontendRoute.POST("/alipaynotify", yy.AliPayNotify)
+
+	FrontendRoute.GET ("/companyindex",    frontend.CompanyIndexShow)
 }
 

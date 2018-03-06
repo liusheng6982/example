@@ -13,9 +13,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
+	"hiyuncms/config"
 )
 
 type UnifyOrderReq struct {
@@ -67,24 +65,24 @@ func TimeConvert(span int) string {
 	return _now.Format("20060102150405")
 }
 
-func (o *UnifyOrderReq) CreateOrder(ctx *context.Context, param map[string]interface{}) UnifyOrderResp {
+func (o *UnifyOrderReq) CreateOrder(clientIp string, param map[string]interface{}) UnifyOrderResp {
 	xmlResp := UnifyOrderResp{}
 	unify_order_req := "https://api.mch.weixin.qq.com/pay/unifiedorder"
 	var yourReq UnifyOrderReq
 	yourReq.Attach = param["attach"].(string)
-	yourReq.Appid = beego.AppConfig.String("wxappid") //微信开放平台我们创建出来的app的app id
+	yourReq.Appid = config.GetValue("wxappid") //微信开放平台我们创建出来的app的app id
 	yourReq.Body = param["body"].(string)
 	yourReq.Detail = "某某某网络科技有限公司"
 	yourReq.Fee_type = "CNY"
 	yourReq.Goods_tag = "WXG"
-	yourReq.Mch_id = beego.AppConfig.String("wxmchid")
+	yourReq.Mch_id = config.GetValue("wxmchid")
 	yourReq.Nonce_str = randStr(32, "alphanum")
-	yourReq.Notify_url = "http://" + beego.AppConfig.String("domainurl") + "/weixin/notify" //异步返回的地址
+	yourReq.Notify_url = "http://" + config.GetValue("pay.notify.domain") + "/wxpaynotify" //异步返回的地址
 	yourReq.Product_id = param["product_id"].(string)
 	yourReq.Time_start = TimeConvert(1)
 	yourReq.Time_expire = TimeConvert(2)
 	yourReq.Trade_type = "NATIVE"
-	yourReq.Spbill_create_ip = ctx.Input.IP()
+	yourReq.Spbill_create_ip = clientIp
 
 	totalFee, _ := strconv.ParseFloat(param["total_fee"].(string), 64)
 	totalfeeint := totalFee * 100
@@ -113,7 +111,7 @@ func (o *UnifyOrderReq) CreateOrder(ctx *context.Context, param map[string]inter
 	m["spbill_create_ip"] = yourReq.Spbill_create_ip
 	m["total_fee"] = yourReq.Total_fee
 	m["out_trade_no"] = yourReq.Out_trade_no
-	appkey := beego.AppConfig.String("wxappkey")
+	appkey := config.GetValue("wxappkey")
 	yourReq.Sign = WxpayCalcSign(m, appkey) //这个是计算wxpay签名的函数上面已贴出
 
 	//beego.Debug("yourReq",yourReq)

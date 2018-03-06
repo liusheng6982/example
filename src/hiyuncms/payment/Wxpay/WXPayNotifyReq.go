@@ -14,13 +14,9 @@ import (
 	_ "strconv"
 	"strings"
 	_ "time"
-
-	_ "KiWiFi/gate.cloud/models"
-	_ "gatecloud"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
-	_ "github.com/bitly/go-simplejson"
 	//"encoding/json"
+	"net/http"
+	"hiyuncms/config"
 )
 
 type WXPayNotifyReq struct {
@@ -50,9 +46,9 @@ type WXPayNotifyResp struct {
 	Return_msg  string `xml:"return_msg"`
 }
 
-func (o *WXPayNotifyReq) WxpayCallback(ctx *context.Context) map[string]interface{} {
+func (o *WXPayNotifyReq) WxpayCallback(req * http.Request, w  http.ResponseWriter) map[string]interface{} {
 
-	body, err := ioutil.ReadAll(ctx.Input.Context.Request.Body)
+	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		fmt.Println("读取http body失败，原因!", err)
 	}
@@ -95,8 +91,6 @@ func (o *WXPayNotifyReq) WxpayCallback(ctx *context.Context) map[string]interfac
 		//beego.Debug("succes","succes")
 		resp.Return_code = "SUCCESS"
 		resp.Return_msg = "OK"
-		ctx.WriteString("SUCCESS")
-		return reqMap
 	} else {
 		resp.Return_code = "FAIL"
 		resp.Return_msg = "failed to verify sign, please retry!"
@@ -110,8 +104,8 @@ func (o *WXPayNotifyReq) WxpayCallback(ctx *context.Context) map[string]interfac
 		//return
 	}
 	////beego.Debug("sa",strResp)
-	ctx.WriteString(strResp)
 
+	w.Write([]byte(strResp))
 	//c.Ctx.ResponseWriter.WriteHeader(200)
 	//fmt.Fprint(c.Ctx.ResponseWriter, strResp)
 
@@ -120,7 +114,7 @@ func (o *WXPayNotifyReq) WxpayCallback(ctx *context.Context) map[string]interfac
 
 //微信支付签名验证函数
 func WxpayVerifySign(needVerifyM map[string]interface{}, sign string) bool {
-	appkey := beego.AppConfig.String("wxappkey")
+	appkey := config.GetValue("wxappkey")
 	signCalc := WxpayCalcSign(needVerifyM, appkey)
 
 	//beego.Debug("计算出来的sign: ", signCalc)

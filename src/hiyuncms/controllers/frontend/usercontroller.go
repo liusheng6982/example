@@ -29,6 +29,14 @@ func UserLoginShow(c * gin.Context)  {
 	})
 }
 
+
+func CompanyIndexShow(c * gin.Context)  {
+	c.HTML(http.StatusOK, "companyindex.html", gin.H{
+		"path":"",
+		"sessionInfo":GetSessionInfo(c),
+	})
+}
+
 /**
 用户登录动作
  */
@@ -87,7 +95,7 @@ func UserLogin(c * gin.Context)  {
 
 		SetToken(token, &bus)
 
-		c.Redirect(http.StatusFound, "/")
+		c.Redirect(http.StatusFound, "/companyindex")
 	} else{
 		c.HTML(http.StatusOK, "login.html",gin.H{
 			"msg":"用户名不存在或密码错误！",

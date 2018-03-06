@@ -1,0 +1,122 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+{{template "slider.html" .}}
+<style>
+    #li {list-style-type:none;}
+    .dongtai-title {
+        border-bottom: solid 1px #0a6aa1;
+        font-size: 20px;
+        margin: 20px;
+        padding: 10px;
+    }
+
+    .mycontainer{
+        background-color: white;
+        margin: 20px auto;
+    }
+
+    .dongtai-mode {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .hosp{
+        background-color: white;
+        padding: 5px;
+        margin: 10px;
+        /*
+        border-radius:6px;
+        box-sizing: border-box;
+        border: solid 1px #0882a1;
+        */
+        background-color:linen;
+    }
+
+    .supply{
+        background-color: white;
+        padding: 5px;
+        margin: 5px;
+        border-radius:6px;
+        box-sizing: border-box;
+        border: solid 1px #2e2aa1;
+    }
+
+    .project li a {
+        display: block;
+        border-bottom: 1px #eee dashed;
+        overflow: hidden;
+        color: #666;
+    }
+
+    .project{
+        background-color: #ffffff;
+
+    }
+
+    .project li a {
+        display: block;
+        border-bottom: 1px #eee dashed;
+        overflow: hidden;
+        color: #666;
+    }
+
+    .project li .title {
+        float: left;
+        display: table;
+        line-height: 50px;
+        vertical-align: middle;
+        margin-left: 10px;
+        width: 500px;
+        font-size: 15px;
+    }
+
+    .project li .typ {
+        float: left;
+        display: table-cell;
+        margin-left: 10px;
+        width: 100px;
+        text-align: center;
+        color: #b3b3b3;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .project li .data {
+        float: left;
+        display: table-cell;
+        margin-left: 10px;
+        width: 100px;
+        text-align: center;
+        color: #b3b3b3;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .project li .button {
+        margin-top: 8px;
+        display: table-cell;
+        color: #0955c6;
+        float: right;
+        border: 0px #93bcf4 solid;
+        border-radius: 3px;
+        padding: 3px 8px;
+        display: block;
+    }
+
+    .hosp-title{
+        font-size: 48px;
+    }
+</style>
+<section class="yy-news">
+    <div class="container mycontainer">
+        <div class="row">
+            <div class="col-md-12">
+                {{template "myproject.html" .}}
+            </div>
+        </div>
+
+    </div>
+    &nbsp;
+</section>
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}

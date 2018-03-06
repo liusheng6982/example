@@ -13,7 +13,7 @@
 
                 {{if eq "" $user.UserName }}
                 <div class="sitenav-item-bd js_nologin">
-                    <a rel="nofollow" href="javascript:javascript:location.href='/userlogin';" id="js_login_btn" >登录</a>
+                    <a rel="nofollow" target="_blank" href="/userlogin" id="js_login_btn" >登录</a>
                 </div>
                 {{else}}
                 <div class="sitenav-item-bd js_login" style="display:block;">
@@ -25,7 +25,7 @@
             <li class="sitenav-item sitenav-register">
                 {{if eq "" $user.UserName }}
                 <div class="sitenav-item-bd js_nologin">
-                    <a rel="nofollow" href="javascript:location.href='/registry';" id="js_register_btn">注册</a>
+                    <a rel="nofollow" target="_blank" href="javascript:location.href='/registry';" id="js_register_btn">注册</a>
                 </div>
                 {{else}}
                 <div class="sitenav-item-bd js_login" style="">

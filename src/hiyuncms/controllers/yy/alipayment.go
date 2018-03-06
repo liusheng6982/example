@@ -27,6 +27,12 @@ MIIEowIBAAKCAQEAs6bAiqNYKhLQ/U4ecM6vPYXV6dvfk1giS5ulPUe1OzJQnXqZmtKcEIfBOF+NuSWN
 -----END RSA PRIVATE KEY-----`)
 
 
+func AliPayNotify(c *gin.Context){
+	alipayClient := alipay.New("2016091200494527", "2088102175304454",[]byte(a),[]byte(b), false)
+	alipayClient.AliPayPublicKey = a
+	alipayClient.GetTradeNotification(c.Request)
+}
+
 func AliPrePay(c *gin.Context){
 	vipLevel,_:= c.GetPostForm("VipLevel")
 

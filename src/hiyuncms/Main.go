@@ -13,7 +13,7 @@ import (
 	"hiyuncms/config"
 	//"time"
 	//"hiyuncms/util"
-	"hiyuncms/payment"
+	//"hiyuncms/payment"
 )
 
 

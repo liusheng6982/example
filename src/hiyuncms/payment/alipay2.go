@@ -1,0 +1,146 @@
+package payment
+
+import(
+ "github.com/smartwalle/alipay"
+ "github.com/astaxie/beego/logs"
+)
+
+var a = []byte(`MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs6bAiqNYKhLQ/U4ecM6v
+ PYXV6dvfk1giS5ulPUe1OzJQnXqZmtKcEIfBOF+NuSWNus34Pm+yn946Ir7S8yNG
+ KzY0Anwg3clw6KXj6O17SI9Buk2SZJ9GmBOgJkAnYh4hUVk4sRw3Z+hlijFvuWL6
+ XB3rVBAhwlxDCzTioc2Mu7g5sy2Tm6F2G19p1sGepLM+wtg5mskuhftVYAYWuLWz
+ Gou1DTQ09Xmp7REzdnVRO/LYDiwpjOCBNUEcTyWARSzFQHVXKixXsbVM4xdA4kAS
+ DIaOvhqsBzvh1aZqW8iNoFn3m1Iz+ZA38ftjU9MAjvqsLNBNrzaV3dGtK8OArB1q
+ NwIDAQAB`)
+
+var b = []byte(`-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAs6bAiqNYKhLQ/U4ecM6vPYXV6dvfk1giS5ulPUe1OzJQnXqZmtKcEIfBOF+NuSWNus34Pm+yn946Ir7S8yNGKzY0Anwg3clw6KXj6O17SI9Buk2SZJ9GmBOgJkAnYh4hUVk4sRw3Z+hlijFvuWL6XB3rVBAhwlxDCzTioc2Mu7g5sy2Tm6F2G19p1sGepLM+wtg5mskuhftVYAYWuLWzGou1DTQ09Xmp7REzdnVRO/LYDiwpjOCBNUEcTyWARSzFQHVXKixXsbVM4xdA4kASDIaOvhqsBzvh1aZqW8iNoFn3m1Iz+ZA38ftjU9MAjvqsLNBNrzaV3dGtK8OArB1qNwIDAQABAoIBAECf0I1Omw1vfVxReKPNxb4U4dFhNbjUMGoQUE2N+QSVYeh0TMMj1d4gZ4I25U1f0+8J3q3fEltt3m3XRR0PaFNtCSKHsm714rbdzfFhVELSvasd8nZd0VAtZyO7Wi9ydTvFI56abtfjAnvGstD2aOcwIBI6R1qaQ8fJO2lG/sQbs8hhLQmoYWS0cUQzZuIkaF89uo7UmUVy8hz1ACajmaA1oCZjwnMaYbUKrhv4cNI/L2z/3OlF5gQy731jSHSuqsCPKB7AOcaMEqcFCIHyxxn7UicgJYu1NK3UCnJ1hLLFSygM60MsHSrNHv0kink9G8vdHoGYv40FThzF8tsQ4qECgYEA3pS+Qm/8ABI3oF6rgdT6HvhZ1EmlN2khtZnxXkiLj0I5g3EUuJ4uwR6+cgrAr3A8uhoh5LWHx90SjLuphXcPbyISmi2mWA+Bg35ZpWxfvyiI2XdJPzadvWsVi+tcRYECsafAiQYG5VLKRKkDFPxWqQ4TeUrKOvNG1FaNFdGwRxECgYEAzp/wcoJiF257bxJ2AdIskjGnG7KvUTV/YUrXY0wEkKzymTRE1NfPbGEfELSuxTtfv5Y/hbB+ytkZmHdRkPldUAvL0CG7u92D/SKtmzX9ahaDYWWtDRV6I/4OKt60+xMwmCv4Oi4Vdv1K4SjCcALXCb6Mw42ZAW4UGlKJAPprbMcCgYByq+cpi1AlKT2HXb62cOc7tW9yM07vMTawvNLhZDaiY9gFo+itBLHJxPERCAElYYmnx3bWwb9mdLrtznET1bcZ5k/3JrWggLyU5i+BTkg1z8hRYWdXLeguglDjeSpclI6ywF4tOfGri++xV/HCig6LojjeMG3n2RYQp1agext6QQKBgQCpmsmBBRtFho/VbX7mIcIqQo2cA8E61MH5d7hzLnv00bHVJf12BKujl9krGlT3WrROjCMaNvTsxuXmq9KNQNNimDw1XOs/2yWzjFqas+eOxGoVcaNpwP5gOvMgJ2zBR1A1KKp5/0fpQyLKzW1FCl+/BOWAw2MbtGLV9He3ENdLEwKBgCCL/fVN8AFUj0mUIn7ih9J+glH4DVfLMmTKZTt5ad4ht9bxoUXDE9TVAs1hO+F8Q6qs3wliacERm0W/9L8/VUP+ztfzq65wM4M4Bse69bewfwKiBVMb0jIAE0JHIfCMHJLAuEhkASLXavGQlrdNtPWA3AuIPu2NaHPMbOXVX8/q
+-----END RSA PRIVATE KEY-----`)
+func Test()  {
+ alipayClient := alipay.New("2016091200494527", "2088102175304454",[]byte(a),[]byte(b), false)
+ alipayClient.AliPayPublicKey = a
+
+ var p = alipay.AliPayTradeWapPay{}
+ p.NotifyURL = "xxx"
+ p.Subject = "标题"
+ p.OutTradeNo = "传递一个唯一单号"
+ p.TotalAmount = "10.00"
+ p.ProductCode = "商品编码"
+
+ var url, err = alipayClient.TradeWapPay(p)
+ if( err != nil ){
+  logs.Info( err )
+ }
+ logs.Info( url )
+}
+
+
+var appID     = "2016073100129537"
+var partnerID = "2088102169227503"
+
+// RSA2(SHA256)
+var aliPublicKey = []byte(`-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2MhEVUp+rRRyAD9HZfiS
+g8LLxRAX18XOMJE8/MNnlSSTWCCoHnM+FIU+AfB+8FE+gGIJYXJlpTIyWn4VUMte
+wh/4C8uwzBWod/3ilw9Uy7lFblXDBd8En8a59AxC6c9YL1nWD7/sh1szqej31VRI
+2OXQSYgvhWNGjzw2/KS1GdrWmdsVP2hOiKVy6TNtH7XnCSRfBBCQ+LgqO1tE0NHD
+DswRwBLAFmIlfZ//qZ+a8FvMc//sUm+CV78pQba4nnzsmh10fzVVFIWiKw3VDsxX
+PRrAtOJCwNsBwbvMuI/ictvxxjUl4nBZDw4lXt5eWWqBrnTSzogFNOk06aNmEBTU
+hwIDAQAB
+-----END PUBLIC KEY-----`)
+
+var publicKey = []byte(`-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv8dXxi8wNAOqBNOh8Dv5
+rh0BTb5KNgk62jDaS536Z1cDqq2JmpBYkBnzJXHAXEgBwPXgX8bGruMMjZKW8P4u
+v3Rvj8Am9ewWwUK2U7m2ZB3Oo9MWtyYoiLGX1IA4FFenXzpPgm0WyzaeLX4yJ8j+
+hVrRbgwbZzb9Aq0MyepnK5PVoSPLAPXxvWrIBTok1+liughxwD/7R+ldaQQCtWC7
+nHBwOOChLkX6jenCOqi6LrTxJ4ycGTWTctngFMJO4YtMmq/2zrw+ovNqmxHJQAZw
+uRFnKlZuFoEKPWyMGYtbvK9AWIfC8ubn30O5F9kfLMIHwAHCh0UipPSbKDwQ2BnW
+swIDAQAB
+-----END PUBLIC KEY-----`)
+
+var privateKey = []byte(`-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAv8dXxi8wNAOqBNOh8Dv5rh0BTb5KNgk62jDaS536Z1cDqq2J
+mpBYkBnzJXHAXEgBwPXgX8bGruMMjZKW8P4uv3Rvj8Am9ewWwUK2U7m2ZB3Oo9MW
+tyYoiLGX1IA4FFenXzpPgm0WyzaeLX4yJ8j+hVrRbgwbZzb9Aq0MyepnK5PVoSPL
+APXxvWrIBTok1+liughxwD/7R+ldaQQCtWC7nHBwOOChLkX6jenCOqi6LrTxJ4yc
+GTWTctngFMJO4YtMmq/2zrw+ovNqmxHJQAZwuRFnKlZuFoEKPWyMGYtbvK9AWIfC
+8ubn30O5F9kfLMIHwAHCh0UipPSbKDwQ2BnWswIDAQABAoIBAH7QyfkSsTRkC+Sf
+MaGTd1qscXVAVQCAf/tSfLeuIqx9PL57fNfJhdbcYg2rt8EOGKLJtHKBFlcFawKf
+IdMAslcGHtOXA+xxDucDP2AEGVkA4OkyJ/46bGlfzn/Fvc+t2s6812Du1DjSyCxb
+G711SuFSGdVEikZpdUt0tVU7/LcyKAEZd45Ct+F9MvrPECbSsfODvTOVDHO2k42f
+iwSzLPVmM4wVUc2xA15O87jtDhRiAK/RveQ7J2TWcarkyCR8J+bf5GGA79LdE3vR
+Kr/HAk7INVX4T6U9QuDF30mqNRsloQbNGdvqO65nafNHvuVzUiqPdSX7XQwg/cOO
+mhSsUbkCgYEA8BQXaHn3psHUZx8zEwQFVyd6rzxb+7jmVlUT+jG1pSiZ4WAWxxqx
+YVXhn2dbfatDxWoGOMsrDM/Qp8g81nMG01jtmJr2RKFhAbQl93ipGvvaCNoJ8Lx7
+HpFSq7dETcCCAE7tYMk0LlcVwxeaIUWakDyBHgEy4Zp6lLwdwsh115UCgYEAzH8/
+E5dTOcYdcxk7HLupEC9MCb+FshZT5UIN9I7zLNljQX2O/8m2THb+oZUoy30RVot+
+kYjh5H8M5CYiP0Kkm0Ovq5KC0loyt5SfzWbgwHEldQUVp8woE0YdaJzGB/UnmI9m
+dJBON1t3qbMWjlguXOD8bfriDRuefaZd9oVSQycCgYBcz+ecxEoxdY2fsDgWid9m
+qiSLylHlJr4lcg6fEsieaOvUbUlg/7jDYGgxL8v28Vbp4us02ZZzBYQs2QRsA1wI
+KMDx1jaOobTW68YhvcviWqsX8PMW1kbislu7dsY5KMsZQ2oRmLdLku8e1OkJI9d1
+G27vIpeBEC+DgJYgz05/YQKBgQCStWNiQbkihKBSF7LR3Uvf4Z6yi6V16xDLM8Vh
+Q0DwVxEfRd3WYjcXynLJJ4J54kMTDMaD0GkHDaMI9taw/bWr8jZQZ67VDILAM68l
+o/3v8fyGZFxx4kSJ905X48kqolWC3LYLQA/tJQDHTUUMX/T7CynuGQQdlUfyKu3U
+Uzd+FwKBgHW9Nur4eTxK1nIOZyGgCqL1duYsJQcPWyIcRMTSjOoQZ5ZUhQZTw1Hd
+2CW0Iu2fXExESTIjwXJ0ZJXnCgFU8acQX5vtItC1BlMaucw9XTx1RBCVQdTZ7DSX
+vTlWbWwZHVDP85dioLE9mfo5+Hh3SmHDi3TaVXjxeJsUgHkRgOX7
+-----END RSA PRIVATE KEY-----
+`)
+
+// RSA(SHA1)
+//	aliPublicKey = []byte(`-----BEGIN PUBLIC KEY-----
+//MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIgHnOn7LLILlKETd6BFRJ0Gqg
+//S2Y3mn1wMQmyh9zEyWlz5p1zrahRahbXAfCfSqshSNfqOmAQzSHRVjCqjsAw1jyq
+//rXaPdKBmr90DIpIxmIyKXv4GGAkPyJ/6FTFY99uhpiq0qadD/uSzQsefWo0aTvP/
+//65zi3eof7TcZ32oWpwIDAQAB
+//-----END PUBLIC KEY-----
+//`)
+//
+//	publicKey = []byte(`-----BEGIN PUBLIC KEY-----
+//MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/27vaZOkiSI+7/I0PQXHLWV+l
+//uPhXd2sJIT3YnjUSDbW1Lo6HES0yDP/LOAdVHfzxU09+BnKJbSHAsmBuf/ZQej5y
+//lYi7KUNekTf9zRiaT5mrt2T6GNUptbF/o5Ew4dIAdqvbe1+KQZhzkgoJ1o6uNqFH
+//jVkE05TcQ7NQYr42JwIDAQAB
+//-----END PUBLIC KEY-----`)
+//
+//
+//	privateKey = []byte(`-----BEGIN RSA PRIVATE KEY-----
+//MIICXAIBAAKBgQC/27vaZOkiSI+7/I0PQXHLWV+luPhXd2sJIT3YnjUSDbW1Lo6H
+//ES0yDP/LOAdVHfzxU09+BnKJbSHAsmBuf/ZQej5ylYi7KUNekTf9zRiaT5mrt2T6
+//GNUptbF/o5Ew4dIAdqvbe1+KQZhzkgoJ1o6uNqFHjVkE05TcQ7NQYr42JwIDAQAB
+//AoGAAgpbOBpkpFmzNaOc+HGQvUHpE4EhGwUJHWK+HqSoGdYNfazOFT+ohGTA/69L
+//3Krh+ssRCF0XMMD5X+xFvEceHn47yr3TNJeArsT61UGORm4z0bWPwurjQx884t56
+//dXY2X4NnEHPJA1AlphWASZu4h8TkBzsMhfmfJQDURBuWn7ECQQD+x13z+baTCShv
+//BMKrB+fVZa/yfVx3Mk2m5COn3EosF/+SUxPUONav8b7MqNaR20pSJBxmqpybKP5I
+//BbtO7FOpAkEAwMcomveKwRlsP7qse30NY7TvJDoUZPezGutwDNlI5YjjOVh3RaYd
+//SgtCHzqYRQRhiL3ESDHjNXBpj/ayJYxdTwJAIr859w41cjQriYiSrBS174qgxmeG
+//dtMrd/lhS4FltEHJn0EpUSY3UWOc6/iS2u2XY0B9hxr5pMegdl4hv4/HkQJANCxy
+//j+ZZFkPUKTdTgSRqIEcSxeI2LNFhFvMLY17XPNAcdyO7PA1mNejwH1WTanJyFzkM
+//y2E9FfRzjXP96O2hPwJBAJKUyGfGQXVPqbCoYWaX/Bqj7ok8dal74OCRbKp9WrBe
+//FOEq/sfp2vYGaCw9uyczDwRKcliKibgAEPmbZ1ToKt0=
+//-----END RSA PRIVATE KEY-----
+//`)
+
+
+var client *alipay.AliPay
+
+func Test1() {
+ client = alipay.New(appID, partnerID, publicKey, privateKey, false)
+ client.AliPayPublicKey = aliPublicKey
+
+ var p = alipay.AliPayTradeWapPay{}
+ p.NotifyURL = "xxx"
+ p.Subject = "标题"
+ p.OutTradeNo = "传递一个唯一单号"
+ p.TotalAmount = "10.00"
+ p.ProductCode = "商品编码"
+
+ var url, err = client.TradeWapPay(p)
+ if( err != nil ){
+  logs.Info( err )
+ }
+ logs.Info( url )
+ //exitCode := m.Run()
+ //os.Exit(exitCode)
+}
