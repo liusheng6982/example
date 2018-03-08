@@ -3,6 +3,7 @@ package yy
 import (
 	"log"
 	"hiyuncms/models"
+	"fmt"
 )
 
 type YyPorject struct {
@@ -64,6 +65,16 @@ func GetTopInviteTender(size int) []*YyPorject {
 	return inviteTenderList
 }
 
+func GetTopInviteTenderByCompanyId(size int, companyId int64) []*YyPorject {
+	inviteTenderList := make([]*YyPorject, 0)
+	err := models.DbSlave.Table(YyPorject{}).Limit(size,0).
+		Where("project_type=1").Where(fmt.Sprintf("company_id=%d", companyId)).Find(&inviteTenderList)
+	if err != nil {
+		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
+	}
+	return inviteTenderList
+}
+
 func GetTopRecommendInviteTender(size int) []*YyPorject {
 	inviteTenderList := make([]*YyPorject, 0)
 	err := models.DbSlave.Table(YyPorject{}).Where("Recommended = 1").Where("project_type=1").Limit(size,0).Find(&inviteTenderList)
@@ -108,6 +119,15 @@ func GetAllInviteTenderByPage(page *models.PageRequest) * models.PageResponse  {
 func GetTopPurchase(size int) []*YyPorject {
 	yyPurchaseList := make([]*YyPorject, 0)
 	err := models.DbSlave.Table(YyPorject{}).Where("project_type=2").Limit(size,0).Find(&yyPurchaseList)
+	if err != nil {
+		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
+	}
+	return yyPurchaseList
+}
+
+func GetTopPurchaseByCompanyId(size int, companyId int64) []*YyPorject {
+	yyPurchaseList := make([]*YyPorject, 0)
+	err := models.DbSlave.Table(YyPorject{}).Where("project_type=2").Where(fmt.Sprintf("company_id=%d", companyId)).Limit(size,0).Find(&yyPurchaseList)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
 	}

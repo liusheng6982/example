@@ -1,3 +1,4 @@
+{{ $user := .sessionInfo }}
 <style>
 
     .left-box{
@@ -12,7 +13,7 @@
         margin-top: 20px;
     }
     .dynamic-project-box {
-        width: 350px;
+        width: 510px;
         height: 100%;
         border: 1px solid #E4E5E9;
         float: left;
@@ -82,7 +83,7 @@
     .dynamic-project-box .center ul li a {
         color: #6F6F6F;
         padding-right: 3px;
-        width: 240px;
+        width: 360px;
         display: block;
 
     }
@@ -103,12 +104,12 @@
    <div class="col-md-6 ">
        <div class="dynamic-project-box left-box">
            <div class="dynamic-project-title">
-               <span>招标公告</span>
-               <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+               <span>采购信息</span>
+               <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
            </div>
            <div class="center">
                <ul>
-               {{ $inviteTenders := loadTopInviteTender 10 }}
+               {{ $inviteTenders := loadTopInviteTenderByCompanyId 10 $user.CompanyId }}
                {{range $k,$v := $inviteTenders}}
                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                {{end}}
@@ -120,12 +121,12 @@
     <div class="col-md-6">
         <div class="dynamic-project-box">
             <div class="dynamic-project-title">
-                <span>采购公告</span>
-                <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+                <span>招标信息</span>
+                <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
             </div>
             <div class="center">
                 <ul>
-                {{ $purchase := loadTopPurchase 10 }}
+                {{ $purchase := loadTopPurchaseCompanyId 10 $user.CompanyId  }}
                 {{range $k,$v := $purchase}}
                     <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                 {{end}}

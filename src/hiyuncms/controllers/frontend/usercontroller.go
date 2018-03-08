@@ -31,9 +31,12 @@ func UserLoginShow(c * gin.Context)  {
 
 
 func CompanyIndexShow(c * gin.Context)  {
+	userSession := GetSessionInfo(c)
+	companyInfo := yy.GetById( userSession.CompanyId )
 	c.HTML(http.StatusOK, "companyindex.html", gin.H{
 		"path":"",
-		"sessionInfo":GetSessionInfo(c),
+		"sessionInfo":userSession,
+		"companyLogo": companyInfo.LogoImage,
 	})
 }
 
