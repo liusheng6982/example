@@ -95,7 +95,13 @@ func UserLogin(c * gin.Context)  {
 
 		SetToken(token, &bus)
 
-		c.Redirect(http.StatusFound, "/companyindex")
+		if company.CompanyType == "1"{
+			c.Redirect(http.StatusFound, "/companyindex")
+		}else{
+			c.Redirect(http.StatusFound, "/")
+		}
+
+
 	} else{
 		c.HTML(http.StatusOK, "login.html",gin.H{
 			"msg":"用户名不存在或密码错误！",
@@ -245,6 +251,7 @@ func Registry(c * gin.Context)  {
 	}
 
 	companyType := c.PostForm("company_type")
+	log.Printf("1231231231231231231231231231231231231231231%s",companyType)
 	vipType := c.PostForm("vip_type")
 
 	

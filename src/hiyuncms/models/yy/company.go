@@ -19,6 +19,8 @@ type YyCompany struct {
 	CompanyVip				string      `xorm:"varchar(10)"`
 	VipExpired 				models.Date `xorm:"DateTime"`
 	VipLevel				int 		`xorm:"INT"`
+	LogoImage 				string      `xorm:"varchar(200)"`
+
 }
 
 
