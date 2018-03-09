@@ -16,6 +16,7 @@ func init(){
 	BackendRoute.POST("/invitetenderedit",yy.InviteTenderEdit) 				   //招标项目操作（增删改）
 	
 	FrontendRoute.GET ("/projectdetail",  yy.InviteTenderDetail)
+	FrontendRoute.GET ( "/company_projectdetail",  yy.Company_ProjectDetail )    //医院
 
 	FrontendRoute.GET ("/novip",  frontend.NoVip)
 	FrontendRoute.GET ("/vipexpired", frontend.VipExpired)

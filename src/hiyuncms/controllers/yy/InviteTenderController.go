@@ -111,6 +111,38 @@ func InviteTenderListShow(c *gin.Context){
 	})
 }
 
+
+func Company_ProjectDetail(c *gin.Context){
+	projectId, _ := c.GetQuery("id")
+	log.Printf("projectId=%s\n", projectId)
+	projectIdInt64, _ := strconv.ParseInt(projectId, 10, 64)
+	projectDetail := yy.GetInviteTenderById( projectIdInt64 )
+	sessionInfo := frontend.GetSessionInfo(c)
+	companyInfo := yy.GetById( sessionInfo.CompanyId )
+	if companyInfo.CompanyType != "1"{  //不是医院
+		log.Printf("session=%+v\n", sessionInfo)
+		if sessionInfo.UserName == "" {
+			c.Redirect(http.StatusFound, "/userlogin")
+			return
+		}
+		/*
+		if sessionInfo.VipLevel == 0  {
+			c.Redirect(http.StatusFound, "/novip")
+			return
+		}*/
+		if sessionInfo.VipExpired == 1{
+			c.Redirect(http.StatusFound, "/novip")
+			return
+		}
+	}
+	log.Printf("%+v", projectDetail)
+	c.HTML(http.StatusOK, "projectdetail.html", gin.H{
+		"projectDetail" : projectDetail,
+		"path":"",
+		"sessionInfo":frontend.GetSessionInfo(c),
+	})
+}
+
 func InviteTenderDetail(c *gin.Context){
 	projectId, _ := c.GetQuery("id")
 	log.Printf("projectId=%s\n", projectId)

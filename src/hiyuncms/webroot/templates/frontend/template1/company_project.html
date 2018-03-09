@@ -111,7 +111,7 @@
                <ul>
                {{ $inviteTenders := loadTopInviteTenderByCompanyId 10 $user.CompanyId }}
                {{range $k,$v := $inviteTenders}}
-                   <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                   <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                {{end}}
                </ul>
            </div>
@@ -128,7 +128,7 @@
                 <ul>
                 {{ $purchase := loadTopPurchaseCompanyId 10 $user.CompanyId  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                    <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                 {{end}}
                 </ul>
             </div>
