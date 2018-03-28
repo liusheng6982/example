@@ -6,6 +6,7 @@ import (
 )
 
 func init(){
+	BackendRoute.GET( "/getHospital", yy.GetHospital)
 	BackendRoute.GET ("/purchaselist", yy.PurchaseListShow)					   //采购项目列表显示
 	BackendRoute.POST("/purchaselist",yy.PurchaseList)                           //采购项目列表数据
 	BackendRoute.POST("/purchaseedit",yy.PurchaseEdit) 						   //采购项目操作（增删改）

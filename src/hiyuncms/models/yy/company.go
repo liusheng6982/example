@@ -35,6 +35,12 @@ func GetById(id int64)  *YyCompany {
 	return &company
 }
 
+func GetHospital() []* YyCompany{
+	companies := make([]* YyCompany, 0)
+	models.DbSlave.Table(YyCompany{}).Where("Company_Type=1").Find(&companies)
+	return companies
+}
+
 func CompanyReg(company *YyCompany, user *YyUser) (error,string){
 
 	msg := "success"
