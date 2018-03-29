@@ -86,7 +86,7 @@ func GetTopRecommendInviteTender(size int) []*YyPorject {
 
 func GetTopWinBidInviteTender(size int) []*YyPorject {
 	inviteTenderList := make([]*YyPorject, 0)
-	err := models.DbSlave.Table(YyPorject{}).Where("invite_tender_win_bid_flag = 1").Where("project_type=1").Limit(size,0).Find(&inviteTenderList)
+	err := models.DbSlave.Table(YyPorject{}).Where("invite_win_bid_flag = 1").Where("project_type=1").Limit(size,0).Find(&inviteTenderList)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
 	}
