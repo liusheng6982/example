@@ -13,7 +13,7 @@ type Column struct {
 	ParentId 	int64 	`xorm:"BIGINT"`
 	ShowFlag	int		`xorm:"INT"`
 	OrderNum 	int 	`xorm:"int"`
-	TemplatePath string `xorm:varchar(100)`
+	TemplatePath string `xorm:"varchar(100)"`
 }
 
 /**
