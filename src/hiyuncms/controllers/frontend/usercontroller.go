@@ -17,6 +17,7 @@ import (
 	"net/url"
 	"io/ioutil"
 	"hiyuncms/models"
+	"strconv"
 )
 
 /**
@@ -29,7 +30,9 @@ func UserLoginShow(c * gin.Context)  {
 	})
 }
 
-
+/**
+用户门户供应商首页
+ */
 func CompanyIndexShow(c * gin.Context)  {
 	userSession := GetSessionInfo(c)
 	companyInfo := yy.GetById( userSession.CompanyId )
@@ -38,6 +41,116 @@ func CompanyIndexShow(c * gin.Context)  {
 		"sessionInfo":userSession,
 		"companyLogo": companyInfo.LogoImage,
 	})
+}
+
+/**
+医院SaaS首页
+ */
+func HospitalIndexShow(c * gin.Context)  {
+	companyId,_ := c.GetQuery("hospitalid")
+	companyIdInt, _ := strconv.ParseInt(companyId, 10, 64)
+	companyInfo := yy.GetById( companyIdInt )
+	userSession := GetSessionInfo(c)
+	c.HTML(http.StatusOK, "hospitalindex.html", gin.H{
+		"path":"",
+		"sessionInfo":userSession,
+		"companyInfo":companyInfo,
+		"companyLogo": companyInfo.LogoImage,
+	})
+}
+
+/**
+医院SaaS用户登录界面
+ */
+func HospitalLoginShow(c * gin.Context)  {
+	companyId,_ := c.GetQuery("hospitalid")
+	companyIdInt, _ := strconv.ParseInt(companyId, 10, 64)
+	companyInfo := yy.GetById( companyIdInt )
+	c.HTML(http.StatusOK, "hospital_login.html", gin.H{
+		"path":"",
+		"companyInfo":companyInfo,
+		"sessionInfo":GetSessionInfo(c),
+	})
+}
+
+
+func HospitalUserLogin(c * gin.Context)  {
+	companyId,_ := c.GetQuery("hospitalid")
+	companyIdInt, _ := strconv.ParseInt(companyId, 10, 64)
+	companyInfo := yy.GetById( companyIdInt )
+	vcode := c.PostForm("vcode")
+	session := sessions.Default(c)
+	sessionCode := session.Get( FRONT_CAPTCHA_SESSION )
+	if vcode != sessionCode {
+		c.HTML(http.StatusOK, "hospital_login.html",gin.H{
+			"msg":"验证码错误！",
+			"path":"",
+			"companyInfo":companyInfo,
+			"sessionInfo":GetSessionInfo(c),
+		})
+		return
+	}
+	userName := c.PostForm("UserPhone")
+	passwd := c.PostForm("UserPassword")
+	admin := yy.GetUserByPhone(userName)
+	passwdMd5 := backend.Md5str(passwd)
+	if admin.UserPassword == passwdMd5 {
+		company := yy.GetById( admin.CompanyId )
+		token := fmt.Sprintf("%s-%s",uuid.NewV4(), uuid.NewV4() )
+		now := time.Now()
+
+		expired := 1
+		if now.Before( time.Time(company.VipExpired) ) || now.Equal( time.Time(company.VipExpired) ) {
+			log.Printf("asdfasdfasdfasdfasdfasdf\n")
+			expired = 0
+		}
+		log.Printf("asdfasdfasdfasdfasdfasdf expired=%d\n", expired)
+		bus := UserSession{
+			UserId:admin.Id,
+			UserPhone:admin.UserPhone,
+			UserName:admin.UserName,
+			AccessToken:token,
+			Success:true,
+			CompanyId:company.Id,
+			CompanyName:company.CompanyName,
+			CompanyType:company.CompanyType,
+			VipExpired:expired,
+			VipLevel:company.VipLevel,
+		}
+		session := sessions.Default(c)
+		jsonBytes,_ := json.Marshal(bus)
+		session.Set(FRONT_USER_SESSION,  string(jsonBytes) )
+		session.Save()
+
+		cookie := &http.Cookie{
+			Name:     "accessToken",
+			Value:    token,
+			Domain:	  config.GetValue("cookie.domain"),
+			Path:     "/",
+			MaxAge:   config.GetInt("hiyuncms.server.frontend.session.timeout"),
+			HttpOnly: true,
+		}
+		http.SetCookie(c.Writer, cookie)
+
+		SetToken(token, &bus)
+
+
+		//if company.CompanyType == "1"{
+		c.Redirect(http.StatusFound, fmt.Sprintf("/hospitalindex?hospitalid=%s", companyId))
+		//}else{
+		//	c.Redirect(http.StatusFound, "/hospitalindex?hospitalid")
+		//}
+
+
+	} else{
+		c.HTML(http.StatusOK, "login.html",gin.H{
+			"msg":"用户名不存在或密码错误！",
+			"path":"",
+			"companyInfo":companyInfo,
+			"sessionInfo":GetSessionInfo(c),
+			"bodyCss": "login-layout",
+		})
+	}
 }
 
 /**
@@ -78,6 +191,7 @@ func UserLogin(c * gin.Context)  {
 			Success:true,
 			CompanyId:company.Id,
 			CompanyName:company.CompanyName,
+			CompanyType:company.CompanyType,
 			VipExpired:expired,
 			VipLevel:company.VipLevel,
 		}
@@ -98,10 +212,11 @@ func UserLogin(c * gin.Context)  {
 
 		SetToken(token, &bus)
 
+
 		if company.CompanyType == "1"{
 			c.Redirect(http.StatusFound, "/companyindex")
 		}else{
-			c.Redirect(http.StatusFound, "/")
+			c.Redirect(http.StatusFound, "/companyindex")
 		}
 
 

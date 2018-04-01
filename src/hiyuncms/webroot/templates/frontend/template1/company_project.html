@@ -13,7 +13,7 @@
         margin-top: 20px;
     }
     .dynamic-project-box {
-        width: 510px;
+        width: 100%;
         height: 100%;
         border: 1px solid #E4E5E9;
         float: left;
@@ -101,43 +101,22 @@
     }
 </style>
 <div class="row">
-    <div class="col-md-12" style="text-align: center;padding-top: 20px;">
-        <div class="col-md-3">
-            <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
-                <img src="/static/yy/img/job-logo1.png"><br>
-                电子招标
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
-                <img src="/static/yy/img/job-logo2.png"><br>
-                电商
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
-                <img src="/static/yy/img/job-logo3.png"><br>
-                CA申请
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a  target="_blank" href="/static/yy/ceb_bulletin.zip">
-                <img src="/static/yy/img/job-logo3.png"><br>
-                发布招标信息
-            </a>
-        </div>
-    </div>
+   <div class="col-md-9">
    <div class="col-md-6 ">
        <div class="dynamic-project-box left-box">
            <div class="dynamic-project-title">
-               <span>采购信息</span>
+               <span>采购项目</span>
                <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
            </div>
            <div class="center">
                <ul>
-               {{ $inviteTenders := loadTopInviteTenderByCompanyId 10 $user.CompanyId }}
-               {{range $k,$v := $inviteTenders}}
-                   <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+               {{ if eq $user.CompanyType "1"}}
+                   {{ $inviteTenders := loadTopInviteTenderByCompanyId 10 $user.CompanyId }}
+                   {{range $k,$v := $inviteTenders}}
+                       <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                   {{end}}
+               {{else}}
+
                {{end}}
                </ul>
            </div>
@@ -147,20 +126,70 @@
     <div class="col-md-6">
         <div class="dynamic-project-box">
             <div class="dynamic-project-title">
-                <span>招标信息</span>
+                <span>招标项目</span>
                 <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
             </div>
             <div class="center">
                 <ul>
-                {{ $purchase := loadTopPurchaseCompanyId 10 $user.CompanyId  }}
-                {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
-                {{end}}
+                {{ if eq $user.CompanyType "1"}}
+                    {{ $purchase := loadTopPurchaseCompanyId 10 $user.CompanyId  }}
+                    {{range $k,$v := $purchase}}
+                        <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                    {{end}}
+                {{else}}
+
+               {{end}}
                 </ul>
             </div>
         </div>
 
     </div>
+   </div>
+    {{ if eq $user.CompanyType "1"}}
+        <div class="col-md-3" style="text-align: center;padding-top: 20px;">
+            <div class="col-md-6">
+                <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
+                    <img src="/static/yy/img/job-logo1.png"><br>
+                    电子招标
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
+                    <img src="/static/yy/img/job-logo2.png"><br>
+                    电商
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
+                    <img src="/static/yy/img/job-logo3.png"><br>
+                    CA申请
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a  target="_blank" href="/static/yy/ceb_bulletin.zip">
+                    <img src="/static/yy/img/job-logo3.png"><br>
+                    发布招标信息
+                </a>
+            </div>
+        </div>
+    {{else}}
+        <div class="col-md-3" style="text-align: center;padding-top: 20px;">
+            <div class="col-md-6">
+                <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
+                    <img src="/static/yy/img/job-logo1.png"><br>
+                    投标
+                </a>
+            </div>
+
+            <div class="col-md-6">
+                <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
+                    <img src="/static/yy/img/job-logo3.png"><br>
+                    CA申请
+                </a>
+            </div>
+
+        </div>
+    {{end}}
 </div>
 
 

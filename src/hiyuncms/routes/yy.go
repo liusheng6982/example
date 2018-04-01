@@ -32,5 +32,9 @@ func init(){
 	FrontendRoute.POST("/alipaynotify", yy.AliPayNotify)
 
 	FrontendRoute.GET ("/companyindex",    frontend.CompanyIndexShow)
+
+	FrontendRoute.GET ("hospitalindex", frontend.HospitalIndexShow)
+	FrontendRoute.GET ("hospitallogin", frontend.HospitalLoginShow)
+	FrontendRoute.POST("hospitallogin", frontend.HospitalUserLogin)
 }
 

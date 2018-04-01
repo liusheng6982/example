@@ -45,7 +45,7 @@ type YyPorject struct {
 
 	BusinessCategory					string			`xorm:"varchar(20)"`   //建设、理疗器械、后勤物资、行政物资
 
-	Auth								int				`xorm:"int"`              //查看权限
+	Auth								int				`xorm:"int"`           //查看权限
 }
 
 
@@ -126,6 +126,7 @@ func GetTopPurchase(size int) []*YyPorject {
 	}
 	return yyPurchaseList
 }
+
 
 func GetTopPurchaseByCompanyId(size int, companyId int64) []*YyPorject {
 	yyPurchaseList := make([]*YyPorject, 0)

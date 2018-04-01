@@ -1,0 +1,59 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+
+<div class="container">
+	<div class="col-sm-5 col-sm-offset-3 col-xs-4 col-xs-offset-3" style="padding-top: 50px;margin-bottom: 120px">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">用户登录</h3>
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" method="POST">
+                    <div style="font-size: large;">{{ .msg }}</div>
+					<div class="form-group">
+						<label for="UserPhone" class="col-sm-2 control-label">登录名</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="UserPhone" id="UserPhone" placeholder="手机号">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="UserPassword" class="col-sm-2 control-label">密码</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" name="UserPassword" id="UserPassword" placeholder="密码">
+						</div>
+					</div>
+
+					<div class="form-group">
+                        <label for="vcode" class="col-sm-2 control-label">验证码</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="vcode" id="vcode" placeholder="验证码">
+                        </div>
+                        <div class="col-sm-5">
+                            <img id="captcha-img" src="/captcha"><span id="refresh-button" style="position:relative;margin-top: -5px;cursor: default">刷新</span>
+                        </div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-default">登录</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}
+
+<script>
+	jQuery(function () {
+		$("#refresh-button").click(function () {
+            $("#captcha-img").attr("src", "/captcha?" + Date.now())
+        })
+    })
+</script>
