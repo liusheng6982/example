@@ -53,8 +53,8 @@ func HospitalIndexShow(c * gin.Context)  {
 	userSession := GetSessionInfo(c)
 	c.HTML(http.StatusOK, "hospitalindex.html", gin.H{
 		"path":"",
-		"sessionInfo":userSession,
-		"companyInfo":companyInfo,
+		"sessionInfo": userSession,
+		"companyInfo": companyInfo,
 		"companyLogo": companyInfo.LogoImage,
 	})
 }
