@@ -43,6 +43,8 @@ func initRouteFrontend()   *gin.Engine{
 		"html"  : html,
 		"addNum": addNum,
 		"loadTopInviteTender" : yy.GetTopInviteTender,
+		"GetInviteTenderBySupplyId" : yy.GetInviteTenderBySupplyId,
+		"GetInviteTenderByCompanyIdAndSupplyId" : yy.GetInviteTenderByCompanyIdAndSupplyId,
 		"loadTopInviteTenderByCompanyId" : yy.GetTopInviteTenderByCompanyId,
 		"loadTopPurchase":yy.GetTopPurchase,
 		"loadTopPurchaseCompanyId":yy.GetTopPurchaseByCompanyId,
