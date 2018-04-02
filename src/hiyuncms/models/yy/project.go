@@ -62,37 +62,6 @@ func GetTopInviteTender(size int) []*YyPorject {
 	return inviteTenderList
 }
 
-func GetInviteTenderByCompanyIdAndSupplyId(size int, companyId,supplyId int64 )[]*YyPorject{
-	hospitals := GetCompanyIdsBySupplyId( supplyId )
-	hospitalIds := make( []int64, 0)
-	for _,hospital:= range hospitals{
-		hospitalIds = append(hospitalIds, hospital.HospitalId)
-	}
-	inviteTenderList := make([]*YyPorject, 0)
-	err := models.DbSlave.Table(YyPorject{}).Limit(size,0).
-		Where("project_type=1").Where("company_id = ?", companyId).Find(&inviteTenderList)
-	if err != nil {
-		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
-	}
-	return inviteTenderList
-}
-
-
-func GetInviteTenderBySupplyId(size int, supplyId int64 )[]*YyPorject{
-	hospitals := GetCompanyIdsBySupplyId( supplyId )
-	hospitalIds := make( []int64, 0)
-	for _,hospital:= range hospitals{
-		hospitalIds = append(hospitalIds, hospital.HospitalId)
-	}
-	inviteTenderList := make([]*YyPorject, 0)
-	err := models.DbSlave.Table(YyPorject{}).Limit(size,0).
-		Where("project_type=1").Where("company_id in ? or auth= ?", hospitalIds, 0).Find(&inviteTenderList)
-	if err != nil {
-		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
-	}
-	return inviteTenderList
-}
-
 func GetTopInviteTenderByCompanyId(size int, companyId int64) []*YyPorject {
 	inviteTenderList := make([]*YyPorject, 0)
 	err := models.DbSlave.Table(YyPorject{}).Limit(size,0).
