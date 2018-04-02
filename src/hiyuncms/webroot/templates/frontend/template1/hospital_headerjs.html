@@ -1,4 +1,5 @@
-{{ $user := .sessionInfo }}
+{{ $companyInfo := .companyInfo}}
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="zh-cn"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="zh-cn"> <![endif]-->
@@ -7,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{$user.CompanyName}}</title>
+    <title>{{$companyInfo.CompanyName}}</title>
     <meta name="description" content="company is a free job board template">
     <meta name="author" content="hiyum">
     <meta name="keyword" content="html, css, bootstrap, job-board">
@@ -17,7 +18,7 @@
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <link rel="icon" type="image/png" href="{{.companyLogo}}">
+    <link rel="icon" type="image/png" href="{{$companyInfo.LogoImage}}">
 
     <link rel="stylesheet" href="/static/yy/css/normalize.css">
     <link rel="stylesheet" href="/static/yy/css/font-awesome.min.css">

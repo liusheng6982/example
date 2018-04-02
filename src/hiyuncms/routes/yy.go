@@ -36,5 +36,6 @@ func init(){
 	FrontendRoute.GET ("hospitalindex", frontend.HospitalIndexShow)
 	FrontendRoute.GET ("hospitallogin", frontend.HospitalLoginShow)
 	FrontendRoute.POST("hospitallogin", frontend.HospitalUserLogin)
+	FrontendRoute.GET ("/hospitallogout", frontend.HospitalLogout)
 }
 

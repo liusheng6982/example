@@ -73,7 +73,20 @@ func HospitalLoginShow(c * gin.Context)  {
 	})
 }
 
+/**
+医院SaaS用户登出
+ */
+func HospitalLogout(c *gin.Context)  {
+	companyId,_ := c.GetQuery("hospitalid")
+	sessionInfo := GetSessionInfo(c)
+	ClearSessionInfo(c)
+	DelToken( sessionInfo.AccessToken )
+	c.Redirect(http.StatusFound, fmt.Sprintf("/hospitalindex?hospitalid=%s", companyId))
+}
 
+/**
+医院SaaS用户登录
+ */
 func HospitalUserLogin(c * gin.Context)  {
 	companyId,_ := c.GetQuery("hospitalid")
 	companyIdInt, _ := strconv.ParseInt(companyId, 10, 64)

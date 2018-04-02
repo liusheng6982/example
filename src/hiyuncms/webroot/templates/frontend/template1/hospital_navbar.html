@@ -1,5 +1,4 @@
-
-{{ $user := .sessionInfo }}
+{{ $user := .sessionInfo}}
 {{ $companyInfo := .companyInfo}}
 <div class="cxgb-site-nav site-nav-jia">
     <div class="sitenav-wrap site-nav-bd">
@@ -15,7 +14,7 @@
 
             {{if eq "" $user.UserName }}
                 <div class="sitenav-item-bd js_nologin">
-                    <a rel="nofollow" target="_blank" href="/userlogin" id="js_login_btn" >登录</a>
+                    <a rel="nofollow" target="_blank" href="/hospitallogin?hospitalid={{$companyInfo.Id}}" id="js_login_btn" >登录</a>
                 </div>
             {{else}}
                 <div class="sitenav-item-bd js_login" style="display:block;">
@@ -26,12 +25,10 @@
             </li>
             <li class="sitenav-item sitenav-register">
             {{if eq "" $user.UserName }}
-                <div class="sitenav-item-bd js_nologin">
-                    <a rel="nofollow" target="_blank" href="javascript:location.href='/registry';" id="js_register_btn">注册</a>
-                </div>
+
             {{else}}
                 <div class="sitenav-item-bd js_login" style="">
-                    <a rel="nofollow" href="/logout" class="link-loginout" id="js_loginout">安全退出</a>
+                    <a rel="nofollow" href="/hospitallogout?hospitalid={{$companyInfo.Id}}" class="link-loginout" id="js_loginout">安全退出</a>
                 </div>
             {{end}}
             </li>
