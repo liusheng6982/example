@@ -1,4 +1,5 @@
 {{ $user := .sessionInfo }}
+{{ $companyInfo := .companyInfo}}
 <style>
 
     .left-box{
@@ -110,14 +111,12 @@
                 </div>
                 <div class="center">
                     <ul>
-                    {{ if eq $user.CompanyType "1"}}
-                    {{ $inviteTenders := loadTopInviteTenderByCompanyId 10 $user.CompanyId }}
+
+                    {{ $inviteTenders := GetTopInviteTenderByCompanyId 10 $companyInfo.Id }}
                     {{range $k,$v := $inviteTenders}}
                         <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                     {{end}}
-                    {{else}}
 
-               {{end}}
                     </ul>
                 </div>
             </div>
@@ -132,7 +131,7 @@
                 <div class="center">
                     <ul>
                     {{ if eq $user.CompanyType "1"}}
-                    {{ $purchase := loadTopPurchaseCompanyId 10 $user.CompanyId  }}
+                    {{ $purchase := GetPurchaseByCompanyId 10 $user.CompanyId  }}
                     {{range $k,$v := $purchase}}
                         <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                     {{end}}
