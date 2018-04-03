@@ -7,7 +7,7 @@ import (
 )
 
 type YyCompany struct {
-	Id              		int64      `xorm:"pk BIGINT autoincr"`
+	Id              		int64      `xorm:"pk BIGINT autoincr" json:"id"`
 	CompanyName     		string     `xorm:"varchar(50) notnull unique"`
 
 	CompanyType             string 		`xorm:"varchar(50)"`
@@ -38,6 +38,12 @@ func GetById(id int64)  *YyCompany {
 func GetHospital() []* YyCompany{
 	companies := make([]* YyCompany, 0)
 	models.DbSlave.Table(YyCompany{}).Where("Company_Type=1").Find(&companies)
+	return companies
+}
+
+func GetAllSupplies() []* YyCompany{
+	companies := make([]* YyCompany, 0)
+	models.DbSlave.Table(YyCompany{}).Where("Company_Type=2").Find(&companies)
 	return companies
 }
 

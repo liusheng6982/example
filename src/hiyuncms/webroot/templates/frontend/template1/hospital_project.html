@@ -112,7 +112,7 @@
                 <div class="center">
                     <ul>
 
-                    {{ $inviteTenders := GetTopInviteTenderByCompanyId 10 $companyInfo.Id }}
+                    {{ $inviteTenders := GetPurchaseByCompanyId 10 $companyInfo.Id }}
                     {{range $k,$v := $inviteTenders}}
                         <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                     {{end}}
