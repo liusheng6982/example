@@ -4,6 +4,10 @@ package yy
 import (
 	"log"
 	"hiyuncms/models"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"hiyuncms/config"
 )
 
 type YyCompanyRelation struct{
@@ -51,7 +55,9 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 	log.Printf("supplies===:%v", supplies)
 	companyRelation := make([]*YyCompanyRelation, 0)
 	models.DbSlave.Table(YyCompanyRelation{}).Where("hospital_id = ?", hospitalId ).Find(&companyRelation)
+	log.Printf("info  -2-2-2-2-2-=================：%+v", companyRelation)
 	info := make(map[int64]int64)
+	log.Printf("info  -1-1-1-1-1-=================：%v", info)
 	for _, v := range companyRelation{
 		info[v.SupplyId] = v.SupplyId
 	}
@@ -60,6 +66,9 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 
 	for _, v := range supplies {
 		delete(info, v)
+		if v == 0 {
+			continue
+		}
 		isExist := false
 		models.DbSlave.Table(YyCompanyRelation{}).Where("hospital_id = ?", hospitalId ).And("supply_id = ?", v).Exist(&isExist)
 
@@ -72,6 +81,8 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 			if err != nil {
 				log.Printf("保存医院与供应商关系出错%s", err.Error())
 			}
+			go HospitalSupplySync(config.GetValue("sync.supply.guoxin.url"), hospitalId, v, "1")
+			go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "1")
 			log.Printf("save=============:%d", ha )
 		}
 	}
@@ -82,8 +93,28 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 		if v == 0 {
 			continue
 		}
+		go HospitalSupplySync(config.GetValue("sync.supply.guoxin.url"), hospitalId, v, "0")
+		go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "0")
 		delData := YyCompanyRelation{HospitalId:hospitalId, SupplyId:v}
 		models.DbMaster.Delete(&delData)
+	}
+}
+
+func HospitalSupplySync(url string, hospitalId,supplyId int64, flag string ){ //医院供应商关系同步
+
+	getUrl := fmt.Sprintf("%s?hospitalId=%d&supplyId=%d&flag=%s",
+		url, hospitalId, supplyId, flag)
+
+	res, err := http.Get(getUrl)
+	log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
+	if err == nil {
+		body, err1 := ioutil.ReadAll(res.Body)
+		log.Printf("%s\n", body)
+		if err1 != nil {
+			log.Printf("-----err1=%s\n", err1)
+		}
+	} else {
+		log.Printf("------err=%s\n", err)
 	}
 }
 
