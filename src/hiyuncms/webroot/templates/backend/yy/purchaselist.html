@@ -78,14 +78,17 @@
                 },
                 {name:'id',index:'id', width:60, sorttype:"int", editable: false},
                 {name:'',index:'', width:100,editable: true, hidden : true},
-                {name:'ProjectName',index:'name', width:100,editable: true, editrules:{required: true}},
-                {name:'ProjectNo',index:'url', width:70, editable: true,editrules:{required: true}},
+                {name:'ProjectName', width:100,editable: true, editrules:{required: true}},
+                {name:'ProjectNo', width:70, editable: true,editrules:{required: true}},
                 {name:'PurchaseType', width:90, editable: true,formatter: "select",edittype:"select",editoptions: {value:"1:询价模式;2:优质供应商"}},
-                {name:'CompanyName',index:'Template_Path', width:70, editable: true,editrules:{required: true},edittype:"select", editoptions: { value: getMedicalGroups()}},
-                {name:'PurchaseQuotePriceEndTime',index:'Template_Path', width:70, editable: true, unformat:pickDate},
-                {name:'PurchaseDeliveryTime',index:'Template_Path', width:70, editable: true, unformat:pickDate},
-                {name:'ProjectContent',index:'Template_Path', width:70, editable: true,edittype:'textarea'},
-                {name:'BusinessCategory',index:'order_num', width:90, editable: true,editrules:{required: true, integer: true},formatter: "select",edittype:"select",
+                {name:'CompanyId', formatter: function( cellvalue, options, rowObject ){
+                     return rowObject.CompanyName+"";
+                    },
+                    width:70, editable: true,editrules:{required: true},edittype:"select", editoptions: { value: getMedicalGroups()}},
+                {name:'PurchaseQuotePriceEndTime', width:70, editable: true, unformat:pickDate},
+                {name:'PurchaseDeliveryTime', width:70, editable: true, unformat:pickDate},
+                {name:'ProjectContent', width:70, editable: true,edittype:'textarea'},
+                {name:'BusinessCategory', width:90, editable: true,editrules:{required: true, integer: true},formatter: "select",edittype:"select",
                     editoptions: {value:"1:建设;2:理疗器械;3:后勤物资;4:行政物资"}
                 }
             ],
@@ -354,7 +357,6 @@
                     //alert( rJson )
                     //alert( json_decode(rJson) )
                     var rObj = rJson;
-                    alert( rObj.length )
                     for (var i = 0; i < rObj.length; i++) {
                         if (i < rObj.length - 1) {
                             returnStr += rObj[i].hospitalId + ":" + rObj[i].hospitalName + ";";

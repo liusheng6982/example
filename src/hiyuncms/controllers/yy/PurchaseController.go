@@ -29,6 +29,8 @@ func PurchaseEdit(c * gin.Context){
 	purchase := yy.YyPorject{}
 	purchase.ProjectType = 2
 	bindErr := c.Bind( &purchase)
+	temp := yy.GetById( purchase.CompanyId )
+	purchase.CompanyName =  temp.CompanyName
 	quotePriceEndDate := c.PostForm("PurchaseQuotePriceEndTime")
 	convertErr := purchase.PurchaseQuotePriceEndTime.UnmarshalText( []byte(quotePriceEndDate))
 	if convertErr != nil {

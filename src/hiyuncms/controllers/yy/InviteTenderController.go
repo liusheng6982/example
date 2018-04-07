@@ -183,6 +183,8 @@ func InviteTenderEdit(c * gin.Context){
 	c.Bind( &tender)
 	tender.ProjectType = 1
 	openTenderTime := c.PostForm("InviteOpenTenderTime")
+	temp := yy.GetById( tender.CompanyId )
+	tender.CompanyName =  temp.CompanyName
 	tender.InviteOpenTenderTime.UnmarshalText( []byte(openTenderTime))
 	submitTenderEndTime := c.PostForm("InviteSubmitTenderEndTime")
 	tender.InviteSubmitTenderEndTime.UnmarshalText([]byte(submitTenderEndTime))
