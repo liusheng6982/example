@@ -8,10 +8,10 @@ import (
 	"log"
 	"time"
 	"hiyuncms/models"
-
 	"github.com/smartwalle/alipay"
-	"github.com/astaxie/beego/logs"
 	"net/http"
+	"github.com/satori/go.uuid"
+	"fmt"
 )
 
 var a = []byte(`MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs6bAiqNYKhLQ/U4ecM6v
@@ -30,16 +30,28 @@ MIIEowIBAAKCAQEAs6bAiqNYKhLQ/U4ecM6vPYXV6dvfk1giS5ulPUe1OzJQnXqZmtKcEIfBOF+NuSWN
 func AliPayNotify(c *gin.Context){
 	alipayClient := alipay.New("2016091200494527", "2088102175304454",[]byte(a),[]byte(b), false)
 	alipayClient.AliPayPublicKey = a
-	alipayClient.GetTradeNotification(c.Request)
+	result,err := alipayClient.GetTradeNotification(c.Request)
+	if err != nil{
+		log.Printf("支付回调报错%s", err.Error())
+		return
+	}
+	yyPayment := yy.GetPaymentByOrderNo(result.OutTradeNo)
+	yyPayment.PayStatus = 1
+	yyPayment.TradeNo = result.TradeNo
+
+	yy.UpdatePamyment( yyPayment )
+
 }
 
 func AliPrePay(c *gin.Context){
-	vipLevel,_:= c.GetPostForm("VipLevel")
+	vipLevel,_:= c.GetQuery("vip-type")
 
-	VipLevel, err:= strconv.Atoi( vipLevel )
+	VipLevel, err:= strconv.ParseInt( vipLevel,10,64 )
 	if err != nil {
 		log.Printf("支付时，vipvel错误：%s", err.Error() )
 	}
+	paymentInfo := GetPayInfo(VipLevel)
+	log.Printf("支付信息%+v",paymentInfo)
 	sessionInfo := frontend.GetSessionInfo(c)
 	if sessionInfo.UserName == "" {
 		log.Printf("支付时，用户还没有登录" )
@@ -49,29 +61,27 @@ func AliPrePay(c *gin.Context){
 	payment.PayStatus = 0
 	payment.CompanyId = sessionInfo.CompanyId
 	payment.UserId = sessionInfo.UserId
-	payment.OrderInfo = ""
-	payment.OrderNo = ""
+	payment.OrderInfo = paymentInfo.PayInfo
+	payment.OrderNo = uuid.UUID{}.String()
 	payment.PayTime = models.Time(time.Now())
-	payment.PayAmount = 1//120000
+	payment.PayAmount = paymentInfo.PayAmount
 
 	yy.SavePayment( &payment )
-
-
 	alipayClient := alipay.New("2016091200494527", "2088102175304454",[]byte(a),[]byte(b), false)
 	alipayClient.AliPayPublicKey = a
 
 	var p = alipay.AliPayTradeWapPay{}
-	p.NotifyURL = "xxx"
-	p.Subject = "标题"
-	p.OutTradeNo = "传递一个唯一单号"
-	p.TotalAmount = "10.00"
-	p.ProductCode = "商品编码"
+	p.NotifyURL = "http://www.medscm.net/alipaynotify"
+	p.Subject = payment.OrderInfo
+	p.OutTradeNo = payment.OrderNo
+	p.TotalAmount = fmt.Sprintf("%2f", payment.PayAmount / 100)
+	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
 
 	url, err := alipayClient.TradeWapPay(p)
 	if err != nil {
 		log.Printf( err.Error() )
 	}
-	logs.Info( url )
+	log.Printf("%s" ,url )
 
 
 	if url != nil {
@@ -79,3 +89,4 @@ func AliPrePay(c *gin.Context){
 		return
 	}
 }
+

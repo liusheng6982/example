@@ -125,9 +125,10 @@ func loadArticlesByPage(path string, pageSize int, pageNo int ) * models.PageRes
 	return response
 }
 
-func loadAllProject(pageSize int, pageNo int ) * models.PageResponse {
+func loadAllProject(path string ,pageSize int, pageNo int ) * models.PageResponse {
 	page := models.PageRequest{Rows:pageSize, Page:pageNo}
 	response := yy.GetAllInviteTenderByPage(&page)
+	response.Path = path;
 	return response
 }
 

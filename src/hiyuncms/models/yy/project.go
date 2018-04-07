@@ -40,7 +40,7 @@ type YyPorject struct {
 	Recommended							int             `xorm:"int"`           //是否是推荐项目
 	Published        					int         	`xorm:"int"`           //是否发布
 	PublishedTime						models.Date  	`xorm:"DateTime"`      //发布时间
-	CreateTime          				models.Date 	`xorm:"DateTime"`      //创建时间
+	CreateTime          				models.Date 	`xorm:"created"`      //创建时间
 
 
 	BusinessCategory					string			`xorm:"varchar(20)"`   //建设、理疗器械、后勤物资、行政物资
@@ -102,11 +102,16 @@ func GetInviteTenderById(id int64) * YyPorject  {
 
 func GetAllInviteTenderByPage(page *models.PageRequest) * models.PageResponse  {
 	inviteTenderList := make([]*YyPorject, 0)
-	err := models.DbSlave.Table(YyPorject{}).Where("project_type=1").Limit(page.Rows, (page.Page - 1)* page.Rows).Find(&inviteTenderList)
+	err := models.DbSlave.Table(YyPorject{}).
+		//Where("project_type=1").
+		Limit(page.Rows, (page.Page - 1)* page.Rows).
+		Find(&inviteTenderList)
 	if err != nil {
 		log.Printf("获取YyInviteTender数据:%s", models.GetErrorInfo(err))
 	}
-	records,_:= models.DbSlave.Table(YyPorject{}).Where("project_type=1").Count(YyPorject{})
+	records,_:= models.DbSlave.Table(YyPorject{}).
+		//Where("project_type=1").
+			Count(YyPorject{})
 	pageResponse := models.InitPageResponse(page, inviteTenderList, records)
 	return pageResponse
 }

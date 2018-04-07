@@ -11,7 +11,7 @@ type YyPayment struct {
 	UserId          int64   			`xorm:"bigint"`
 	OrderNo			string				`xorm:"varchar(100)"`
 	OrderInfo       string 				`xorm:"varchar(128)"`
-	VipLevel 		int 				`xorm:"int"`
+	VipLevel 		int64				`xorm:"int"`
 	PayAmount		int64				`xorm:"bigint"`
 	PayTime			models.Time			`xorm:"datetime"`
 	PayStatus		int					`xorm:"int"`
@@ -19,10 +19,23 @@ type YyPayment struct {
 }
 
 func init()  {
-	err := models.DbMaster.Sync2( YyCompany{})
+	err := models.DbMaster.Sync2( YyPayment{})
 	log.Println( "init table yy_payment", models.GetErrorInfo(err))
 }
 
 func SavePayment(payment * YyPayment){
-	models.DbMaster.Insert( payment )
+	_,err := models.DbMaster.Insert( payment )
+	if err != nil {
+		log.Printf("保存支付信息出错！:%s", err.Error())
+	}
+}
+
+func GetPaymentByOrderNo(orderNo string)*YyPayment{
+	yyPayment := YyPayment{}
+	models.DbSlave.Table(YyPayment{}).Where("OrderNo=?", orderNo).Get(&yyPayment)
+	return &yyPayment
+}
+
+func UpdatePamyment(payment * YyPayment)  {
+	models.DbMaster.Id(payment.Id).Update(payment)
 }

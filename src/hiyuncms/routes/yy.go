@@ -35,14 +35,14 @@ func init(){
 
 	FrontendRoute.POST("/RegistryVerify", frontend.RegistryVerify)
 
-	FrontendRoute.POST("/aliprepay",    yy.AliPrePay)
+	FrontendRoute.GET ("/aliprepay",    yy.AliPrePay)
 	FrontendRoute.POST("/alipaynotify", yy.AliPayNotify)
 
 	FrontendRoute.GET ("/companyindex",    frontend.CompanyIndexShow)
 
-	FrontendRoute.GET ("hospitalindex", frontend.HospitalIndexShow)
-	FrontendRoute.GET ("hospitallogin", frontend.HospitalLoginShow)
-	FrontendRoute.POST("hospitallogin", frontend.HospitalUserLogin)
+	FrontendRoute.GET ("/hospitalindex", frontend.HospitalIndexShow)
+	FrontendRoute.GET ("/hospitallogin", frontend.HospitalLoginShow)
+	FrontendRoute.POST("/hospitallogin", frontend.HospitalUserLogin)
 	FrontendRoute.GET ("/hospitallogout", frontend.HospitalLogout)
 }
 

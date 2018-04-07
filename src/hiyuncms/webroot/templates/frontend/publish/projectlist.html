@@ -18,13 +18,16 @@
     <div class="col-md-8">
         <div class="lists_left">
             <ul class="list_ul">
-                {{ $allPorjectPage := loadAllProject .pageSize .pageNo }}
+                {{ $allPorjectPage := loadAllProject .path .pageSize .pageNo }}
                 {{  range $k,$v := $allPorjectPage.Rows }}
-                <li><span>[]</span><a href="/projectdetail?id={{$v.Id}}" target="_blank" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a>
-                    <span>[Vip项目]</span>
+                <li><span>{{if eq 1 $v.ProjectType}}[招标]{{else}}[采购]{{end}}</span><a href="/projectdetail?id={{$v.Id}}" target="_blank" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a>
+                    <span>[{{$v.CompanyName}}]</span>
                     <b>{{$v.CreateTime}}</b></li>
                 {{end}}
             </ul>
+        </div>
+        <div class="row" style="margin: 15px">
+        {{template "pagination.html" $allPorjectPage }}
         </div>
     </div>
     <div class="col-md-4">
