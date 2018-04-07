@@ -18,7 +18,7 @@ type YyCompany struct {
 	CompanyImage 			string      `xorm:"varchar(100)"`
 	CompanyVip				string      `xorm:"varchar(10)"`
 	VipExpired 				models.Date `xorm:"DateTime"`
-	VipLevel				int 		`xorm:"INT"`
+	VipLevel				int64 		`xorm:"INT"`
 	LogoImage 				string      `xorm:"varchar(200)"`
 
 }
@@ -45,6 +45,10 @@ func GetAllSupplies() []* YyCompany{
 	companies := make([]* YyCompany, 0)
 	models.DbSlave.Table(YyCompany{}).Where("Company_Type=2").Find(&companies)
 	return companies
+}
+
+func UpdateCompany(company * YyCompany){
+	models.DbMaster.Id( company.Id ).Update( &company )
 }
 
 func CompanyReg(company *YyCompany, user *YyUser) (error,string){

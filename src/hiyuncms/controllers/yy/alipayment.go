@@ -3,15 +3,12 @@ package yy
 import (
 	"github.com/gin-gonic/gin"
 	"strconv"
-	"hiyuncms/models/yy"
 	"hiyuncms/controllers/frontend"
 	"log"
-	"time"
-	"hiyuncms/models"
 	"github.com/smartwalle/alipay"
 	"net/http"
-	"github.com/satori/go.uuid"
 	"fmt"
+	"hiyuncms/config"
 )
 
 var a = []byte(`MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs6bAiqNYKhLQ/U4ecM6v
@@ -35,43 +32,28 @@ func AliPayNotify(c *gin.Context){
 		log.Printf("支付回调报错%s", err.Error())
 		return
 	}
-	yyPayment := yy.GetPaymentByOrderNo(result.OutTradeNo)
-	yyPayment.PayStatus = 1
-	yyPayment.TradeNo = result.TradeNo
 
-	yy.UpdatePamyment( yyPayment )
-
+	PaymentSuccess(result.OutTradeNo, result.TradeNo)
 }
 
 func AliPrePay(c *gin.Context){
 	vipLevel,_:= c.GetQuery("vip-type")
-
 	VipLevel, err:= strconv.ParseInt( vipLevel,10,64 )
 	if err != nil {
-		log.Printf("支付时，vipvel错误：%s", err.Error() )
+		log.Printf("支付时，vipLvel错误：%s", err.Error() )
 	}
-	paymentInfo := GetPayInfo(VipLevel)
-	log.Printf("支付信息%+v",paymentInfo)
+
 	sessionInfo := frontend.GetSessionInfo(c)
 	if sessionInfo.UserName == "" {
 		log.Printf("支付时，用户还没有登录" )
 	}
-	payment := yy.YyPayment{}
-	payment.VipLevel = VipLevel
-	payment.PayStatus = 0
-	payment.CompanyId = sessionInfo.CompanyId
-	payment.UserId = sessionInfo.UserId
-	payment.OrderInfo = paymentInfo.PayInfo
-	payment.OrderNo = uuid.UUID{}.String()
-	payment.PayTime = models.Time(time.Now())
-	payment.PayAmount = paymentInfo.PayAmount
 
-	yy.SavePayment( &payment )
-	alipayClient := alipay.New("2016091200494527", "2088102175304454",[]byte(a),[]byte(b), false)
+	payment := PaymentPrePay(VipLevel, sessionInfo.CompanyId, sessionInfo.UserId)
+	alipayClient := alipay.New(config.GetValue("pay.ali.appId"), "2088102175304454",[]byte(a),[]byte(b), true)
 	alipayClient.AliPayPublicKey = a
 
 	var p = alipay.AliPayTradeWapPay{}
-	p.NotifyURL = "http://www.medscm.net/alipaynotify"
+	p.NotifyURL = config.GetValue("pay.ali.notify.url")
 	p.Subject = payment.OrderInfo
 	p.OutTradeNo = payment.OrderNo
 	p.TotalAmount = fmt.Sprintf("%2f", payment.PayAmount / 100)
@@ -83,10 +65,8 @@ func AliPrePay(c *gin.Context){
 	}
 	log.Printf("%s" ,url )
 
-
 	if url != nil {
 		c.Redirect(http.StatusFound, url.String())
 		return
 	}
 }
-
