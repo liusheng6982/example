@@ -27,7 +27,7 @@ type UserSession struct {
 	CompanyName       string     	`json:"companyName"`
 	AccessToken 	  string		`json:"accessToken"`
 	Success 		  bool          `json:"success"`
-	VipLevel          int           `json:"vipLevel"`
+	VipLevel          int64           `json:"vipLevel"`
 	VipExpired        int           `json:"vipExpired"`
 	CompanyType       string 			`json:"companyType"`
 }

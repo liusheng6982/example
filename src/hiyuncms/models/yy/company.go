@@ -48,7 +48,10 @@ func GetAllSupplies() []* YyCompany{
 }
 
 func UpdateCompany(company * YyCompany){
-	models.DbMaster.Id( company.Id ).Update( &company )
+	_, err:=models.DbMaster.Id( company.Id ).Update( company )
+	if err != nil {
+		log.Printf("更新公司信息报错：%s\n%+v", err.Error(),company )
+	}
 }
 
 func CompanyReg(company *YyCompany, user *YyUser) (error,string){

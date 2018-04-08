@@ -27,15 +27,19 @@ func PaymentPrePay(vipLevel, companyId, userId int64)*yy.YyPayment{
 
 func PaymentSuccess(orderNo,tradeNo string){
 	yyPayment := yy.GetPaymentByOrderNo(orderNo)
+	if yyPayment.PayStatus == 1{
+		return
+	}
 	yyPayment.PayStatus = 1
 	yyPayment.TradeNo = tradeNo
 
 	yyCompany := yy.GetById( yyPayment.CompanyId )
 	yyCompany.VipLevel = yyPayment.VipLevel
-	if time.Time(  yyCompany.VipExpired ).After( time.Now() ){
+	tempTime := time.Time(  yyCompany.VipExpired )
+	if tempTime.Before( time.Now() ){
 		yyCompany.VipExpired = models.Date(time.Now().AddDate(1, 0, 0))
 	}else{
-		yyCompany.VipExpired = models.Date(time.Time(yyCompany.VipExpired).AddDate(1, 0, 0))
+		yyCompany.VipExpired = models.Date(tempTime.AddDate(1, 0, 0))
 	}
 	yy.UpdateCompany( yyCompany )
 	yy.UpdatePamyment( yyPayment )

@@ -32,7 +32,10 @@ func SavePayment(payment * YyPayment){
 
 func GetPaymentByOrderNo(orderNo string)*YyPayment{
 	yyPayment := YyPayment{}
-	models.DbSlave.Table(YyPayment{}).Where("OrderNo=?", orderNo).Get(&yyPayment)
+	_, err := models.DbSlave.Table(YyPayment{}).Where("Order_No=?", orderNo).Get(&yyPayment)
+	if err != nil {
+		log.Printf("根据%s获取YyPayment出错:%s",orderNo, err.Error())
+	}
 	return &yyPayment
 }
 

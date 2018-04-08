@@ -14,7 +14,9 @@ func init()  {
 	fmt.Printf( confFile )
 	cfg, err = goconfig.LoadConfigFile( confFile )
 	if err != nil {
-		println("读取配置文件出错", err.Error() )
+		println("读取配置文件出错:", err.Error() )
+		cfg, err = goconfig.LoadConfigFile(
+			"/Users/liusheng/GoglandProjects/martini/src/hiyuncms/webroot/conf/config.ini" )
 	}
 }
 
