@@ -25,7 +25,7 @@ MIIEowIBAAKCAQEAs6bAiqNYKhLQ/U4ecM6vPYXV6dvfk1giS5ulPUe1OzJQnXqZmtKcEIfBOF+NuSWN
 
 
 func AliPayNotify(c *gin.Context){
-	alipayClient := alipay.New("2016091200494527", "2088102175304454",[]byte(a),[]byte(b), false)
+	alipayClient := alipay.New(config.GetValue("pay.ali.appId"), "2088102175304454",[]byte(a),[]byte(b), true)
 	alipayClient.AliPayPublicKey = a
 	result,err := alipayClient.GetTradeNotification(c.Request)
 	if err != nil{
