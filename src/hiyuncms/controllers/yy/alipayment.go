@@ -50,6 +50,7 @@ func AliPrePay(c *gin.Context){
 
 	var p = alipay.AliPayTradePagePay{}
 	p.NotifyURL = config.GetValue("pay.ali.notify.url")
+	p.ReturnURL = config.GetValue("pay.ali.return.url")
 	p.Subject = payment.OrderInfo
 	p.OutTradeNo = payment.OrderNo
 	var payAmount float64
