@@ -36,6 +36,7 @@ func initRouteFrontend()   *gin.Engine{
 	engine.Use( sessions.Sessions("jsessionid", store) )
 	engine.SetFuncMap(template.FuncMap{
 		"loadColumn":   loadColumn,
+		"getAllPayInfo":yy.GetAllPayInfo,
 		"loadArticles": loadArticlesByPage,
 		"loadArticlesTop": loadArticlesTop,
 		"loadArticle" : loadArticle,
@@ -56,6 +57,7 @@ func initRouteFrontend()   *gin.Engine{
 		"hasPrefix": HasPrefix,
 		"substring": Substring,
 		"judgeVIP":yy.JudgeVIP,
+		"isSupply":yy.IsSupply,
 	})
 	engine.LoadHTMLGlob("webroot/templates/frontend/**/*")
 	engine.GET("/ping", func(c *gin.Context) {

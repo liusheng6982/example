@@ -1,10 +1,9 @@
 {{template "headerjs.html" .}}
-
 <link href="/static/userregistry/code.css" rel="stylesheet">
-
-
-
 {{template "navbar.html" .}}
+
+{{ $user := .sessionInfo}}
+
 <div class="login-box f-mt10 f-pb50">
 
 
@@ -13,31 +12,54 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
             <div class="main bgf">
-                <h3 style="font-size: 24px">选择会员类型</h3>
+                <h3 style="font-size: 16px">选择会员类型</h3>
             </div>
             </div>
         </div>
-        <div class="row" style="font-size: 18px">
+        <div class="row" style="font-size: 15px">
+            {{ if isSupply $user.CompanyId }}
             <div class="col-md-6 col-md-offset-3">
                 <div class="radio">
                     <label>
-                        <input type="radio" name="vip-type" id="optionsRadios1" value="1" checked>
+                        <input type="radio" name="vip-type" id="optionsRadios1" value="4" checked>
                         医院原供应商升级包 600元/年
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="vip-type" id="optionsRadios2" value="2">
-                        合格供应商 1200元/年
+                        <input type="radio" name="vip-type" id="optionsRadios2" value="5">
+                        现有供应商优选会员年费 1200元/年
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="vip-type" id="optionsRadios3" value="3">
-                        优选供应商 1800/年
+                        <input type="radio" name="vip-type" id="optionsRadios3" value="6">
+                        现有供应商VIP会员年费 1800/年
                     </label>
                 </div>
             </div>
+            {{else}}
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="vip-type" id="optionsRadios1" value="1" checked>
+                            普通会员年费 600元/年
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="vip-type" id="optionsRadios2" value="2">
+                            选会员年费 1200元/年
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="vip-type" id="optionsRadios3" value="3">
+                            VIP会员年费 1800/年
+                        </label>
+                    </div>
+                </div>
+            {{end}}
         </div>
         <div class="row" style="font-size: 18px">
             <div class="col-md-6 col-md-offset-3">

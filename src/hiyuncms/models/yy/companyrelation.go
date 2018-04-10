@@ -30,6 +30,15 @@ func IsSelectSupplyByHospitalId(hospitalId, supplyId int64) bool {
 	return  has
 }
 
+func IsSupply(supplyId int64) bool{
+	userRole := YyCompanyRelation{SupplyId:supplyId}
+	has, err := models.DbSlave.Table(YyCompanyRelation{}).Get( &userRole)
+	if err != nil {
+		log.Printf("是否是已有供应商:%s\n", models.GetErrorInfo(err))
+	}
+	return  has
+}
+
 func GetCompanyIdsBySupplyId( supplyId int64 )([]*YyCompanyRelation){
 	result := make( [] *YyCompanyRelation, 0)
 	models.DbSlave.Table(YyCompanyRelation{}).Where("supply_id =?", supplyId).Find( &result )

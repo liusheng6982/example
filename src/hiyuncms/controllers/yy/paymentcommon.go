@@ -8,7 +8,7 @@ import (
 )
 
 func PaymentPrePay(vipLevel, companyId, userId int64)*yy.YyPayment{
-	paymentInfo := GetPayInfo(vipLevel)
+	paymentInfo := yy.GetPayInfo(vipLevel)
 	payment := yy.YyPayment{}
 	payment.VipLevel = vipLevel
 	payment.PayStatus = 0

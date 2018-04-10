@@ -1,6 +1,8 @@
 package yy
 
-import "hiyuncms/config"
+import (
+	"hiyuncms/config"
+)
 
 var PayProductInfo map[int64]*PaymentInfo
 
@@ -23,4 +25,8 @@ func init()  {
 func GetPayInfo(vipLevel int64)  *PaymentInfo{
 	paymentInfo := PayProductInfo[vipLevel]
 	return paymentInfo
+}
+
+func GetAllPayInfo(vipLevel int64)  map[int64]*PaymentInfo{
+	return PayProductInfo
 }
