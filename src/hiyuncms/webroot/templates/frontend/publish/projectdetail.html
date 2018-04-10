@@ -38,10 +38,11 @@ td, th {
     font-size: 20px;
   }
 </style>
+{{ $user := .sessionInfo}}
 <section class="yy-news" style="font-size: 14px">
   <div class="container mycontainer">
     <div id="main">
-      <div class="block">
+      <div class="row">
         {{ $projectInfo := .projectDetail }}
         <h3>项目概况</h3>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
@@ -76,24 +77,45 @@ td, th {
         </table>
       </div>
 
-      <div class="block" style="font-size: 16px">
+      <div class="row" style="font-size:16px;margin-top:20px">
         <h3>项目描述</h3>
           <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">
             <p>
                 {{$projectInfo.ProjectContent}}
             </p>
           </div>
+      </div>
+        <div class="row" style="font-size:16px;margin-top:20px">
+            <h3>操作</h3>
+            <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">
+            {{if judgeVIP $user.CompanyId $projectInfo.CompanyId}}
+            {{ if eq $projectInfo.ProjectType 1}}
+                <a href="">参与招标</a>
+            {{ else}}
+                <a href="">参与采购</a>
+            {{end}}
+            {{else}}
+                <a href="/applysupply">申请成为供应商</a>
+            {{end}}
+            </div>
+        </div>
+
 
       </div>
-
-     
-    </div>
+  </div>     &nbsp;
 
 
-
-
-
-  </div>
-  &nbsp;
 </section>
+
+<section class="yy-news" style="font-size: 14px">
+
+</section>
+     
+
+
+
+
+
+
+
 {{template "bottom.html" .}} {{template "footerjs.html" .}}

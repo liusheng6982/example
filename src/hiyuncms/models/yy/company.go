@@ -93,4 +93,13 @@ func CompanyReg(company *YyCompany, user *YyUser) (error,string){
 	return nil, msg
 }
 
+func JudgeVIP(userCompanyId,projectCompanyId int64)(int64){
+	is := IsSelectSupplyByHospitalId(userCompanyId, projectCompanyId)
+	if is {
+		return 1
+	}else{
+		return 0 //不是供应商
+	}
+}
+
 

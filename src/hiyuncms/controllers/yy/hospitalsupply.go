@@ -10,6 +10,7 @@ import (
 	"hiyuncms/models"
 	"fmt"
 	"strings"
+	"hiyuncms/controllers/frontend"
 )
 
 func HospitalSupplyShow(c *gin.Context)  {
@@ -84,6 +85,12 @@ func HospitalSupplySave(c * gin.Context)  {
 	yy.HospitalSupplySave(hospitalId, supplyIdsInt)
 	c.JSON(http.StatusOK, gin.H{
 		"result":"success",
+	})
+}
+
+func ApplyToSupply(c * gin.Context)  {
+	c.HTML(http.StatusOK, "applysupply.html", gin.H{
+		"path":"",		"sessionInfo":frontend.GetSessionInfo(c),
 	})
 }
 

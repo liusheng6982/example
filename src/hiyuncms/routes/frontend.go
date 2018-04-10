@@ -55,6 +55,7 @@ func initRouteFrontend()   *gin.Engine{
 		"loadAllProject":loadAllProject,
 		"hasPrefix": HasPrefix,
 		"substring": Substring,
+		"judgeVIP":yy.JudgeVIP,
 	})
 	engine.LoadHTMLGlob("webroot/templates/frontend/**/*")
 	engine.GET("/ping", func(c *gin.Context) {
