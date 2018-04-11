@@ -103,14 +103,14 @@
    <div class="col-md-6 ">
        <div class="dynamic-project-box left-box">
            <div class="dynamic-project-title">
-               <span>招标公告</span>
+               <span>招标项目</span>
                <a href="" title="更多招标公告信息">More&gt;&gt;</a>
            </div>
            <div class="center">
                <ul>
                {{ $inviteTenders := loadTopInviteTender 10 }}
                {{range $k,$v := $inviteTenders}}
-                   <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                   <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                {{end}}
                </ul>
            </div>
@@ -120,14 +120,14 @@
     <div class="col-md-6">
         <div class="dynamic-project-box">
             <div class="dynamic-project-title">
-                <span>采购公告</span>
+                <span>采购项目</span>
                 <a href="" title="更多招标公告信息">More&gt;&gt;</a>
             </div>
             <div class="center">
                 <ul>
                 {{ $purchase := loadTopPurchase 10 }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -146,7 +146,7 @@
                 <ul>
                 {{ $purchase := loadTopWinBid 10 }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -163,7 +163,7 @@
                 <ul>
                 {{ $purchase := loadTopRecommend 10 }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                 {{end}}
                 </ul>
             </div>

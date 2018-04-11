@@ -31,6 +31,7 @@ func IsSelectSupplyByHospitalId(hospitalId, supplyId int64) bool {
 }
 
 func IsSupply(supplyId int64) bool{
+	log.Printf("是否是已有供应商:%d",supplyId)
 	userRole := YyCompanyRelation{SupplyId:supplyId}
 	has, err := models.DbSlave.Table(YyCompanyRelation{}).Get( &userRole)
 	if err != nil {
@@ -79,12 +80,14 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 			continue
 		}
 		isExist := false
-		models.DbSlave.Table(YyCompanyRelation{}).Where("hospital_id = ?", hospitalId ).And("supply_id = ?", v).Exist(&isExist)
+		//models.DbSlave.Table(YyCompanyRelation{}).Where("hospital_id = ?", hospitalId ).And("supply_id = ?", v).Exist(&isExist)
+		save := YyCompanyRelation{HospitalId:hospitalId, SupplyId:v}
+		isExist,_ = models.DbSlave.Table(YyCompanyRelation{}).Get(&save)
 
 		log.Printf("是否存在：%v", isExist)
 
 		if !isExist{
-			save := YyCompanyRelation{HospitalId:hospitalId, SupplyId:v}
+
 
 			ha,err  := models.DbMaster.Insert( &save )
 			if err != nil {
