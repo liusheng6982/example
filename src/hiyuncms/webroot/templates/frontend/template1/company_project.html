@@ -146,7 +146,7 @@
     </div>
    </div>
     {{ if eq $user.CompanyType "1"}}
-        <div class="col-md-3" style="text-align: center;padding-top: 20px;">
+        <div class="col-md-3" style="text-align: center;padding-top: 20px;padding-bottom: 20px">
             <div class="col-md-6">
                 <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
                     <img src="/static/yy/img/job-logo1.png"><br>
@@ -171,9 +171,15 @@
                     发布招标信息
                 </a>
             </div>
+            <div class="col-md-6">
+                <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
+                    <img src="/static/yy/img/job-logo3.png"><br>
+                    发布招标信息
+                </a>
+            </div>
         </div>
     {{else}}
-        <div class="col-md-3" style="text-align: center;padding-top: 20px;">
+        <div class="col-md-3" style="text-align: center;padding-top: 20px;padding-bottom: 20px">
             <div class="col-md-6">
                 <a  target="_blank" href="http://219.239.33.98:8080/yyg/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
                     <img src="/static/yy/img/job-logo1.png"><br>
