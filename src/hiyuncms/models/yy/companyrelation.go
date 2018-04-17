@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"hiyuncms/config"
+	"strings"
 )
 
 type YyCompanyRelation struct{
@@ -94,7 +95,7 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 				log.Printf("保存医院与供应商关系出错%s", err.Error())
 			}
 			go HospitalSupplySync(config.GetValue("sync.supply.guoxin.url"), hospitalId, v, "1")
-			go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "1")
+			//go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "1")
 			log.Printf("save=============:%d", ha )
 		}
 	}
@@ -106,16 +107,23 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 			continue
 		}
 		go HospitalSupplySync(config.GetValue("sync.supply.guoxin.url"), hospitalId, v, "0")
-		go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "0")
+		//go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "0")
 		delData := YyCompanyRelation{HospitalId:hospitalId, SupplyId:v}
 		models.DbMaster.Delete(&delData)
 	}
 }
 
 func HospitalSupplySync(url string, hospitalId,supplyId int64, flag string ){ //医院供应商关系同步
+	var getUrl string
+	if strings.Contains(url, "?"){
+		getUrl = fmt.Sprintf("%s&hospitalId=%d&supplyId=%d&flag=%s",
+			url, hospitalId, supplyId, flag)
+	} else{
+		getUrl = fmt.Sprintf("%s?hospitalId=%d&supplyId=%d&flag=%s",
+			url, hospitalId, supplyId, flag)
+	}
 
-	getUrl := fmt.Sprintf("%s?hospitalId=%d&supplyId=%d&flag=%s",
-		url, hospitalId, supplyId, flag)
+	log.Printf("同步的url:%s", getUrl )
 
 	res, err := http.Get(getUrl)
 	log.Printf("!!!!!!!!!!!!!!!!!!%s", err)

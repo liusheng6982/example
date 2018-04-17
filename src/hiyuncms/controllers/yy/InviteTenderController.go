@@ -91,6 +91,8 @@ type TenderProjectInfo struct{
 	PreBidEndTime string `json:"preBidEndTime"`
 	PreDocDownloadEndTime string `json:"preDocDownloadEndTime"`
 	ProjectDesc string `json:"projectDesc"`
+	Buyerid string `json:"buyerid"`
+	Flag string `json:"flag"`
 }
 type Data struct {
 	TenderProjectInfo  TenderProjectInfo `json:"tenderProjectInfo"`
@@ -219,7 +221,9 @@ func InviteTenderEdit(c * gin.Context){
 }
 
 
-
+/*
+	获取用户信息
+*/
 func PushInviteTenderProject( c * gin.Context ){
 
 	project := ProjecgNo{}
@@ -229,7 +233,7 @@ func PushInviteTenderProject( c * gin.Context ){
 		log.Printf("获取项目时绑定参数出错%s\n",models.GetErrorInfo(err))
 	}
 
-	fmt.Printf("proejctNo=%s tenderNoNumber=%s", project.ProjectNo, project.TenderNoNumber)
+	fmt.Printf("proejctNo=%s tenderNoNumber=%s\n", project.ProjectNo, project.TenderNoNumber)
 
 
 	{//项目同步
@@ -238,9 +242,10 @@ func PushInviteTenderProject( c * gin.Context ){
 		data["userName"] = []string{"daili"}
 		data["password"] = []string{"MTIzNDU2"}
 		data["tenderNoNumber"] = []string{ project.TenderNoNumber }
-
-		res, err := http.PostForm(config.GetValue("sync.project.guoxin.url"), data)
-		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
+		TestURL := fmt.Sprintf("%s&tenderNo=%s&userName=%s&password=%s&tenderNoNumber=%s",config.GetValue("sync.project.guoxin.url"), project.ProjectNo, "daili","MTIzNDU2", project.TenderNoNumber)
+		fmt.Printf("test_URL=%s", TestURL)
+		res, err := http.Get(TestURL)
+		log.Printf("!!!!!!!!!!!!!!!!!!%s\n", err)
 		if err == nil {
 			temp := Temp{}
 			body, err1 := ioutil.ReadAll(res.Body)
@@ -264,7 +269,8 @@ func PushInviteTenderProject( c * gin.Context ){
 			project.PurchaseType = tProject.TenderType
 			project.InviteType = tProject.TenderType
 			project.CompanyName = tProject.BuyersName
-			//project.CompanyId = tProject.Buyersid
+			project.CompanyId, _ = strconv.ParseInt(tProject.Buyerid, 10, 64)
+			project.Auth, _ = strconv.Atoi(tProject.Buyersid)
 			project.InviteEnterStartTime.UnmarshalText([]byte(tProject.SignUpStartTime))
 			project.InviteEnterEndTime.UnmarshalText([]byte(tProject.SignUpEndTime))
 			project.InviteWinBidFlag  =   0
