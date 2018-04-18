@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/contrib/sessions"
 	"hiyuncms/config"
 	"hiyuncms/models/yy"
+	"fmt"
 )
 
 var FrontendRoute *gin.Engine
@@ -56,6 +57,7 @@ func initRouteFrontend()   *gin.Engine{
 		"loadAllProject":loadAllProject,
 		"hasPrefix": HasPrefix,
 		"substring": Substring,
+		"substring2": Substring2,
 		"judgeVIP":yy.JudgeVIP,
 		"isSupply":yy.IsSupply,
 	})
@@ -95,9 +97,16 @@ func regFrontRoute()  {
 	
 }
 
+func Substring2(str string, length int) string {
+	if len([]rune(str)) > length {
+		return fmt.Sprintf("%s...",string([]rune(str)[0:length]))
+	}
+	return str
+}
+
 func Substring(str, split string) string{
 	index := strings.LastIndex(str, split)
-	if( index > 0 ){
+	if index > 0 {
 		return str[0:index]
 	}
 	return str

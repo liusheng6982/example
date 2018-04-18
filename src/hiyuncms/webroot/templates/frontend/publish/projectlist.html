@@ -3,14 +3,14 @@
 {{template "slider.html" .}}
 
 <style>
-.lists_left {margin-top: 17px;border: 1px solid #E2E5EC;padding: 15px 0;}
+.lists_left {margin-top: 17px;border: 1px solid #E2E5EC;padding: 0px 0;}
 .col-md-8 { margin-bottom: 20px}
 .col-md-4 { margin-bottom: 20px}
 .list_ul{width:720px;margin:0 auto;}
 .list_ul li{color:#343537;width:710px;overflow:hidden;color: rgb(84, 84, 85); line-height: 2.5;}
 .list_ul li span{font-size:12px;margin-left:14px;padding:0 10px;float:left;}
 .list_ul li b{font-size:12px;float:right; color: rgb(84, 84, 85);}
-.list_ul li a{font-size:14px;color:#343537;float:left;width:460px;padding-left:24px;}
+.list_ul li a{font-size:14px;color:#343537;float:left;width:400px;padding-left:24px;}
 .list_ul li a:hover{color:#81008F;}
 .list_ul li a:visited{color:#81008F;}
 </style>
@@ -21,7 +21,7 @@
                 {{ $allPorjectPage := loadAllProject .path .pageSize .pageNo }}
                 {{  range $k,$v := $allPorjectPage.Rows }}
                 <li><span>{{if eq 1 $v.ProjectType}}[招标]{{else}}[采购]{{end}}</span><a href="/projectdetail?id={{$v.Id}}" target="_blank" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a>
-                    <span>[{{$v.CompanyName}}]</span>
+                    <span>[{{substring2 $v.CompanyName 10}}]</span>
                     <b>{{$v.CreateTime}}</b></li>
                 {{end}}
             </ul>
