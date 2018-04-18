@@ -93,6 +93,11 @@ type TenderProjectInfo struct{
 	ProjectDesc string `json:"projectDesc"`
 	Buyerid string `json:"buyerid"`
 	Flag string `json:"flag"`
+	Agentid string `json:"agentid"`
+	Linker string `json:"linker"`
+	LinkTel string `json:"linkTel"`
+	DepartName string `json:"departName"`
+	DepartId string `json:"departId"`
 }
 type Data struct {
 	TenderProjectInfo  TenderProjectInfo `json:"tenderProjectInfo"`
@@ -263,13 +268,16 @@ func PushInviteTenderProject( c * gin.Context ){
 			tProject :=  temp.Data.TenderProjectInfo
 			project.ProjectNo = tProject.TenderNo
 			project.ProjectName = tProject.TenderName
+			project.ProjectType = 1
 			project.ProjectAreaName = tProject.ProjectAreaName
 			project.BusinessCategory = tProject.IndustryName
 			project.ImpId = tProject.TenderId
+			project.ImpFlag = 1
+
 			project.PurchaseType = tProject.TenderType
 			project.InviteType = tProject.TenderType
-			project.CompanyName = tProject.BuyersName
-			project.CompanyId, _ = strconv.ParseInt(tProject.Buyerid, 10, 64)
+			project.CompanyName = tProject.DepartName
+			project.CompanyId, _ = strconv.ParseInt(tProject.DepartId, 10, 64)
 			project.Auth, _ = strconv.Atoi(tProject.Buyersid)
 			project.InviteEnterStartTime.UnmarshalText([]byte(tProject.SignUpStartTime))
 			project.InviteEnterEndTime.UnmarshalText([]byte(tProject.SignUpEndTime))
@@ -277,18 +285,20 @@ func PushInviteTenderProject( c * gin.Context ){
 			project.InviteWinBidCompany   = ""
 			project.InviteSubmitTenderEndTime.UnmarshalText([]byte(tProject.BidStartTime))
 			project.InviteOpenTenderTime .UnmarshalText([]byte(tProject.BidEndTime))
+			project.CreateTime.UnmarshalText([]byte(tProject.CreateTime))
+			project.Contact = tProject.Linker
+			project.ContactPhone = tProject.LinkTel
 			project.ProjectContent = tProject.ProjectDesc
-			_, err := models.DbMaster.Insert( &project )
-			if err != nil {
-				log.Printf("插入数据库报错 err=%s\n", err)
+			if project.ProjectNo != "" {
+				_, err := models.DbMaster.Insert(&project)
+				if err != nil {
+					log.Printf("插入数据库报错 err=%s\n", err)
+				}
 			}
-
-
 		} else {
 			log.Printf("err=%s\n", err)
 		}
 	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"success":true,
 		"msg":fmt.Sprintf("调用成功,projectNo=%s, tenderNoNumber=%s", project.ProjectNo, project.TenderNoNumber),
