@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-func md5str(passwd string) string  {
+func Md5str(passwd string) string  {
 	m5 := md5.New()
 	m5.Write([]byte(passwd))
 	m5.Write([]byte(string("hihi")))
@@ -45,7 +45,7 @@ func  UserLogin(c * gin.Context)  {
 	admin := system.GetUserByUserName(userName)
 
 
-	passwdMd5 := md5str(passwd)
+	passwdMd5 := Md5str(passwd)
 
 	/*
 	m5 = md5.New()
@@ -84,11 +84,11 @@ func ChangePassword(c *gin.Context)  {
 	currentPassword := c.PostForm("currentPassword")
 	newPassword := c.PostForm("newPassword")
 
-	log.Printf("after========%s",md5str (currentPassword ))
-	if admin.LoginPassword != md5str (currentPassword ){
+	log.Printf("after========%s", Md5str(currentPassword ))
+	if admin.LoginPassword != Md5str(currentPassword ){
 		c.JSON(http.StatusOK, "当前密码错误")
 	}else{
-		admin.LoginPassword = md5str( newPassword )
+		admin.LoginPassword = Md5str( newPassword )
 		_, err := models.DbMaster.Id( admin.Id ).Update( admin )
 		if err == nil {
 			c.JSON(http.StatusOK, true)
@@ -132,7 +132,7 @@ func UserEdit(c * gin.Context){
 			log.Printf("更新Org报错:%s\n",models.GetErrorInfo(err))
 		}
 	}else if "add" == oper {
-		passwordMd5 := md5str("000000")
+		passwordMd5 := Md5str("000000")
 		user.LoginPassword = passwordMd5
 		orgIdStr,_ := c.GetPostForm("orgId")
 		orgId,_:= strconv.ParseInt(orgIdStr, 10, 64)
