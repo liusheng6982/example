@@ -5,6 +5,23 @@ $(window).load(function() { // makes sure the whole site is loaded
     })
 
 $(document).ready(function() {
+
+    $("#small-slider").owlCarousel({
+        navigation : false, // Show next and prev buttons
+        slideSpeed : 100,
+        autoPlay: 4000,
+        paginationSpeed : 100,
+        singleItem:true,
+        mouseDrag: false,
+        transitionStyle : "fade"
+
+        // "singleItem:true" is a shortcut for:
+        // items : 1,
+        // itemsDesktop : false,
+        // itemsDesktopSmall : false,
+        // itemsTablet: false,
+        // itemsMobile : false
+    });
  
   $("#bg-slider").owlCarousel({
       navigation : false, // Show next and prev buttons
