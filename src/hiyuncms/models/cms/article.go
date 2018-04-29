@@ -160,7 +160,7 @@ func initFirstContent(articles_ []*Article)  {
 		//nodes.Find("p").First().
 		str := nodes.Find("p").Text()
 		if utf8.RuneCountInString(str) > 150 {
-			artic.FirstContent = fmt.Sprintf("%s%s",str[0:150], "...")
+			artic.FirstContent = fmt.Sprintf("%s%s",string([]rune(str)[0:150]), "...")
 		}else{
 			artic.FirstContent = str
 		}
