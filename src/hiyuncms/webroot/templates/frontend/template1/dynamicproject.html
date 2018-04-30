@@ -1,0 +1,187 @@
+<style>
+
+    .left-box{
+        margin-left: 10px;
+    }
+
+    .bottom-box{
+        margin-bottom: 20px;
+    }
+
+    .col-md-6 {
+        margin-top: 20px;
+    }
+    .dynamic-project-box {
+        width: 350px;
+        height: 100%;
+        border: 1px solid #E4E5E9;
+        float: left;
+        overflow: hidden;
+        padding-bottom: 10px;
+    }
+
+    .dynamic-project-box .dynamic-project-title span {
+        height: 50px;
+        line-height: 50px;
+        background: url(../static/yy/img/title-cube.png) 20px center no-repeat;
+        display: block;
+        color: rgb(84, 85, 87);
+        font-size: 16px;
+        font-weight: bold;
+        float: left;
+        padding-left: 40px;
+    }
+
+
+
+    .dynamic-project-title {
+        height: 35px;
+        font-size: 12px;
+        line-height: 35px;
+        color: #303435;
+        padding-left: 5px;
+    }
+
+    .dynamic-project-title a {
+        margin: 0 5px;
+        color: #303435;
+    }
+
+    .dynamic-project-box .dynamic-project-title a {
+        height: 31px;
+        line-height: 31px;
+        width: 45px;
+        font-size: 12px;
+        float: right;
+        display: block;
+        margin-right: 13px;
+        font-weight: 100;
+        color: #000002;
+        padding-right: 10px;
+    }
+
+    .dynamic-project-box .center ul {
+        font-size: 12px;
+        width: 100%;
+        float: left;
+        overflow: hidden;
+        color: #6F6F6F;
+    }
+
+    .dynamic-project-box .center ul li {
+        height: 27px;
+        padding-left: 30px;
+        background: url(../Images/dot.png) no-repeat 20px center;
+        overflow: hidden;
+        padding-right: 10px;
+        font-size: 12px;
+        color: rgb(84, 84, 85);
+        line-height: 2.5;
+        text-align: left;
+    }
+    .dynamic-project-box .center ul li a {
+        color: #6F6F6F;
+        padding-right: 3px;
+        width: 240px;
+        display: block;
+
+    }
+
+
+
+    .dynamic-project-box .center ul li span {
+        float: right;
+    }
+    .dynamic-project-box .center ul li a:hover {
+        color: rgb(89, 163, 255);
+    }
+    a {
+        text-decoration: none;
+    }
+</style>
+<div class="row">
+    <!--
+   <div class="col-md-6 ">
+       <div class="dynamic-project-box left-box">
+           <div class="dynamic-project-title">
+               <span>招标项目</span>
+               <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+           </div>
+           <div class="center">
+               <ul>
+               {{ $inviteTenders := loadArticlesTop "/published/haha1" 0 5  }}
+               {{range $k,$v := $inviteTenders}}
+                   <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+               {{end}}
+               </ul>
+           </div>
+       </div>
+   </div>
+
+    <div class="col-md-6">
+        <div class="dynamic-project-box">
+            <div class="dynamic-project-title">
+                <span>采购项目</span>
+                <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+            </div>
+            <div class="center">
+                <ul>
+                {{ $purchase := loadArticlesTop "/published/haha1" 0 5  }}
+                {{range $k,$v := $purchase}}
+                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                {{end}}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="dynamic-project-box left-box bottom-box">
+            <div class="dynamic-project-title">
+                <span>中标公告</span>
+                <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+            </div>
+            <div class="center">
+                <ul>
+                {{ $purchase := loadArticlesTop "/published/haha1" 0 5  }}
+                {{range $k,$v := $purchase}}
+                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                {{end}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="dynamic-project-box bottom-box">
+            <div class="dynamic-project-title">
+                <span>推荐项目</span>
+                <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+            </div>
+            <div class="center">
+                <ul>
+                {{ $purchase := loadArticlesTop "/published/haha1" 0 5  }}
+                {{range $k,$v := $purchase}}
+                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                {{end}}
+                </ul>
+            </div>
+        </div>
+    </div>
+    -->
+</div>
+
+<dvi class="row">
+    <div class="small-slider-area">
+    <div class="slider">
+        <div id="small-slider" class="owl-carousel owl-theme">
+            {{ $articles := loadArticlesTop "/published/haha1" 0 5 }}
+            {{range $k,$v := $articles}}
+                <div class="item"><img src="{{$v.FirstImage}}"></div>
+            {{end}}
+        </div>
+    </div>
+    </div>
+</dvi>

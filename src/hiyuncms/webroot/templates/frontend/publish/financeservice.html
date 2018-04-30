@@ -1,0 +1,52 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+{{template "slider.html" .}}
+
+{{$path := .path}}
+{{ $columns := substring $path "/" | loadSubColumn  }}
+<style>
+   
+</style>
+<div class="container">
+        {{ range $k,$v :=  $columns }}
+        <a href="{{$v.Url}}"><button type="button" class="btn {{ if or (and ( eq $path "/financeservice") ( eq $k 0) ) (eq $v.Url $path)  }}btn-primary{{end}}">{{$v.Name}}</button></a>
+        {{end}}
+      </div>
+<div class="container">
+        <div class="col-md-offset-1 col-md-9 yy-news-body">
+            <div class="row">
+                <div class="yy-news-list">
+                    <ul class="met-page-ajax" style="margin:10px auto;padding:5px;border:1px solid #E4E5E9;overflow:hidden;">
+                            {{if eq $path "/financeservice"}}
+                            {{$path := "/financeservice/zbd"}}
+
+                                {{ $page := loadArticles $path .pageSize .pageNo }}
+                                {{range $k,$v := $page.Rows}}
+                                    {{ if eq $k 0 }}
+                                        {{ $article := printf "%d" $v.Id  | loadArticle }}
+                                         <p >
+                                             {{$article.Content | html}}
+                                         </p>
+                                    {{end}}
+                                {{end}}
+
+                            {{end}}
+
+                            {{ $page := loadArticles $path .pageSize .pageNo }}
+                            {{range $k,$v := $page.Rows}}
+                            {{ if eq $k 0 }}
+                            {{ $article := printf "%d" $v.Id  | loadArticle }}
+                                <p >
+                                {{$article.Content | html}}
+                                </p>
+                            {{end}}
+                            {{end}}
+                    </ul>
+                </div>
+            </div>
+            <div class="row" style="margin: 15px">
+            </div>
+        </div>
+</div>
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}
