@@ -57,20 +57,14 @@
     </div-->
     <div class="zb_news" style="margin-top:20px;">
         <div class="title">
-            <span>优质供应商</span>
+            <span>公告栏</span>
         </div>
     {{ $user := .sessionInfo }}
         <div class="center">
-            <label><a href="http://42.202.144.67:4489/BIZ/Purchase/BizPurchase/PurchaseYYGTest?AccessToken={{$user.AccessToken}}" target="_blank">测试单点<img src=""><span>立即访问</span></a></label>
-            <label><a href="http://125.208.29.27/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}" target="_blank"><img src=""><span>立即访问</span></a></label>
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
-            <label><a href="" target="_blank"><img src=""><span>立即访问</span></a></label>
+        {{ $inviteTenders := loadArticlesTop "/published/list0" 0 10  }}
+        {{range $k,$v := $inviteTenders}}
+            <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+        {{end}}
         </div>
     </div>
     <!--div class="zb_news" style="margin-top:20px;">

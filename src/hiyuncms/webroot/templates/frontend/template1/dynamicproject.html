@@ -100,18 +100,18 @@
     }
 </style>
 <div class="row">
-    <!--
+
    <div class="col-md-6 ">
        <div class="dynamic-project-box left-box">
            <div class="dynamic-project-title">
-               <span>招标项目</span>
-               <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+               <span>信息公开</span>
+               <a href="" title="更多信息公开">More&gt;&gt;</a>
            </div>
            <div class="center">
                <ul>
-               {{ $inviteTenders := loadArticlesTop "/published/haha1" 0 5  }}
+               {{ $inviteTenders := loadArticlesTop "/published/list1" 0 5  }}
                {{range $k,$v := $inviteTenders}}
-                   <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
+                   <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                {{end}}
                </ul>
            </div>
@@ -126,9 +126,9 @@
             </div>
             <div class="center">
                 <ul>
-                {{ $purchase := loadArticlesTop "/published/haha1" 0 5  }}
+                {{ $purchase := loadArticlesTop "/published/list2" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -145,9 +145,9 @@
             </div>
             <div class="center">
                 <ul>
-                {{ $purchase := loadArticlesTop "/published/haha1" 0 5  }}
+                {{ $purchase := loadArticlesTop "/published/list3" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -162,15 +162,14 @@
             </div>
             <div class="center">
                 <ul>
-                {{ $purchase := loadArticlesTop "/published/haha1" 0 5  }}
+                {{ $purchase := loadArticlesTop "/published/list4" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.CreateTime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>
         </div>
     </div>
-    -->
 </div>
 
 <dvi class="row">
