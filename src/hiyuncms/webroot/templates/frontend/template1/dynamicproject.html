@@ -105,13 +105,13 @@
        <div class="dynamic-project-box left-box">
            <div class="dynamic-project-title">
                <span>信息公开</span>
-               <a href="" title="更多信息公开">More&gt;&gt;</a>
+               <!--a href="" title="更多信息公开">More&gt;&gt;</a -->
            </div>
            <div class="center">
                <ul>
                {{ $inviteTenders := loadArticlesTop "/published/list1" 0 5  }}
                {{range $k,$v := $inviteTenders}}
-                   <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                   <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                {{end}}
                </ul>
            </div>
@@ -121,14 +121,14 @@
     <div class="col-md-6">
         <div class="dynamic-project-box">
             <div class="dynamic-project-title">
-                <span>采购项目</span>
-                <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+                <span>工作动态</span>
+                <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
             </div>
             <div class="center">
                 <ul>
                 {{ $purchase := loadArticlesTop "/published/list2" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -140,14 +140,14 @@
     <div class="col-md-6">
         <div class="dynamic-project-box left-box bottom-box">
             <div class="dynamic-project-title">
-                <span>中标公告</span>
-                <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+                <span>财务管理</span>
+                <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
             </div>
             <div class="center">
                 <ul>
                 {{ $purchase := loadArticlesTop "/published/list3" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -157,14 +157,14 @@
     <div class="col-md-6">
         <div class="dynamic-project-box bottom-box">
             <div class="dynamic-project-title">
-                <span>推荐项目</span>
-                <a href="" title="更多招标公告信息">More&gt;&gt;</a>
+                <span>国资管理</span>
+                <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
             </div>
             <div class="center">
                 <ul>
                 {{ $purchase := loadArticlesTop "/published/list4" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>
