@@ -111,7 +111,7 @@
                <ul>
                {{ $inviteTenders := loadArticlesTop "/published/list1" 0 5  }}
                {{range $k,$v := $inviteTenders}}
-                   <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                   <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                {{end}}
                </ul>
            </div>
@@ -128,7 +128,7 @@
                 <ul>
                 {{ $purchase := loadArticlesTop "/published/list2" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -147,7 +147,7 @@
                 <ul>
                 {{ $purchase := loadArticlesTop "/published/list3" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>
@@ -164,7 +164,7 @@
                 <ul>
                 {{ $purchase := loadArticlesTop "/published/list4" 0 5  }}
                 {{range $k,$v := $purchase}}
-                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+                    <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
                 {{end}}
                 </ul>
             </div>

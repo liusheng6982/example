@@ -35,10 +35,6 @@
     }
 </style>
 <div class="right_box">
-    <ul class="dl_zc">
-        <li class="deng_l"><a target="_blank" href="/userlogin" rel="nofollow"><img src="/static/yy/img/userlogin.png">登录</a></li>
-        <li class="zhu_c"><a href="/registry" rel="nofollow"><img src="/static/yy/img/registry.png">注册</a></li>
-    </ul>
     <!--div class="news_box1">
         <div class="content cf_o">
             <span class="woshou">
@@ -55,7 +51,7 @@
             </span>
         </div>
     </div-->
-    <div class="zb_news" style="margin-top:20px;">
+    <div class="zb_news" style="">
         <div class="title">
             <span>公告栏</span>
         </div>
@@ -63,7 +59,7 @@
         <div class="center">
         {{ $inviteTenders := loadArticlesTop "/published/list0" 0 10  }}
         {{range $k,$v := $inviteTenders}}
-            <li><span>{{$v.Createtime}}</span><a target="_blank" href="/projectdetail?id={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
+            <li><span>{{$v.Createtime}}</span><a target="_blank" href="/articleShow?articleId=={{$v.Id}}" title="{{$v.Title}}">{{$v.Title}}</a></li>
         {{end}}
         </div>
     </div>
