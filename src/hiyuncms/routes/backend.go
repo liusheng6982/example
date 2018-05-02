@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/contrib/sessions"
 	"strings"
 	"hiyuncms/models/cms"
+	"hiyuncms/models/system"
 	"html/template"
 	"hiyuncms/controllers"
 	"hiyuncms/config"
@@ -52,6 +53,7 @@ func initRouteBackend() *gin.Engine {
 	engine.Use( gin.Logger() )
 	engine.SetFuncMap(template.FuncMap{
 		"mycontain":contain,
+		"hasAuth":hasAuth,
 	})
 	store := sessions.NewCookieStore([]byte("hiyuncms.secret"))
 	store.Options(sessions.Options{
@@ -75,6 +77,21 @@ func contain(obj int64, list []* cms.ColumnArticle ) (bool) {
 		}
 	}
 	return false
+}
+
+func hasAuth(authName string, userId int64)bool{
+	if userId == 1{
+		return true
+	}
+	has := false
+	roles := system.GetRolesByUserId(userId)
+	for _,v := range roles{
+		if v.RoleName == authName {
+			has = true
+			break
+		}
+	}
+	return has
 }
 
 

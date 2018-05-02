@@ -10,11 +10,13 @@
             </a>
         </div>
 
+        {{ $user := .user }}
+
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav" style="">
                 <li class="light-blue dropdown-modal">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle" aria-expanded="false">
-                        <span class="user-info" style="margin-top: 9px">用户：{{.user.Name}}</span>
+                        <span class="user-info" style="margin-top: 9px">用户：{{$user.Name}}</span>
                         <i class="ace-icon fa fa-caret-down"></i>
                     </a>
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close" style="">
@@ -61,6 +63,7 @@
                 <b class="arrow"></b>
             </li>
 
+            {{ if hasAuth "栏目管理" $user.Id }}
             <li class='{{ if eq .mainMenu "栏目管理" }} active {{ end }}'>
                 <a href="columnlist">
                     <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
@@ -70,7 +73,9 @@
 
                 <b class="arrow"></b>
             </li>
+            {{end}}
 
+            {{ if hasAuth "新增文档" $user.Id }}
             <li class='{{ if eq .mainMenu "新增文档" }} active {{ end }}'>
                 <a href="article">
                     <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
@@ -80,7 +85,9 @@
 
                 <b class="arrow"></b>
             </li>
+            {{end}}
 
+            {{ if hasAuth "文档列表" $user.Id }}
             <li class='{{ if eq .mainMenu "文档列表" }} active {{ end }}'>
                 <a href="articlelist">
                     <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
@@ -90,7 +97,9 @@
 
                 <b class="arrow"></b>
             </li>
+            {{end}}
 
+            {{ if hasAuth "角色管理" $user.Id }}
             <li class='{{ if eq .mainMenu "角色管理" }} active {{ end }}'>
                 <a href="rolelist">
                     <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
@@ -100,7 +109,9 @@
 
                 <b class="arrow"></b>
             </li>
+            {{end}}
 
+            {{ if hasAuth "组织管理" $user.Id }}
             <li class='{{ if eq .mainMenu "组织管理" }} active {{ end }}'>
                 <a href="orglist">
                     <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
@@ -110,7 +121,9 @@
 
                 <b class="arrow"></b>
             </li>
+            {{end}}
 
+            {{ if hasAuth "用户管理" $user.Id }}
             <li class='{{ if eq .mainMenu "用户管理" }} active {{ end }}'>
                 <a href="userlist">
                     <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
@@ -120,7 +133,9 @@
 
                 <b class="arrow"></b>
             </li>
+            {{end}}
 
+            {{ if hasAuth "资源管理" $user.Id }}
             <li class='{{ if eq .mainMenu "资源管理" }} active {{ end }}'>
                 <a href="resourcelist">
                     <!-- fa-list fa-calendar fa-picture-o  fa-file-o  fa-picture-o fa-tag fa-pencil-square-o-->
@@ -130,6 +145,7 @@
 
                 <b class="arrow"></b>
             </li>
+            {{end}}
 
 
         </ul><!-- /.nav-list -->
