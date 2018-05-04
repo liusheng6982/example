@@ -26,7 +26,7 @@ copyConf()
     echo "3、---------------------------------------------------------------------"
 }
 
-copyMin()
+copyMain()
 {
     echo "4、----------------------------上传 main--------------------------------"
     scp ./demo_cms 180.76.187.132:/root/demo/
@@ -59,6 +59,11 @@ copyStatic()
 }
 
 
-
+#compile
+#stopServer
+#copyConf
+#copyMain
+#startServer
 copyTemplate
+#copyStatic
 
