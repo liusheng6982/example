@@ -2,27 +2,34 @@
 {{template "navbar.html" .}}
 {{template "slider.html" .}}
 <style>
-    #li {list-style-type:none;}
-    .mycontainer{
-        margin: 20px auto;
+
+
+    * {
+        box-sizing:content-box;
+        -moz-box-sizing:content-box;
+        -webkit-box-sizing:content-box;
+    }
+
+    #preview {
+        background-color: white;
+        padding: 3.5em;
+        margin: 0;
     }
 </style>
 <div class="yy-news">
-    <div class="container mycontainer">
+    <div class="container">
         <div class="col-md-12">
             <div class="row">
-                <div class="yy-news-list">
-                    <ul class="met-page-ajax">
+                <div id="preview">
                         {{ $page := loadArticles .path .pageSize .pageNo }}
                         {{range $k,$v := $page.Rows}}
                             {{ if eq $k 0 }}
                                 {{ $article := printf "%d" $v.Id  | loadArticle }}
-                                 <p>
+
                                      {{$article.Content | html}}
-                                 </p>
+
                             {{end}}
                         {{end}}
-                    </ul>
                 </div>
             </div>
         </div>
