@@ -95,7 +95,7 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 				log.Printf("保存医院与供应商关系出错%s", err.Error())
 			}
 			go HospitalSupplySync(config.GetValue("sync.supply.guoxin.url"), hospitalId, v, "1")
-			//go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "1")
+			go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "1")
 			log.Printf("save=============:%d", ha )
 		}
 	}
@@ -107,7 +107,7 @@ func HospitalSupplySave(hospitalId int64, supplies [] int64){
 			continue
 		}
 		go HospitalSupplySync(config.GetValue("sync.supply.guoxin.url"), hospitalId, v, "0")
-		//go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "0")
+		go HospitalSupplySync(config.GetValue("sync.supply.chuanyiwang.url"), hospitalId, v, "0")
 		delData := YyCompanyRelation{HospitalId:hospitalId, SupplyId:v}
 		models.DbMaster.Delete(&delData)
 	}
