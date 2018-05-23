@@ -432,9 +432,9 @@ func Registry(c * gin.Context)  {
 
 	chuanyiwangSync := func(){ //用户同步
 		url := config.GetValue("sync.user.chuanyiwang.url")
-		getUrl := fmt.Sprintf("%s?userId=%d&userPhone=%s&userName=%s&companyId=%d&companyName=%s&companyType=%s",
+		getUrl := fmt.Sprintf("%s?userId=%d&userPhone=%s&userName=%s&companyId=%d&companyName=%s&companyType=%s&State=1",
 			url, user.Id, user.UserPhone, user.UserName, company.Id, company.CompanyName, company.CompanyType)
-
+		log.Printf("船易网同步连接: %s\n", getUrl)
 
 		res, err := http.Get(getUrl)
 		log.Printf("!!!!!!!!!!!!!!!!!!%s", err)
