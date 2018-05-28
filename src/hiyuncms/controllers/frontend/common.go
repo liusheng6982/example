@@ -11,6 +11,7 @@ import (
 	"log"
 	"encoding/json"
 	"net/http"
+	"github.com/astaxie/beego/session"
 )
 
 const(
@@ -58,6 +59,7 @@ func SendSMS(c * gin.Context){
 		d[v] = byte(rd.Intn(10))
 		ss = fmt.Sprintf("%s%d", ss, d[v])
 	}
+	log.Printf("----------mima:%s", ss)
 	session := sessions.Default(c)
 	sessionSmsKey := fmt.Sprintf("%s%s",FRONT_SMS,mobile)
 	session.Delete(sessionSmsKey)

@@ -90,9 +90,9 @@ td, th {
             <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">
             {{if judgeVIP $user.CompanyId $projectInfo.CompanyId}}
             {{ if eq $projectInfo.ProjectType 1}}
-                <a href="">参与招标</a>
+                <a href="http://125.208.29.27/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">参与招标</a>
             {{ else}}
-                <a href="">参与采购</a>
+                <a href="http://180.76.114.73/Api/eygou/verifyToken.ashx?accessToken={{$user.AccessToken}}">参与采购</a>
             {{end}}
             {{else}}
                 <a href="/applysupply">申请成为供应商</a>
