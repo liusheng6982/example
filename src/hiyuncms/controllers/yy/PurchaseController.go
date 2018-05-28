@@ -85,11 +85,11 @@ func PushPurchaseProject( c * gin.Context ){
 		CompanyName       					string   	    `form:"companyName"`    //公司名称
 		ContactPhone   						string 	   		`form:"contactPhone"`    //联系人电话
 		Contact	   	   						string          `form:"contact"`    	//联系人
-		PurchaseType   						string			`form:"varchar(20)"`   //合格供应商，定向，公开
-		PurchaseExpiredDate                 models.Date 	`form:"DateTime"`      //采购有效期
-		PurchaseQuotePriceEndTime   		models.Date		`form:"DateTime"`      //报价截止时间
-		PurchaseDeliveryTime                models.Date		`form:"DateTime"`      //交货时间
-		BusinessCategory					string			`form:"varchar(20)"`   //建设、理疗器械、后勤物资、行政物资
+		PurchaseType   						string			`form:"purchaseType"`   //合格供应商，定向，公开
+		PurchaseExpiredDate                 string 			`form:"purchaseExpiredDate"`      //采购有效期
+		PurchaseQuotePriceEndTime   		string			`form:"purchaseQuotePriceEndTime"`      //报价截止时间
+		PurchaseDeliveryTime                string			`form:"purchaseDeliveryTime"`      //交货时间
+		BusinessCategory					string			`form:"businessCategory"`   //建设、理疗器械、后勤物资、行政物资
 	}
 	purchase := yy.YyPorject{}
 	purchase.ProjectType = 2
@@ -99,14 +99,29 @@ func PushPurchaseProject( c * gin.Context ){
 	if bindErr != nil {
 		log.Printf("bind form出错:%s\n",models.GetErrorInfo(bindErr))
 	}
-	models.CopyStruct(purchaseTemp,purchase)
+	log.Printf("bind form数据:%+v\n",purchaseTemp)
+	//models.CopyStruct(purchaseTemp,purchase)
+	purchase.ProjectName   =  purchaseTemp.ProjectName
+	purchase.ProjectNo=		purchaseTemp.ProjectNo
+	purchase.ProjectContent=	purchaseTemp.ProjectContent
+	purchase.CompanyId=		purchaseTemp.CompanyId
+	purchase.CompanyName=	purchaseTemp.CompanyName
+	purchase.ContactPhone=	purchaseTemp.ContactPhone
+	purchase.Contact=		purchaseTemp.Contact
+	purchase.PurchaseType=		purchaseTemp.PurchaseType
+	purchase.PurchaseExpiredDate.UnmarshalText( []byte(purchaseTemp.PurchaseExpiredDate) )
+	purchase.PurchaseQuotePriceEndTime.UnmarshalText( []byte(purchaseTemp.PurchaseQuotePriceEndTime) )
+	purchase.PurchaseDeliveryTime.UnmarshalText( []byte(purchaseTemp.PurchaseDeliveryTime ))
+	purchase.BusinessCategory=	purchaseTemp.BusinessCategory
+
 	_, err := models.DbMaster.Insert( &purchase)
 	if err != nil {
-		log.Printf("bind form出错:%s\n",models.GetErrorInfo(bindErr))
+		log.Printf("保存数据出错:%s\n",models.GetErrorInfo(bindErr))
 		c.JSON(http.StatusOK, gin.H{
 			"success":"false",
 			"msg":"推送失败",
 		})
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"success":"true",
