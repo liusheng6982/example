@@ -11,7 +11,6 @@ import (
 	"log"
 	"encoding/json"
 	"net/http"
-	"github.com/astaxie/beego/session"
 )
 
 const(
