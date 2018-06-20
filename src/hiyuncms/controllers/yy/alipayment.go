@@ -21,7 +21,7 @@ MIIEowIBAAKCAQEAs6bAiqNYKhLQ/U4ecM6vPYXV6dvfk1giS5ulPUe1OzJQnXqZmtKcEIfBOF+NuSWN
 
 
 func AliPayNotify(c *gin.Context){
-	alipayClient := alipay.New(config.GetValue("pay.ali.appId"), "2088102175304454",[]byte(a),[]byte(b), true)
+	alipayClient := alipay.New(config.GetValue("pay.ali.appId"), "2088102175304454",string(a),string(b), true)
 	alipayClient.AliPayPublicKey = a
 	result,err := alipayClient.GetTradeNotification(c.Request)
 	if err != nil{
@@ -45,7 +45,7 @@ func AliPrePay(c *gin.Context){
 	}
 
 	payment := PaymentPrePay(VipLevel, sessionInfo.CompanyId, sessionInfo.UserId)
-	alipayClient := alipay.New(config.GetValue("pay.ali.appId"), "2088102175304454",[]byte(a),[]byte(b), true)
+	alipayClient := alipay.New(config.GetValue("pay.ali.appId"), "2088102175304454",string(a),string(b), true)
 	alipayClient.AliPayPublicKey = a
 
 	var p = alipay.AliPayTradePagePay{}

@@ -90,6 +90,7 @@ func PushPurchaseProject( c * gin.Context ){
 		PurchaseQuotePriceEndTime   		string			`form:"purchaseQuotePriceEndTime"`      //报价截止时间
 		PurchaseDeliveryTime                string			`form:"purchaseDeliveryTime"`      //交货时间
 		BusinessCategory					string			`form:"businessCategory"`   //建设、理疗器械、后勤物资、行政物资
+		ProjectId 							string 			`form:"projectId"`    //项目导入的ＩＤ
 	}
 	purchase := yy.YyPorject{}
 	purchase.ProjectType = 2
@@ -113,6 +114,8 @@ func PushPurchaseProject( c * gin.Context ){
 	purchase.PurchaseQuotePriceEndTime.UnmarshalText( []byte(purchaseTemp.PurchaseQuotePriceEndTime) )
 	purchase.PurchaseDeliveryTime.UnmarshalText( []byte(purchaseTemp.PurchaseDeliveryTime ))
 	purchase.BusinessCategory=	purchaseTemp.BusinessCategory
+	purchase.ImpId = purchaseTemp.ProjectId
+	purchase.ImpFlag = 1
 
 	_, err := models.DbMaster.Insert( &purchase)
 	if err != nil {

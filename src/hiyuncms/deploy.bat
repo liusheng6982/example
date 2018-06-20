@@ -7,7 +7,7 @@ set  GOPATH=C:/Users/liusheng/GoglandProjects/example
 set CGO_ENABLED=0
 set GOOS=linux
 set GOARCH=amd64
-go build -o -x Main ./Main.go
+go build -o -x Main Main.go
 echo "1、---------------------------------------------------------------------"
 
 echo "2、---------------------------停止服务器上 main---------------------------"
