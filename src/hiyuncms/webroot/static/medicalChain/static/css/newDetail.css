@@ -1,0 +1,53 @@
+.newContent{
+    width: 70%;
+    margin: 0 auto;
+}
+.newTop{
+    width: 100%;
+    border-bottom:2px solid #b5b5b5;
+    margin-bottom: 5%;
+}
+.newTitle{
+    padding: 80px 0;
+}
+.newDate{
+    font-size:25px;
+    color:rgba(160,160,160,1);
+    margin-bottom: 60px;
+}
+.detail{
+    width: 100%;
+    padding-bottom: 100px;
+    border-bottom: 2px dotted #b5b5b5;
+}
+.detail p{
+    text-indent: 2em;
+    font-size:25px;
+    font-family:AdobeSongStd-Light;
+    color:#888787;
+    line-height:1.6;
+    margin-top:0.5%;
+}
+.repertory{
+    width: 100%;
+    height: 130px;
+    line-height: 130px;
+    margin-bottom: 80px;
+    font-size:25px;
+    color:rgba(140,135,135,1);
+}
+.preNew{
+  width: 50%;
+}
+.nextNew{
+    width: 50%;
+   text-align: right;
+}
+.ul_line{
+    color: white;
+}
+.ul_line img{
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+}

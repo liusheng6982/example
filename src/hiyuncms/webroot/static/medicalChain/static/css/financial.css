@@ -1,0 +1,116 @@
+.financicalContent{
+    /*width: 4050px;*/
+    width: 64.8%;
+    margin:0 auto;
+    margin-top: 10%;
+}
+.finNav{
+    width:20.6%;
+    height:100px; ;
+}
+.firNavItem {
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    background: #45b396;
+    color: #fff;
+    font-size: 30px;
+    font-family: HiraginoSansGB-W6;
+}
+.secNav{
+    position: relative;
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    font-size:25px;
+    font-family:HiraginoSansGB-W3;
+    color:rgba(128,128,128,1);
+    border:1px solid #eee;
+}
+.secNav span{
+    display: inline-block;
+    float: right;
+    margin-right: 50px;
+}
+.finRight{
+    width: 79.4%;
+    margin-left: 80px;
+}
+
+.finTitleH1{
+    font-size:30px;
+    font-family:HiraginoSansGB-W3;
+    /*margin-top: 60px;*/
+    color:rgba(112,112,112,1);
+}
+.finTittleH2{
+   margin:40px 0px;
+    font-size:25px;
+    font-family:HiraginoSansGB-W3;
+    color:rgba(142,142,142,1);
+}
+.finTxt{
+    /*margin-left: 20px;*/
+    font-size:25px;
+    font-family:HiraginoSansGB-W3;
+    color:rgba(142,142,142,1);
+}
+.finBtn{
+    width:100%;
+    margin:10% auto;
+}
+.btnModule{
+    width: 50%;
+    color: #fff;
+}
+.leftBtn,.rightBtn{
+    padding: 0 44px;
+    width: 250px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    margin: 0 auto;
+}
+/*.leftBtn{*/
+ /*background: #45b396;*/
+/*}*/
+/*.rightBtn{*/
+    /*background: #fbb03b;*/
+
+/*}*/
+
+.banner-img {
+    background-image: url("../imgs/finacial1.png");
+    width: 100%;
+    height: 510px;
+    /*   opacity: 0.6;
+       filter: alpha(opacity=60);
+       background: #000;*/
+}
+.banner-content{
+    font-size: 30px;
+    color: white;
+    padding-left: 20%;
+    padding-top: 10%;
+}
+.banner-content p {
+    letter-spacing:10px;
+}
+.banner-p{
+    background-color: #45b396;
+    width: 180px;
+    height: 65px;
+    line-height: 65px;
+    padding-left: 10px;
+}
+
+.ul_line{
+    color: white;
+}
+.ul_line img{
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+}

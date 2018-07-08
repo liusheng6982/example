@@ -1,0 +1,140 @@
+body{
+    margin: 0px;
+    padding-bottom: 0px;
+    width: 0px;
+    transition: all 0.3s;
+    font-size: 25px;
+    height: 0px;
+    color: rgba(77,77,77,1);
+    overflow-x: hidden;
+}
+a,a:hover,a:active{
+    text-decoration:none;
+}
+.title{
+    font-size: 30px;
+    color: #444;
+}
+.mainPage{
+    width: 1920px;
+    background: #fff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transform-origin: left top 0px;
+    -ms-transform-origin: left top 0px;
+    transform-origin: left top 0px;
+    overflow-x: hidden;
+}
+
+/*flex布局*/
+.rowFlex{
+    display: flex;
+    display: -webkit-flex;
+}
+/*header模块css*/
+.header{
+    width: 64.8%;
+    margin: 0 auto;
+    border:none;
+    height: 128px;
+}
+.logo{
+  width: 22.66%;
+    margin-top: 25px;
+}
+.nav{
+    width: 62.03%;
+    margin-top:50px;
+}
+.header_right{
+    width: 15.31%;
+    margin-top:50px;
+}
+.logo img{
+    height: 78px;
+    font-size: 0;
+}
+.nav ul li {width: 130px;text-align: center;}
+.header_right ul li{width: 81px;text-align: right;}
+.ul_line li{
+    text-decoration: none;  /*去掉前面的圆点*/
+    list-style: none;
+    float: left;
+}
+.ul_line li a{
+   color: #4D4D4D;
+}
+.ul_line li a:hover{
+  color: #45B396;
+}
+#nav_active a{
+    color: #45B396;!important;
+}
+.nav ul{
+    width:100%;
+}
+/*底部footer*/
+.footer{
+    background: #333;
+    width: 1920px;
+}
+
+.footer_content{
+    width: 1280px;
+    margin: 0 auto;
+}
+.contactUs{
+    width: 1280px;
+    height: 134px;
+    line-height: 134px;
+    border-bottom: 2px solid #c7c7c7;
+    position: relative;
+}
+.contactUs ul{
+    width: 310px;
+    position: absolute;
+    right: 43px;
+}
+.footer_info{
+    width: 1280px;
+    margin: 0 auto;
+}
+.info_logo{
+    width: 22%;
+    margin-top: 118px;
+}
+.info_logo img{height:72px;}
+.info_item{
+    width: 13%;
+}
+.info_title{
+    font-size: 23px;
+    color:rgba(239,239,239,1);
+    text-align: center;
+    height: 70px;
+    line-height: 70px;
+    /*margin-top: 22px;*/
+}
+.info_text{
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+}
+.info_text a{
+    font-size:18px;
+    color:rgba(201,201,201,1);
+}
+.footer_beiAn{
+    width: 1280px;
+    text-align: center;
+    margin: 112px auto 0 auto;
+    font-size:18px;
+    color:rgba(219,219,219,1);
+    padding-bottom: 60px;
+}
+.banner-img img{
+    width:100%;
+    height: 710px;
+}

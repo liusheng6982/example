@@ -1,0 +1,141 @@
+.sczxModule,.cgdtModule,.zxjsModule{
+    width: 64.8%;
+    margin: 0 auto;
+}
+.zxjsModule{
+    margin-bottom: 260px;
+}
+.moduleTop{
+    width: 100%;
+    height:220px;
+    position: relative;
+}
+.topTitle{
+    line-height: 300px;
+    width:15%;
+    height:107px;
+    font-size:30px;
+    color:rgba(69,179,150,1);
+}
+.topLine{
+    float: right;
+    width:85% ;
+    height: 5px;
+    background: #b6b6b6;
+    margin-top:38px;
+}
+.topMore{
+    font-size:22px;
+    color:rgba(69,179,150,1);
+    position: absolute;
+    top:200px;
+    right: 2px;
+}
+.sczxImg{
+    /*width: 50%;*/
+    padding-top: 50px;
+    /*margin-right: 10%;*/
+}
+.sczxRight{
+    width: 40%;
+    margin-left: 5%;
+}
+.sczxRight ul li{
+    height:100px;
+    line-height: 100px;
+    border-bottom: 2px dotted #666666;
+}
+.sczxRight ul li a {
+    font-size:25px;
+    color:rgba(102,102,102,1);
+}
+.cgdtContent{
+    padding-top: 20px;
+    padding-bottom: 60px;
+    width: 100%;
+    border-bottom:2px solid #b5b5b5;
+}
+.cgdtLeft{
+     width: 140px;
+    height: 140px;
+    background: #f2f2f2;
+    text-align: center;
+}
+.day{
+    margin-top:15px;
+    font-size: 50px;
+    color: #4D4D4D;
+}
+.yearMon{
+    font-size: 22px;
+    color:rgba(102,102,102,1);
+
+}
+.cgdt_title{
+    font-size: 29px;
+    margin-bottom: 30px;
+}
+.cgdt_text{
+    font-size: 25px;
+    color:rgba(102,102,102,1);
+}
+.cgdtRight{
+    margin:15px 80px;
+}
+.zxjs_title{
+    height: 100px;
+    line-height: 100px;
+    font-size:29px;
+    color:rgba(68,68,68,1);
+}
+.zxjs_text{
+    font-size: 25px;
+    color:rgba(102,102,102,1);
+}
+.zxjsContent{
+    width: 100%;
+    padding-bottom: 60px;
+    margin-bottom: 60px;
+    border-bottom:2px solid #b5b5b5;
+}
+/*.banner-img img{*/
+    /*width:100%;*/
+    /*height: 710px;*/
+/*}*/
+
+.ul_line{
+    color: white;
+}
+.ul_line img{
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+}
+
+.banner-img {
+    background-image: url("../imgs/industrynews1.png");
+    width: 100%;
+    height: 510px;
+    /*   opacity: 0.6;
+       filter: alpha(opacity=60);
+       background: #000;*/
+}
+.banner-content{
+    font-size: 30px;
+    color: white;
+    padding-left: 62%;
+    padding-top: 10%;
+}
+.banner-content p {
+    letter-spacing:10px;
+}
+
+.banner-p {
+    background-color: #45b396;
+    width: 180px;
+    height: 65px;
+    line-height: 65px;
+    padding-left: 10px;
+    margin-left: 12%;
+}
+

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>e医链</title>
+    <link rel="icon" href="">
+    <meta name="keywords" content="互联网，智能采购，供应链">
+    <meta name="description" content="一体化采招平台 便捷看得见">
+    <meta name=”viewport” content=”width=device-width, initial-scale=1″ />
+    <meta name="applicable-device" content="pc,mobile">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <link rel="stylesheet" type="text/css" href="../static/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/comm.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+    <script type="text/javascript" src="../static/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="../static/css/focusStyle.css">
+
+</head>
+
+<body>
+<div class="mainPage">
+    <!--头部导航部分-->
+    <div class="header rowFlex">
+        <div class="logo">
+            <img src="../static/imgs/logo.png">
+        </div>
+        <div class="nav">
+            <ul class="ul_line">
+                <li id="nav_active"><a href="home.html">首页</a></li>
+                <li><a href="industryNews.html">行业新闻</a></li>
+                <li><a href="recruitment.html">采招平台</a></li>
+                <li><a href="financial.html">金融服务</a></li>
+                <li><a href="aboutUs.html">关于我们</a></li>
+            </ul>
+        </div>
+        <div class="header_right">
+            <ul class="ul_line">
+                <li><a href="login.html">登录</a></li>
+                <li><a href="recruitment.html">注册</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--开工-->
+    <div id="focus-banner">
+        <ul id="focus-banner-list">
+            <li> <a href="#" class="focus-banner-img"> <img src="../static/imgs/banner01.png" alt=""> </a>
+
+            </li>
+            <li> <a href="#" class="focus-banner-img"> <img src="../static/imgs/banner02.png" alt=""> </a>
+
+            </li>
+            <li> <a href="#" class="focus-banner-img"> <img src="../static/imgs/banner03.png" alt=""> </a>
+
+            </li>
+
+        </ul>
+        <a href="javascript:;" id="next-img" class="focus-handle"></a> <a href="javascript:;" id="prev-img" class="focus-handle"></a>
+        <ul id="focus-bubble">
+        </ul>
+    </div>
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script>
+        $(function(){
+            var focusBanner=function(){
+                var $focusBanner=$("#focus-banner"),
+                    $bannerList=$("#focus-banner-list li"),
+                    $focusHandle=$(".focus-handle"),
+                    $bannerImg=$(".focus-banner-img"),
+                    $nextBnt=$("#next-img"),
+                    $prevBnt=$("#prev-img"),
+                    $focusBubble=$("#focus-bubble"),
+                    bannerLength=$bannerList.length,
+                    _index=0,
+                    _timer="";
+
+                var _height="705px";
+                $focusBanner.height(_height);
+                $bannerImg.height(_height);
+
+                for(var i=0; i<bannerLength; i++){
+                    $bannerList.eq(i).css("zIndex",bannerLength-i);
+                    $focusBubble.append('<li><a href="javascript:;">'+i+'</a></li>');
+                }
+                $focusBubble.find("li").eq(0).addClass("current");
+                var bubbleLength=$focusBubble.find("li").length;
+                $focusBubble.css({
+                    "width":bubbleLength*22,
+                    "marginLeft":-bubbleLength*11
+                });//初始化
+
+                $focusBubble.on("click","li",function(){
+                    $(this).addClass("current").siblings().removeClass("current");
+                    _index=$(this).index();
+                    changeImg(_index);
+                });//点击轮换
+
+                $prevBnt.on("click",function(){
+                    _index++
+                    if(_index>bannerLength-1){
+                        _index=0;
+                    }
+                    changeImg(_index);
+                });//下一张
+
+                $nextBnt.on("click",function(){
+                    _index--
+                    if(_index<0){
+                        _index=bannerLength-1;
+                    }
+                    changeImg(_index);
+                });//上一张
+
+                function changeImg(_index){
+                    $bannerList.eq(_index).fadeIn(250);
+                    $bannerList.eq(_index).siblings().fadeOut(200);
+                    $focusBubble.find("li").removeClass("current");
+                    $focusBubble.find("li").eq(_index).addClass("current");
+                    clearInterval(_timer);
+                    _timer=setInterval(function(){$nextBnt.click()},5000)
+                }//切换主函数
+                _timer=setInterval(function(){$nextBnt.click()},5000);
+
+
+                function isIE() { //ie?
+                    if (!!window.ActiveXObject || "ActiveXObject" in window)
+                        return true;
+                    else
+                        return false;
+                }
+
+                if(!isIE()){
+                    $(window).resize(function(){
+                        window.location.reload();
+                    });
+                }else{
+                    if(!+'\v1' && !'1'[0]){
+                        alert("老铁什么年代啦还在搞ie8以下版本啊！")
+                    } else{
+                        $(window).resize(function(){
+                            window.location.reload();
+                        });
+                    };
+                }
+
+            }();
+        })
+    </script>
+
+    <div class="platform">
+
+        <div class="plat_title">
+            高效管理，专业运营
+        </div>
+        <div class="plat_content rowFlex">
+            <div class="plat_img"><img src="../static/imgs/platImg.png"></div>
+            <div class="plat_text">
+                <p>一体化采招平台 便捷看得见</p>
+                <p>白发渔樵江渚上，惯看秋月春风。一壶浊酒喜相逢，古今多少事， 都付笑谈中。滚滚长江，汹涌东逝，不可拒，不可留。浪花飞溅，千古英雄在个中湮没不闻。对也罢，错也罢；成也好，败也好，功名，事业，一转眼的工夫就随着江水流逝，烟消云灭，不见踪影。只有青山仍旧矗立眼前，看着一次又一次的夕阳西下。</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="character">
+        <div class="char_content">
+            <div class="char_title">平台特色</div>
+            <div class="char_content rowFlex">
+                <div class="char_item">
+                    <img src="../static/imgs/ts01.png">
+                    <p class="charItem_title">标准统一，流程固化</p>
+                    <p class="charItem_text">操作透明，科技防腐，确保招标采购活动合法合规运行</p>
+                </div>
+                <div class="char_item">
+                    <img src="../static/imgs/ts02.png">
+                    <p class="charItem_title">过程受控，全程在案</p>
+                    <p class="charItem_text">实现事前、事中、事后全程监控，重点环节实时监控</p>
+                </div>
+                <div class="char_item">
+                    <img src="../static/imgs/ts03.png">
+                    <p class="charItem_title">统计分析及数据挖掘</p>
+                    <p class="charItem_text">大数据重构招标产业生态，通过统计分析及数据挖掘为决策提供支撑</p>
+                </div>
+                <div class="char_item">
+                    <img src="../static/imgs/ts04.png">
+                    <p class="charItem_title">安全稳定</p>
+                    <p class="charItem_text">数千个开评项目，零故障，远程异地在线高效开标，投标安枕无忧</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--底部footer-->
+    <div class="footer">
+        <div class="footer_content">
+            <div class="contactUs">
+                <ul class="ul_line">
+                    <li>联系我们</li>
+                    <li><img src="../static/imgs/qq.png" /></li>
+                    <li><img src="../static/imgs/WeChat.png" /></li>
+                    <li><img src="../static/imgs/phone.png"/></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer_info rowFlex">
+            <div class="info_logo"><img src="../static/imgs/logo_grey.png"></div>
+            <div class="info_item">
+                <p class="info_title">行业新闻</p>
+                <p class="info_text"><a href="">公告</a></p>
+                <p class="info_text"><a href="">采购动态</a></p>
+                <p class="info_text"><a href="">最新技术</a></p>
+                <p class="info_text"><a href="">市场资讯</a></p>
+            </div>
+            <div class="info_item">
+                <p class="info_title">采招平台</p>
+                <p class="info_text"><a href="">采购信息</a></p>
+                <p class="info_text"><a href="">招标信息</a></p>
+            </div>
+            <div class="info_item">
+                <p class="info_title">金融服务</p>
+                <p class="info_text"><a href="">投标类</a></p>
+                <p class="info_text"><a href="">履约类</a></p>
+                <p class="info_text"><a href="">中标贷</a></p>
+            </div>
+            <div class="info_item">
+                <p class="info_title">新手入门</p>
+                <p class="info_text"><a href="">平台操作流程</a></p>
+                <p class="info_text"><a href="">投标人指南</a></p>
+                <p class="info_text"><a href="">CA办理流程</a></p>
+            </div>
+            <div class="info_item">
+                <p class="info_title">常见问题</p>
+                <p class="info_text"><a href="">注册登录问题</a></p>
+                <p class="info_text"><a href="">报名支付问题</a></p>
+                <p class="info_text"><a href="">CA办理常见问题</a></p>
+                <p class="info_text"><a href="">投标操作流程</a></p>
+            </div>
+            <div class="info_item">
+                <p class="info_title">关于我们</p>
+                <p class="info_text"><a href="">关于我们</a></p>
+                <p class="info_text"><a href="">市场合作</a></p>
+                <p class="info_text"><a href="">广告招商</a></p>
+                <p class="info_text"><a href="">法律申明</a></p>
+            </div>
+        </div>
+        <div class="footer_beiAn">
+            Copyright2013-2018 浙江医易购有限公司 | 浙ICP备13028265号 | 互联网药品信息服务资格证书(浙）-经营性-2015-002
+        </div>
+    </div>
+</div>
+<script src="../static/js/jquery-2.1.1.min.js"></script>
+<script src="../static/js/comm.js"></script>
+<!--<script src="../static/js/swiper.min.js"></script>-->
+<!--<script>-->
+
+    <!--var swiper = new Swiper('.bannerSwiper', {-->
+        <!--pagination: {-->
+            <!--el: '.sbannerSwiper',-->
+            <!--dynamicBullets: true,-->
+        <!--},-->
+    <!--});-->
+
+    <!--var swiper = new Swiper('.platSwiper', {-->
+        <!--spaceBetween: 30,-->
+        <!--pagination: {-->
+            <!--el: '.platSwiper',-->
+            <!--clickable: true,-->
+        <!--},-->
+    <!--});-->
+
+<!--</script>-->
+</body>
+</html>
