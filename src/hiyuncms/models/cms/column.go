@@ -37,11 +37,10 @@ func GetAllColumnsByPage(page *models.PageRequest) *models.PageResponse{
 	if err != nil {
 		log.Printf("获取Column数据:%s", models.GetErrorInfo(err))
 	}
-	pageResponse := models.PageResponse{}
-	pageResponse.Rows = columnList
-	pageResponse.Page = page.Page
-	pageResponse.Records ,_= models.DbMaster.Table(Column{}).Count(Column{})
-	return &pageResponse
+
+	records ,_ := models.DbSlave.Table(Column{}).Count(Article{})
+	pageResponse := models.InitPageResponse(page, &columnList, records)
+	return pageResponse
 }
 
 /**
