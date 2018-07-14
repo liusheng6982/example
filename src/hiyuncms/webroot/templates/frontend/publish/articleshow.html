@@ -1,27 +1,36 @@
-{{template "headerjs.html" .}}
-{{template "navbar.html" .}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{template "new_head_common_js.html" .}}
+    <style>
+        li {list-style-type:none;}
 
-<style>
-    li {list-style-type:none;}
+        .container{
+            margin: 20px auto;
+        }
 
-    .container{
-        margin: 20px auto;
-    }
+        .article-show img{
+            width:900px;
+        }
 
-    .article-show img{
-        width:900px;
-    }
+        .article-show * {
+            font-size: 15px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/login.css">
+</head>
+<body>
+<div class="mainPage">
+    <!--头部导航部分-->
+{{template "new_navbar2.html" .}}
 
-    .article-show * {
-        font-size: 15px;
-    }
-</style>
+
 <section class="yy-news">
     {{ $article := loadArticle .articleId }}
-    <div class="container">
+    <div class="container" style="border: 1px solid #E1E1E1;padding: 2px">
 
-        <div class="col-md-10 col-md-offset-1 yy-news-body" style="background-color: white;overflow:hidden;">
-               <div style="text-align:center;align-content: center;margin: 0 auto;width: 100%;font-size: x-large">
+        <div class="col-md-12 col-md-offset-0 yy-news-body" style="height:500px;background-color: white;overflow:hidden;">
+               <div style="text-align:center;align-content: center;margin: 0 auto;width: 100%;font-size: 30px">
                    {{ $article.Title }}
                </div>
                <div style="margin-bottom: 10px">
@@ -34,5 +43,26 @@
     </div>
     &nbsp;
 </section>
-{{template "bottom.html" .}}
-{{template "footerjs.html" .}}
+
+    <!--底部footer-->
+{{template "new_footer.html" .}}
+</div>
+<script src="/static/medicalChain/static/js/jquery-2.1.1.min.js"></script>
+<script src="/static/medicalChain/static/js/bootstrap.min.js"></script>
+<script src="/static/medicalChain/static/js/comm.js"></script>
+<script>
+    $(".loginTopItem").on("click",function(){
+        var itemRadio = $(this).children("input[type='radio']");
+        if(!itemRadio.is(":checked")){
+            $(this).siblings("label").removeClass("topChecked");
+            $(this).addClass("topChecked");
+        }
+    });
+    jQuery(function () {
+        $("#refresh-button").click(function () {
+            $("#captcha-img").attr("src", "/captcha?" + Date.now())
+        })
+    })
+
+</script>
+</body>

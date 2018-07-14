@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "new_head_common_js.html" .}}
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/login.css">
+</head>
+<body>
+<div class="mainPage">
+    <!--头部导航部分-->
+    {{template "new_navbar2.html" .}}
+    <!--login-->
+    <div class="loginBg">
+        <div class="loginModule">
+            <form action="" method="POST" class="loginForm">
+                <div class="loginTop rowFlex">
+                     <label  class="loginTopItem topChecked">供应商登录<input type="radio" checked="checked" name="loginName" value="0"  id="gys"/></label>
+                     <label  class="loginTopItem">医院登录<input type="radio" value="1" name="loginName" id="yiyuan"/></label>
+                </div>
+                <div style="color:red;font-size: 24px;text-align:center;">{{ .msg }}</div>
+                <div class="inputModule">
+                    <label for="userName" class="textLabel">用户名</label><input class="inputText" type="text"  name="UserPhone" id="UserPhone" placeholder="请输入您的用户名"/>
+                </div>
+                <div class="inputModule">
+                    <label for="password" class="textLabel">密&nbsp;&nbsp;&nbsp;码</label><input class="inputText" type="password" name="UserPassword" id="UserPassword" placeholder="请输入您的用户名"/>
+                </div>
+                <div class="inputModule">
+                   <label for="identifyingCode" class="textLabel">验证码</label><input class="inputCode" name="vcode"  type="text" id="identifyingCode" placeholder="请输入您的验证码"/>
+                    <span class="code"><img id="captcha-img" width="100%" height="100%" src="/captcha"></span><span id="refresh-button" class="shuanxin">刷新</span>
+                </div>
+                <div class="btnModule"> <input class="loginBtn" type="submit" value="登录"></div>
+            </form>
+            <div class="login_footer">
+                <div class="inputModule">
+                    <label class="formLeft"><a class="loginHerftext" href="">忘记密码</a></label>
+                    <div class="formRight"><span>还没有我们的账号?&nbsp;&nbsp;&nbsp;</span><a class="loginHerftext" href="/registry">立即注册</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--底部footer-->
+{{template "new_footer.html" .}}
+</div>
+<script src="/static/medicalChain/static/js/jquery-2.1.1.min.js"></script>
+<script src="/static/medicalChain/static/js/bootstrap.min.js"></script>
+<script src="/static/medicalChain/static/js/comm.js"></script>
+<script>
+    $(".loginTopItem").on("click",function(){
+        var itemRadio = $(this).children("input[type='radio']");
+        if(!itemRadio.is(":checked")){
+            $(this).siblings("label").removeClass("topChecked");
+            $(this).addClass("topChecked");
+        }
+    });
+    jQuery(function () {
+        $("#refresh-button").click(function () {
+            $("#captcha-img").attr("src", "/captcha?" + Date.now())
+        })
+    })
+
+</script>
+</body>
+</html>

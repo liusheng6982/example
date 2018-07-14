@@ -1,0 +1,38 @@
+{{template "headerjs.html" .}}
+{{template "navbar.html" .}}
+
+<style>
+    li {list-style-type:none;}
+
+    .container{
+        margin: 20px auto;
+    }
+
+    .article-show img{
+        width:900px;
+    }
+
+    .article-show * {
+        font-size: 15px;
+    }
+</style>
+<section class="yy-news">
+    {{ $article := loadArticle .articleId }}
+    <div class="container">
+
+        <div class="col-md-10 col-md-offset-1 yy-news-body" style="background-color: white;overflow:hidden;">
+               <div style="text-align:center;align-content: center;margin: 0 auto;width: 100%;font-size: x-large">
+                   {{ $article.Title }}
+               </div>
+               <div style="margin-bottom: 10px">
+                   日期：{{ $article.Createtime}}
+               </div>
+                <div class="article-show">
+               {{ $article.Content | html }}
+                </div>
+        </div>
+    </div>
+    &nbsp;
+</section>
+{{template "bottom.html" .}}
+{{template "footerjs.html" .}}

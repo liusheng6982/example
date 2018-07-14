@@ -32,11 +32,18 @@
     text-align: right;
     width: 13.43%;
 }
-.radioModule,.fileModule{
+.radioModule{
     position: absolute;
     left: 15.52%;
     top:0;
 }
+
+.fileModule {
+    position: absolute;
+    left: 15.52%;
+    top:15px;
+}
+
 .radioItem{
    font-size: 20px;
     text-align: center;

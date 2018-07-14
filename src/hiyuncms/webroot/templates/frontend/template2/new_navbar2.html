@@ -1,0 +1,26 @@
+
+    <div class="header rowFlex">
+        <div class="logo">
+            <img src="/static/medicalChain/static/imgs/logo.png">
+        </div>
+        <div class="nav">
+            <ul class="ul_line">
+            {{ $columns := loadColumn }}
+            {{ $path := .path }}
+            {{ range $k,$v :=  $columns }}
+                <li {{ if hasPrefix $path $v.Url }}id="nav_active"{{end}}><a href="{{$v.Url}}">{{$v.Name}}</a></li>
+            {{end}}
+                <!--li class="nav_active"><a href="new_home.html">首页</a></li>
+                <li><a href="new_industryNews.html">行业新闻</a></li>
+                <li><a href="new_recruitment.html">采招平台</a></li>
+                <li><a href="new_financial.html">金融服务</a></li>
+                <li><a href="new_aboutUs.html">关于我们</a></-->
+            </ul>
+        </div>
+        <div class="header_right">
+            <ul class="ul_line">
+                <li><a target="mew_" href="/userlogin">登录</a></li>
+                <li><a target="mew_2" href="/registry">注册</a></li>
+            </ul>
+        </div>
+    </div>

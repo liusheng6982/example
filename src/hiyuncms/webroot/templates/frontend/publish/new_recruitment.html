@@ -1,0 +1,202 @@
+<html lang="en">
+<head>
+    {{template "new_head_common_js.html" .}}
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/recruitment.css">
+</head>
+
+<body>
+<div class="mainPage">
+    <!--头部导航部分-->
+    {{template "new_navbar2.html" .}}
+
+    <div class="banner-img">
+        <div class="banner-content">
+            <p>这里是一句标语</p>
+            <p class="banner-p">都在这里</p>
+        </div>
+    </div>
+
+    <!--采招分类-->
+    <!--div class="classify">
+        <div class="selectModule">
+            <div class="classItem all classActive" name="Item">全部</div>
+            <div class="classItem zhaoBiao" name="Item">招标</div>
+            <div class="classItem caiGou" name="Item">采购</div>
+        </div>
+    </div-->
+
+
+    <!--招标翻页-->
+    <div class="recruitment" id="one" name="imgs">
+    {{ $allPorjectPage := loadAllProject .path .pageSize .pageNo }}
+    {{  range $k,$v := $allPorjectPage.Rows }}
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">{{if eq 1 $v.ProjectType}}[招标]{{else}}[采购]{{end}}</div>
+            <div class="recruitInfo"><a href="/projectdetail?id={{$v.Id}}" target="_blank" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></div>
+            <div class="recruitExplain">[{{substring2 $v.CompanyName 10}}]</div>
+            <div class="recruitDate">{{$v.CreateTime}}</div>
+        </div>
+    {{end}}
+        <div class="row" style="margin: 15px">
+        {{template "pagination.html" $allPorjectPage }}
+        </div>
+    </div>
+        <!--div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标1]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标1]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标1]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标1]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标1]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标1]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+    </div>
+    <div class="recruitment" id="two" name="imgs">
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标2]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标2]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标2]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标2]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标2]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标2]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标2]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+    </div>
+    <div class="recruitment" id="three" name="imgs">
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标3]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标3]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标3]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标3]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标3]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标3]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+        <div class="rercuitItem rowFlex">
+            <div class="recruitClass">[招标3]</div>
+            <div class="recruitInfo">最冷世界杯，青岛约谈滴滴</div>
+            <div class="recruitExplain">[上海第二人民医院]</div>
+            <div class="recruitDate">2018-06-08</div>
+        </div>
+    </div>
+    <div class="radius">
+        <div id="radius1" name="radius" class="radius-er">1</div>
+        <div id="radius2" name="radius" class="radius-er">2</div>
+        <div id="radius3" name="radius" class="radius-er">3</div>
+    </div-->
+    {{template "new_footer.html" .}}
+</div>
+<script src="/static/medicalChain/static/js/jquery-2.1.1.min.js"></script>
+<script src="/static/medicalChain/static/js/bootstrap.min.js"></script>
+<script src="/static/medicalChain/static/js/comm.js"></script>

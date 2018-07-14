@@ -7,7 +7,7 @@
     background-image: url(../imgs/loginBg.jpg);
     background-repeat: no-repeat;
     background-position: center;
-    font-size: 0;
+    /**font-size: 0;**/
 }
 .loginModule{
     position: absolute;
@@ -16,7 +16,7 @@
     z-index: 100;
     width: 37.34%;
     background: #fff;
-    height: 478px;
+    height: 488px;
 }
 .loginTopItem{
     width: 50%;
@@ -66,6 +66,7 @@
     border:1px solid #eee;
     width: 73.2%;
     height: 55px;
+    padding:2px 2px 2px 2px;
 }
 .inputCode{
     width: 34.6%;

@@ -1,36 +1,42 @@
-{{template "headerjs.html" .}}
-<link href="/static/userregistry/code.css" rel="stylesheet">
-{{template "navbar.html" .}}
+<html lang="en">
+<head>
+{{template "new_head_common_js.html" .}}
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/recruitment.css">
+</head>
 
+<body>
+<div class="mainPage">
+{{template "new_navbar2.html" .}}
 {{ $user := .sessionInfo}}
-
+    <div class="banner-img">
+        <div class="banner-content">
+            <p>这里是一句标语</p>
+            <p class="banner-p">都在这里</p>
+        </div>
+    </div>
 <div class="login-box f-mt10 f-pb50">
-
-
-    <div class="container">
+    <div class="container" style="font-size: 40px;">
         <form action="/aliprepay">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
             <div class="main bgf">
-                <h3 style="font-size: 16px">选择会员类型</h3>
+                <h1 style="font-size: 25px">选择会员类型</h1>
             </div>
             </div>
         </div>
-        <div class="row" style="font-size: 15px">
+        <div class="row" style="font-size: 20px">
             {{ if isSupply $user.CompanyId }}
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-12 col-md-offset-1">
                 <div class="radio">
                     <label>
                         <input type="radio" name="vip-type" id="optionsRadios1" value="4" checked>
-                        医院原供应商升级包 600元/年<div style="margin-left:30px">查看平台上发布的所有招采信息、可参与全网发布类的采购招标、精准推荐（2次，推荐类招标）
-</div>
+                        医院原供应商升级包 600元/年<div style="margin-left:30px">查看平台上发布的所有招采信息、可参与全网发布类的采购招标、精准推荐（2次，推荐类招标）</div>
                     </label>
                 </div>
                 <div class="radio">
-                    <label>
+                    <label style="font-size: 40px">
                         <input type="radio" name="vip-type" id="optionsRadios2" value="5">
-                        现有供应商优选会员年费 1200元/年<div style="margin-left:30px">查看平台上发布的所有招采信息、参加全网发布类的采购招标、展厅、统计分析、精准推荐（4次）
-</div>
+                        现有供应商优选会员年费 1200元/年<div style="margin-left:30px">查看平台上发布的所有招采信息、参加全网发布类的采购招标、展厅、统计分析、精准推荐（4次）</div>
                     </label>
                 </div>
                 <div class="radio">
@@ -42,7 +48,7 @@
                 </div>
             </div>
             {{else}}
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-12 col-md-offset-1">
                     <div class="radio">
                         <label>
                             <input type="radio" name="vip-type" id="optionsRadios1" value="1" checked>
@@ -67,7 +73,7 @@
                 </div>
             {{end}}
         </div>
-        <div class="row" style="font-size: 18px">
+        <div class="row" style="font-size: 25px">
             <div class="col-md-6 col-md-offset-3">
                 <button class="btn btn-success">支付</button>
             </div>
@@ -77,10 +83,11 @@
 </div>
 <div class="m-sPopBg" style="z-index:998;"></div>
 
-
-{{template "bottom.html" .}}
-{{template "footerjs.html" .}}
-
+</div>
+{{template "new_footer.html" .}}
+<script src="/static/medicalChain/static/js/jquery-2.1.1.min.js"></script>
+<script src="/static/medicalChain/static/js/bootstrap.min.js"></script>
+<script src="/static/medicalChain/static/js/comm.js"></script>
 <script>
     jQuery(function(){
         $(".btn-success").submit()

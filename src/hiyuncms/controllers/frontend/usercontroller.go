@@ -24,7 +24,7 @@ import (
 用户登录界面
  */
 func UserLoginShow(c * gin.Context)  {
-	c.HTML(http.StatusOK, "login.html", gin.H{
+	c.HTML(http.StatusOK, "new_login.html", gin.H{
 		"path":"",
 		"sessionInfo":GetSessionInfo(c),
 	})
@@ -156,7 +156,7 @@ func HospitalUserLogin(c * gin.Context)  {
 
 
 	} else{
-		c.HTML(http.StatusOK, "login.html",gin.H{
+		c.HTML(http.StatusOK, "new_login.html",gin.H{
 			"msg":"用户名不存在或密码错误！",
 			"path":"",
 			"companyInfo":companyInfo,
@@ -174,7 +174,7 @@ func UserLogin(c * gin.Context)  {
 	session := sessions.Default(c)
 	sessionCode := session.Get( FRONT_CAPTCHA_SESSION )
 	if vcode != sessionCode {
-		c.HTML(http.StatusOK, "login.html",gin.H{
+		c.HTML(http.StatusOK, "new_login.html",gin.H{
 			"msg":"验证码错误！",
 			"path":"",
 			"sessionInfo":GetSessionInfo(c),
@@ -234,7 +234,7 @@ func UserLogin(c * gin.Context)  {
 
 
 	} else{
-		c.HTML(http.StatusOK, "login.html",gin.H{
+		c.HTML(http.StatusOK, "new_login.html",gin.H{
 			"msg":"用户名不存在或密码错误！",
 			"path":"",
 			"sessionInfo":GetSessionInfo(c),
@@ -247,7 +247,7 @@ func UserLogin(c * gin.Context)  {
 用户注册界面显示
  */
 func RegistryShow(c * gin.Context)  {
-	c.HTML(http.StatusOK, "registry.html", gin.H{
+	c.HTML(http.StatusOK, "new_register.html", gin.H{
 		"path":"",
 		"sessionInfo":GetSessionInfo(c),
 		"regsuccess":false,

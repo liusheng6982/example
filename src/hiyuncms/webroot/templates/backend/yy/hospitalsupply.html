@@ -1,7 +1,6 @@
 {{template "header.html" .}}
 {{template "top.html" .}}
 
-
 <link rel="stylesheet" href="/static/jstree/themes/default/style.min.css" />
 <link rel="stylesheet" href="/static/ace/assets/css/bootstrap-duallistbox.min.css" />
 
@@ -10,7 +9,7 @@
         <div >
             <a id="org-id-0" href="#" class="jstree-anchor  jstree-clicked"><i class="jstree-icon jstree-themeicon ace-icon ace-icon fa fa-folder blue jstree-themeicon-custom">医院列表</i></a>
         </div>
-        <div id="brand_tree" class="demo" style="min-height:200px;max-height: 600px;overflow: auto;"></div>
+        <div id="brand_tree" class="demo" style="min-height:507px;max-height: 600px;overflow: auto;"></div>
     </div>
     <div class="col-xs-10">
             <table id="supply-table" ></table>
@@ -29,12 +28,10 @@
 
 {{template "bottom.html" .}}
 {{template "footer.html" .}}
-
 <script src="/static/ace/assets/js/jquery-ui.min.js"></script>
-<script src="/static/ace/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 <script src="/static/jstree/jstree.min.js"></script>
+<script src="/static/ace/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 <script type="application/javascript">
-
     var parentId = 0;
     treeInit('brand_tree');
     supplyList()

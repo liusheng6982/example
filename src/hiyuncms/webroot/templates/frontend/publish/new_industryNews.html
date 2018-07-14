@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "new_head_common_js.html" .}}
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/news.css">
+</head>
+<body>
+<div class="mainPage">
+    <!--头部导航部分-->
+   {{template "new_navbar2.html" .}}
+    <div class="banner-img">
+        <!--<img src="/static/medicalChain/static/imgs/recruitment-1.png">-->
+        <div class="banner-content">
+            <p> 你想了解的咨询</p>
+            <p class="banner-p">都在这里</p>
+        </div>
+    </div>
+    <!--市场资讯-->
+    <div class="sczxModule">
+        <div class="moduleTop">
+            <div class="topTitle">市场资讯</div>
+            <div class="topLine"></div>
+            <div class="topMore">查看更多></div>
+        </div>
+        <div class="sczxContent rowFlex">
+            <div class="sczxImg" >
+                <img src="/static/medicalChain/static/imgs/industryLeft.png">
+            </div>
+            <div class="sczxRight">
+                <ul>
+                {{ $articles := loadArticlesTop "/published/sczx" 0 5 }}
+                {{range $k,$v := $articles}}
+                    <li><a href="/articleShow?articleId={{$v.Id}}">{{$v.Title}}</a></li>
+                    <!--div class="item"><img src="{{$v.FirstImage}}"></div-->
+                {{end}}
+                </ul>
+                <!--ul>
+                    <li><a href="">国家重点实验学术会议召开</a></li>
+                    <li><a href="">最冷世界杯</a></li>
+                    <li><a href="">球迷庆祝引发地震</a></li>
+                    <li><a href="">张艺谋守门员</a></li>
+                    <li><a href="">青岛约谈滴滴</a></li>
+                </ul-->
+            </div>
+        </div>
+    </div>
+    <!--采购动态-->
+    <div class="cgdtModule">
+        <div class="moduleTop">
+            <div class="topTitle">采购动态</div>
+            <div class="topLine"></div>
+            <div class="topMore">查看更多></div>
+        </div>
+    {{ $articles := loadArticlesTop "/published/cgdt" 0 5 }}
+    {{range $k,$v := $articles}}
+        <a href="/articleShow?articleId={{$v.Id}}">
+            <div class="cgdtContent rowFlex">
+                <div class="cgdtLeft">
+                    <div class="day"><span>{{$v.Createtime.Format "02"}}</span></div>
+                    <div class="yearMon"><span>{{$v.Createtime.Format "2006/01"}}</span></div>
+                </div>
+                <div class="cgdtRight">
+                    <a href="/articleShow?articleId={{$v.Id}}" style="color: #061827">
+                        <div class="cgdt_title">{{$v.Title}}</div>
+                        <p class="cgdt_text">{{$v.FirstContent}}</p></a>
+                </div>
+            </div>
+        </a>
+    {{end}}
+        <!--div class="cgdtContent rowFlex">
+            <div class="cgdtLeft">
+                <div class="day"><span>21</span></div>
+                <div class="yearMon"><span>2018/5</span></div>
+            </div>
+            <div class="cgdtRight">
+                <a href="newDetail.html" style="color: #061827">
+                    <div class="cgdt_title">医保异地结算打开一扇窗</div>
+                    <p class="cgdt_text">继医保跨省"漫游"新政后，又一旨在方便参保人员就医的文件日前由人力资源....</p></a>
+            </div>
+        </div>
+        <div class="cgdtContent rowFlex">
+            <div class="cgdtLeft">
+                <div class="day"><span>06</span></div>
+                <div class="yearMon"><span>2018/5</span></div>
+            </div>
+            <div class="cgdtRight">
+                <div class="cgdt_title">医保异地结算打开一扇窗</div>
+                <p class="cgdt_text"> 继医保跨省"漫游"新政后，又一旨在方便参保人员就医的文件日前由人力资源....</p>
+            </div>
+        </div>
+        <div class="cgdtContent rowFlex">
+            <div class="cgdtLeft">
+                <div class="day"><span>17</span></div>
+                <div class="yearMon"><span>2018/5</span></div>
+            </div>
+            <div class="cgdtRight">
+                <div class="cgdt_title">医保异地结算打开一扇窗</div>
+                <p class="cgdt_text">继医保跨省"漫游"新政后，又一旨在方便参保人员就医的文件日前由人力资源....</p>
+            </div>
+        </div-->
+    </div>
+    <!--最新技术-->
+    <div class="zxjsModule">
+        <div class="moduleTop">
+            <div class="topTitle">最近技术</div>
+            <div class="topLine"></div>
+            <div class="topMore">查看更多></div>
+        </div>
+    {{ $articles := loadArticlesTop "/published/zjjs" 0 5 }}
+    {{range $k,$v := $articles}}
+            <a href="/articleShow?articleId={{$v.Id}}">
+        <div class="zxjsContent">
+            <div class="zxjs_title">{{$v.Title}}</div>
+            <p class="zxjs_text">
+                {{$v.FirstContent}}
+            </p>
+        </div>
+            </a>
+    {{end}}
+        <!--div class="zxjsContent">
+            <div class="zxjs_title">医保异地结算打开一扇窗</div>
+            <p class="zxjs_text">
+                医保指社会医疗保险。社会医疗保险是国家和社会根据一定的法律法规，为向保障范围内的劳动者提供患病时基本医疗需求保障而建立的社会保险制度。基本医疗保险基金由统筹基金和个人账户构成
+            </p>
+        </div>
+        <div class="zxjsContent">
+            <div class="zxjs_title">医保异地结算打开一扇窗</div>
+            <p class="zxjs_text">
+                医保指社会医疗保险。社会医疗保险是国家和社会根据一定的法律法规，为向保障范围内的劳动者提供患病时基本医疗需求保障而建立的社会保险制度。基本医疗保险基金由统筹基金和个人账户构成
+            </p>
+        </div-->
+    </div>
+    <!--底部footer-->
+{{template "new_footer.html" .}}
+</div>
+<script src="/static/medicalChain/static/js/jquery-2.1.1.min.js"></script>
+<script src="/static/medicalChain/static/js/bootstrap.min.js"></script>
+<script src="/static/medicalChain/static/js/comm.js"></script>
+<script>
+    jQuery(document).ready(function($) {
+        $("#imgCarousel").carousel('cycle');
+        $("#myCarousel").carousel('cycle');
+    });
+
+</script>
+</body>
+</html>

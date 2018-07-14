@@ -154,6 +154,10 @@ func (t Time) String() string {
 	return time.Time(t).Format(timeFormart)
 }
 
+func (t Time) Format(layout string) string {
+	return time.Time(t).Format(layout)
+}
+
 
 /************************************** start data ********************************************/
 /**/
@@ -190,6 +194,9 @@ func (t Time) String() string {
 /**/	return time.Time(t).Format(dateFormart)
 /**/}
 /**/
+/**/func (t Date) Format(layout string) string {
+/**/	return time.Time(t).Format(layout)
+/**/}
 /************************************** end data ********************************************/
 /**/
 /*
