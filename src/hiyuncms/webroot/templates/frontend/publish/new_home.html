@@ -29,13 +29,23 @@
         <div class="plat_title">
             高效管理，专业运营
         </div>
+    {{ $articles := loadArticlesTop "/published/homeimg" 0 1 }}
+    {{range $k,$v := $articles}}
         <div class="plat_content rowFlex">
+            <div class="plat_img"><img src="{{$v.FirstImage}}"></div>
+            <div class="plat_text">
+                <p>{{$v.Title}}</p>
+                <p>{{$v.Content}}</p>
+            </div>
+        </div>
+    {{end}}
+        <!--div class="plat_content rowFlex">
             <div class="plat_img"><img src="/static/medicalChain/static/imgs/platImg.png"></div>
             <div class="plat_text">
                 <p>一体化采招平台 便捷看得见</p>
                 <p>白发渔樵江渚上，惯看秋月春风。一壶浊酒喜相逢，古今多少事， 都付笑谈中。滚滚长江，汹涌东逝，不可拒，不可留。浪花飞溅，千古英雄在个中湮没不闻。对也罢，错也罢；成也好，败也好，功名，事业，一转眼的工夫就随着江水流逝，烟消云灭，不见踪影。只有青山仍旧矗立眼前，看着一次又一次的夕阳西下。</p>
             </div>
-        </div>
+        </div-->
 
     </div>
     <div class="character">

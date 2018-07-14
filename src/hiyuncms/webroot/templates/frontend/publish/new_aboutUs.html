@@ -16,12 +16,18 @@
     <!--企业简介-->
     <div class="companyInfo">
         <div class="infoTitle">企业介绍</div>
-        <p class="info">
+        {{ $articles := loadArticlesTop "/published/abuoutusdesc" 0 1 }}
+        {{range $k,$v := $articles}}
+            <p class="info">
+                {{$v.Content}}　
+            </p>
+        {{end}}
+        <!--p class="info">
             南阳扬名网络科技有限公司（Nanyang Yangming Network Technology Co., Ltd.）创立于2015年，是中国的一家高科技公司，总部位于河南省南阳市。 　　
         </p>
         <p class="info">
             南阳扬名网络科技有限公司是一家以互联网平台运营、WEB应用开发、软件开发、大数据分析、移动互联网通讯技术、云计算、营销推广、技术培训等技术为核心的科技公司。公司骨干人员均来源于各大互联网公司以及各大高校。其中公司与多名211重点大学在职教授作为公司技术指导顾问。我公司主要以技术研发创新为主导，把握移动互联网行业的需求，利用互联网核心技术为客户提供稳定、可靠、功能优异的软硬一体解决方案。
-        </p>
+        </p-->
     </div>
     <!--<div class="companyInfo-img">
         <div class="flex-container">

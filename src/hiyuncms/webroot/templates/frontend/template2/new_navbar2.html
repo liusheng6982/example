@@ -18,9 +18,17 @@
             </ul>
         </div>
         <div class="header_right">
+        {{ $user := .sessionInfo }}
+        {{if eq "" $user.UserName }}
             <ul class="ul_line">
                 <li><a target="mew_" href="/userlogin">登录</a></li>
                 <li><a target="mew_2" href="/registry">注册</a></li>
             </ul>
+        {{else}}
+            <div class="sitenav-item-bd js_login" style="">
+                <a rel="nofollow" target="_blank" href="/companyindex" class="link-loginout">工作台</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a rel="nofollow" target="_self"  href="/logout" class="link-loginout">退出</a>
+            </div>
+        {{end}}
         </div>
     </div>
