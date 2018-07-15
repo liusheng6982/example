@@ -8,9 +8,9 @@ set CGO_ENABLED=0
 set GOOS=linux
 set GOARCH=amd64
 go build -o -x Main Main.go
-echo "1、---------------------------------------------------------------------"
+echo "1---------------------------------------------------------------------"
 
-echo "2、---------------------------停止服务器上 main---------------------------"
+echo "2---------------------------stop main---------------------------"
 ssh -tt root@180.76.187.132 << eeooff
     ps aux | grep Main | grep -v grep | awk '{print "kill ",\$2|"bash"}'
     exit

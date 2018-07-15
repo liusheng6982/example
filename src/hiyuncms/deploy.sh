@@ -3,7 +3,7 @@
 #CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build Main.go
 #echo "1、---------------------------------------------------------------------"
 echo "1、------------------------开始编译 Main.go------------------------------"
-set  GOPATH=C:/Users/liusheng/GoglandProjects/example
+set  GOPATH=/C/Users/liusheng/GoglandProjects/example
 set CGO_ENABLED=0
 set GOOS=linux
 set GOARCH=amd64
@@ -38,5 +38,5 @@ scp -r ./webroot/templates root@180.76.187.132:/home/webroot
 echo "6、---------------------------------------------------------------------"
 
 echo "6、----------------------------开始复制静态文件----------------------------"
-#scp -r ./webroot/static 180.76.187.132:/home/webroot
+scp -r ./webroot/static root@180.76.187.132:/home/webroot
 echo "6、---------------------------------------------------------------------"
