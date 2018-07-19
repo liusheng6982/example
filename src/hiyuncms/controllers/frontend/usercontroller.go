@@ -303,8 +303,8 @@ func RegistryVerify(c * gin.Context)  {
 		})
 		return
 	}
-
-	count1, err := models.DbSlave.Count(&user)
+	userTemp := yy.YyUser{UserPhone: user.UserPhone}
+	count1, err := models.DbSlave.Count(&userTemp)
 	if err != nil {
 		isSuccess = false
 		msg = err.Error()
