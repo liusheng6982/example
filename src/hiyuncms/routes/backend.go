@@ -136,6 +136,7 @@ func regRoute()  {
 	BackendRoute.POST("/article", backend.ArticleSave)          //新增文档
 	BackendRoute.POST("/delarticle", backend.ArticleDel)        //删除文档
 	BackendRoute.POST("/pubarticle", backend.ArticlePublish)    //发布文档
+	BackendRoute.POST("/pubcancelarticle", backend.ArticlePublishCancel)    //发布文档
 	BackendRoute.GET ("/articlelist", backend.ArticleListShow)  //新增列表页
 	BackendRoute.POST("/articlelist", backend.ArticleListData)  //新增表数据
 	BackendRoute.GET ("/UEditorAction", backend.UEdit)          //富文本配置

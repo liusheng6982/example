@@ -83,3 +83,12 @@ func ArticlePublish(c *gin.Context){
 		"flag":"SUCCESS",
 	})
 }
+
+func ArticlePublishCancel(c *gin.Context){
+	articleIdstr, _ := c.GetPostForm("articleId")
+	articleId, _ := strconv.ParseInt(articleIdstr, 10, 64)
+	cms.PublishCancelArticle( articleId )
+	c.JSON(http.StatusOK, gin.H{
+		"flag":"SUCCESS",
+	})
+}
