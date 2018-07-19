@@ -204,4 +204,18 @@ func PublishArticle(articleId int64)  {
 	}
 }
 
+/**
+撤销发布
+ */
+func PublishCancelArticle(articleId int64)  {
+	article := Article{Id:articleId,Status:2}
+	_, err := models.DbMaster.ID(articleId).Update(&article)
+	if err != nil {
+		log.Printf("撤回Article出错%d:%s", articleId, models.GetErrorInfo(err))
+	}
+}
+
+
+
+
 

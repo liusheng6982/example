@@ -70,6 +70,33 @@
         })
     }
 
+    function publishCancelArticle(articleId) {
+        var data = {
+            "articleId" : articleId
+        }
+        $.ajax({
+            "url": "/pubcancelarticle",
+            "data": data,
+            async: false,
+            dataType: "json",
+            type: "POST",
+            success: function (result) {
+                if (result.flag == "SUCCESS") {
+                    $("#grid-table").jqGrid("setGridParam", {
+                        search: true, mtype: "post"
+                    }).trigger("reloadGrid", [{}
+                    ]);
+                }
+                else {
+                    alert("撤回失败！")
+                }
+            },
+            error: function (result) {
+                alert("撤回失败！")
+            }
+        })
+    }
+
     jQuery(function($) {
 
 
@@ -129,7 +156,11 @@
                     formatter: function (cellvalue, options, rowObject) {
                         var taskAudit ='<input type="button" value="修改" onClick="window.location.href=\'/article?id='+rowObject.Id+'\'">&nbsp;';
                         taskAudit += '<input type="button" value="删除" onClick="deleteArticle(\''+rowObject.Id + '\')">&nbsp;'
-                        taskAudit += '<input type="button" value="发布" onClick="publishArticle(\''+rowObject.Id + '\')">'
+                        if( rowObject.Status != 1) {
+                            taskAudit += '<input type="button" value="发布" onClick="publishArticle(\'' + rowObject.Id + '\')">';
+                        }else{
+                            taskAudit += '<input type="button" value="撤回" onClick="publishCancelArticle(\'' + rowObject.Id + '\')">';
+                        }
                         return taskAudit;
                     },
 
