@@ -6,16 +6,6 @@
     }
 </style>
 <div class="row">
-    <div class="col-xs-8">
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <input type="file" id="excel-file" name="excel-file" class="form-control" placeholder="Search">
-            </div>
-            <button type="button" id="import-btn" class="btn btn-default">导入</button>&nbsp;<a href="/static/yy/导入模板.xlsx">下载导入模板</a>
-        </form>
-    </div>
-</div>
-<div class="row">
     <div class="col-xs-12">
         <table id="grid-table"></table>
         <div id="grid-pager"></div>
@@ -28,9 +18,6 @@
 
 <script src="/static/plugin/ajaxfileupload.js"></script>
 <script type="text/javascript">
-
-
-
     jQuery(function($) {
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
@@ -53,14 +40,14 @@
         })
 
         jQuery(grid_selector).jqGrid({
-            caption: "公司列表",
+            caption: "会员列表",
             subGrid : false,
             datatype: "json",
-            url: '/companydatalist',
+            url: '/vipuserlist',
             mtype:'POST',
             //datatype: "local",
             height: 415,
-            colNames:[' ', 'ID','名称','类型'],
+            colNames:[' ', 'ID','用户名','用户登录号', '公司名称'],
             colModel:[
                 {name:'myac',index:'', width:120, fixed:true, sortable:false, resize:false,hidden:true,
 
@@ -78,16 +65,9 @@
                     }
                 },
                 {name:'id',index:'id', width:30, sorttype:"int", editable: true},
-                {name:'CompanyName',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
-                {name:'CompanyType',index:'stock', width:30, editable: false,
-                    formatter: function (cellvalue, options, rowObject) {
-                        if(cellvalue==1){
-                            return "医院";
-                        }else{
-                            return "供应商";
-                        }
-                    },
-                }
+                {name:'UserName',index:'name', width:50,editable: true,editoptions:{size:"20",maxlength:"30"}},
+                {name:'UserPhone',index:'stock', width:30, editable: false},
+                {name:'CompanyName',index:'stock', width:30, editable: false}
             ],
 
             viewrecords : true,
@@ -342,30 +322,7 @@
         });
 
 
-        $("#import-btn").click(function () {
-            if( $("input[name='excel-file']").val() == ""){
-                alert("请选择导入的文件！");
-                return ;
-            }
-            $.ajaxFileUpload({
-                url:"import-excel",
-                secureuri:false,
-                fileElementId:$("input[name='excel-file']").attr("id"),
-                dataType:'json',
-                type:'POST',
-                success:function(data){
-                    if(data.impsuccess){
-                        alert("导入成功");
-                    }
-                    else {
-                        alert(data.msg)
-                    }
-                },
-                error:function(data){
-                    alert("导入出错："+data.msg);
-                }
-            });
-        })
+
 
 
         //$(".part3").show();

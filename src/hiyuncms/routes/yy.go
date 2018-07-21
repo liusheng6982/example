@@ -49,5 +49,9 @@ func init(){
 
 	BackendRoute.GET ("/companyshow", yy.CompanyShow)			//医院供应商列表
 	BackendRoute.POST("/companydatalist", yy.CompanyList)		//公司列表
+	BackendRoute.POST("/import-excel", yy.SupplyImport) 			//导入供应商
+
+	BackendRoute.GET ("/vipusershow", yy.VipUserShow)			//vip用户列表显示
+	BackendRoute.POST("/vipuserlist", yy.VipUserList) 			//VIP用户列表
 }
 
