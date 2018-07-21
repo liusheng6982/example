@@ -47,6 +47,18 @@ func GetCompanyIdsBySupplyId( supplyId int64 )([]*YyCompanyRelation){
 	return result
 }
 
+func GetSupplies( page *models.PageRequest )*models.PageResponse{
+	result := make( [] *YyCompany, 0)
+	models.DbSlave.Table(YyCompany{}).Alias("com").
+		Limit(page.Rows, (page.Page - 1)* page.Rows).
+		Find(&result)
+	records ,_ := models.DbSlave.Table(YyCompany{}).Alias("com").
+		Count()
+	pageResponse := models.InitPageResponse(page, &result, records)
+
+	return pageResponse
+}
+
 func GetSuppliesByHospitalId( hospitalId int64, page *models.PageRequest )*models.PageResponse{
 	result := make( [] *YyCompany, 0)
 	log.Printf("hospital_id=%d", hospitalId)

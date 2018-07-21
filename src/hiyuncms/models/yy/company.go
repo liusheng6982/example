@@ -10,7 +10,7 @@ type YyCompany struct {
 	Id              		int64      `xorm:"pk BIGINT autoincr" json:"id"`
 	CompanyName     		string     `xorm:"varchar(50) notnull unique"`
 
-	CompanyType             string 		`xorm:"varchar(50)"`
+	CompanyType             string 		`xorm:"varchar(50)"`  //1:医院 2：供应商
 	CompanyProvince         string      `xorm:"varchar(30)"`
 	CompanyCity		        string 	    `xorm:"varchar(30)"`
 	CompanyAddress          string      `xorm:"varchar(120)"`

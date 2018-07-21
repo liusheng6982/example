@@ -31,7 +31,7 @@ func init(){
 
 	FrontendRoute.POST("/sendSms", frontend.SendSMS )
 	FrontendRoute.POST("/pushPurchasePorject", yy.PushPurchaseProject)
-	FrontendRoute.POST( "/notifyProjectNo", yy.PushInviteTenderProject)
+	FrontendRoute.POST("/notifyProjectNo", yy.PushInviteTenderProject)
 
 	FrontendRoute.POST("/RegistryVerify", frontend.RegistryVerify)
 
@@ -45,6 +45,9 @@ func init(){
 	FrontendRoute.POST("/hospitallogin", frontend.HospitalUserLogin)
 	FrontendRoute.GET ("/hospitallogout", frontend.HospitalLogout)
 
-	FrontendRoute.GET("/applysupply", yy.ApplyToSupply)
+	FrontendRoute.GET ("/applysupply", yy.ApplyToSupply)			//申请成为供应商
+
+	BackendRoute.GET ("/companyshow", yy.CompanyShow)			//医院供应商列表
+	BackendRoute.POST("/companydatalist", yy.CompanyList)		//公司列表
 }
 
