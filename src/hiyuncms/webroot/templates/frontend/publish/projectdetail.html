@@ -1,47 +1,37 @@
-{{template "headerjs.html" .}} {{template "navbar.html" .}} {{template "slider.html" .}}
-<style>
-  #main {
-    padding: 20px 20px 20px 20px;
-    width: 900px;
-    margin-left: 10px;
-    float: left;
-    background-color: white
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>e医链</title>
+    <link rel="icon" href="">
+    <meta name="keywords" content="互联网，智能采购，供应链">
+    <meta name="description" content="一体化采招平台 便捷看得见">
+    <meta name=”viewport” content="width=device-width, initial-scale=1" />
+    <meta name="applicable-device" content="pc,mobile">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/comm.css">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/home.css">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/style.css" />
+    <script type="text/javascript" src="/static/medicalChain/static/js/jquery.js"></script>
 
-  .blockContent {
-    margin: 20px 0 20px 0;
-  }
+    <link rel="stylesheet" href="/static/medicalChain/static/css/focusStyle.css">
+    <style>
+        .container,.container-fluid{margin-right:auto;margin-left:auto}
+        .container{margin-top: 20px}
+        .container,.container-fluid{padding-left:12px;padding-right:12px}
+        @media (min-width:768px){.container{width:744px}}@media (min-width:992px){.container{width:964px}}@media (min-width:1200px){.container{width:1164px}}
+    </style>
+</head>
 
-  .blockContent tr th, .blockContent tr td {
-    padding-left: 20px;
-    vertical-align: top;
-    line-height: 30px;
-}
-.blockContent th {
-    text-align: right;
-    width: 110px;
-    font-weight: normal;
-    color: #999;
-    vertical-align: top;
-    height: 30px;
-}
+<body>
+<div class="mainPage">
+{{template "new_navbar2.html" .}}
+{{template "new_slider.html" .}}
 
-td, th {
-    display: table-cell;
-    vertical-align: inherit;
-}
-
-  #main h3 {border-bottom: 1px #eee solid;padding-bottom: 14px;
-  }
-
-  h3, .h3 {
-    font-size: 20px;
-  }
-</style>
 {{ $user := .sessionInfo}}
-<section class="yy-news" style="font-size: 14px">
   <div class="container mycontainer">
-    <div id="main">
       <div class="row">
         {{ $projectInfo := .projectDetail }}
         <h3>项目概况</h3>
@@ -77,7 +67,7 @@ td, th {
         </table>
       </div>
 
-      <div class="row" style="font-size:16px;margin-top:20px">
+      <div class="row" style="margin-top:20px">
         <h3>项目描述</h3>
           <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">
             <p>
@@ -85,12 +75,12 @@ td, th {
             </p>
           </div>
       </div>
-        <div class="row" style="font-size:16px;margin-top:20px">
+        <div class="row" style="margin-top:20px">
             <h3>操作</h3>
             <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">
             {{if judgeVIP $user.CompanyId $projectInfo.CompanyId}}
             {{ if eq $projectInfo.ProjectType 1}}
-                <a href="http://125.208.29.27/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">参与招标</a>
+                <a href="http://180.76.102.131/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">参与招标</a>
             {{ else}}
                 <a href="http://180.76.114.73/Api/eygou/PurchaseProject.ashx?Id={{$projectInfo.ImpId}}&accessToken={{$user.AccessToken}}">参与采购</a>
             {{end}}
@@ -101,21 +91,32 @@ td, th {
         </div>
 
 
-      </div>
   </div>     &nbsp;
 
 
-</section>
+{{template "new_footer.html" .}}
 
-<section class="yy-news" style="font-size: 14px">
+</div>
+<script src="/static/medicalChain/static/js/jquery-2.1.1.min.js"></script>
+<script src="/static/medicalChain/static/js/comm.js"></script>
+<!--<script src="../static/js/swiper.min.js"></script>-->
+<!--<script>-->
 
-</section>
-     
+<!--var swiper = new Swiper('.bannerSwiper', {-->
+<!--pagination: {-->
+<!--el: '.sbannerSwiper',-->
+<!--dynamicBullets: true,-->
+<!--},-->
+<!--});-->
 
+<!--var swiper = new Swiper('.platSwiper', {-->
+<!--spaceBetween: 30,-->
+<!--pagination: {-->
+<!--el: '.platSwiper',-->
+<!--clickable: true,-->
+<!--},-->
+<!--});-->
 
-
-
-
-
-
-{{template "bottom.html" .}} {{template "footerjs.html" .}}
+<!--</script>-->
+</body>
+</html>

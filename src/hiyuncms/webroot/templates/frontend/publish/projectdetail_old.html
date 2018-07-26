@@ -1,0 +1,121 @@
+{{template "headerjs.html" .}} {{template "navbar.html" .}} {{template "slider.html" .}}
+<style>
+  #main {
+    padding: 20px 20px 20px 20px;
+    width: 900px;
+    margin-left: 10px;
+    float: left;
+    background-color: white
+  }
+
+  .blockContent {
+    margin: 20px 0 20px 0;
+  }
+
+  .blockContent tr th, .blockContent tr td {
+    padding-left: 20px;
+    vertical-align: top;
+    line-height: 30px;
+}
+.blockContent th {
+    text-align: right;
+    width: 110px;
+    font-weight: normal;
+    color: #999;
+    vertical-align: top;
+    height: 30px;
+}
+
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+  #main h3 {border-bottom: 1px #eee solid;padding-bottom: 14px;
+  }
+
+  h3, .h3 {
+    font-size: 20px;
+  }
+</style>
+{{ $user := .sessionInfo}}
+<section class="yy-news" style="font-size: 14px">
+  <div class="container mycontainer">
+    <div id="main">
+      <div class="row">
+        {{ $projectInfo := .projectDetail }}
+        <h3>项目概况</h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="blockContent">
+          <tbody>
+              <tr>
+                  <th>医院</th>
+                  <td width="280px;">{{$projectInfo.CompanyName}}</td>
+                  <th></th>
+                  <td></td>
+              </tr>
+            <tr>
+              <th>编号</th>
+              <td width="280px;">{{$projectInfo.ProjectNo}}</td>
+              <th>名称</th>
+              <td>{{ $projectInfo.ProjectName }}</td>
+            </tr>
+            {{ if eq $projectInfo.ProjectType 1}}
+            <tr>
+              <th>开标时间</th>
+              <td>{{$projectInfo.InviteOpenTenderTime}}</td>
+              <th>招标截止日期</th>
+              <td>{{$projectInfo.InviteSubmitTenderEndTime}}</td>
+            </tr>
+            {{ end }}
+            <tr>
+                <th>联系人</th>
+                <td>{{$projectInfo.Contact}}</td>
+                <th>联系电话</th>
+                <td>{{$projectInfo.ContactPhone}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row" style="font-size:16px;margin-top:20px">
+        <h3>项目描述</h3>
+          <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">
+            <p>
+                {{$projectInfo.ProjectContent}}
+            </p>
+          </div>
+      </div>
+        <div class="row" style="font-size:16px;margin-top:20px">
+            <h3>操作</h3>
+            <div class="col-md-10 col-md-offset-1" style="margin-top: 20px">
+            {{if judgeVIP $user.CompanyId $projectInfo.CompanyId}}
+            {{ if eq $projectInfo.ProjectType 1}}
+                <a href="http://125.208.29.27/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">参与招标</a>
+            {{ else}}
+                <a href="http://180.76.114.73/Api/eygou/PurchaseProject.ashx?Id={{$projectInfo.ImpId}}&accessToken={{$user.AccessToken}}">参与采购</a>
+            {{end}}
+            {{else}}
+                <a href="/applysupply">申请成为供应商</a>
+            {{end}}
+            </div>
+        </div>
+
+
+      </div>
+  </div>     &nbsp;
+
+
+</section>
+
+<section class="yy-news" style="font-size: 14px">
+
+</section>
+     
+
+
+
+
+
+
+
+{{template "bottom.html" .}} {{template "footerjs.html" .}}
