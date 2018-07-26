@@ -106,13 +106,13 @@
         <div class="col-md-6 ">
             <div class="dynamic-project-box left-box">
                 <div class="dynamic-project-title">
-                    <span>采购项目</span>
+                    <span>招标项目</span>
                     <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
                 </div>
                 <div class="center">
                     <ul>
 
-                    {{ $inviteTenders := GetPurchaseByCompanyId 10 $companyInfo.Id }}
+                    {{ $inviteTenders := loadTopInviteTenderByCompanyId 10 $companyInfo.Id }}
                     {{range $k,$v := $inviteTenders}}
                         <li><span>{{$v.CreateTime}}</span><a href="/company_projectdetail?id={{$v.Id}}" title="{{$v.ProjectName}}">{{$v.ProjectName}}</a></li>
                     {{end}}
@@ -125,7 +125,7 @@
         <div class="col-md-6">
             <div class="dynamic-project-box">
                 <div class="dynamic-project-title">
-                    <span>招标项目</span>
+                    <span>采购项目</span>
                     <!--a href="" title="更多招标公告信息">More&gt;&gt;</a-->
                 </div>
                 <div class="center">
@@ -177,7 +177,7 @@
             </a>
         </div>
         <div class="col-md-6">
-            <a  target="_blank" href="#">
+            <a  target="_blank" href="javascript:alert('即将开通')">
                 <img src="/static/yy/img/job-logo4.png"><br>
                 供应商管理
             </a>
@@ -206,7 +206,7 @@
             </a>
         </div>
         <div class="col-md-6">
-            <a  target="_blank" href="#">
+            <a  target="_blank" href="javascript:alert('即将开通')">
                 <img src="/static/yy/img/job-logo4.png"><br>
                 我的产品
             </a>
