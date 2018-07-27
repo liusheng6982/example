@@ -47,14 +47,14 @@ eeooff
 copyTemplate()
 {
   echo "6、----------------------------开始复制模板文件----------------------------"
-  scp -r ./webroot/templates 180.76.187.132:/root/demo/webroot
+  scp -r ./webroot/templates root@180.76.187.132:/root/demo/webroot
   echo "6、---------------------------------------------------------------------"
 }
 
 copyStatic()
 {
   echo "7、----------------------------开始复制静态文件----------------------------"
-  scp -r ./webroot/static 180.76.187.132:/root/demo/webroot
+  scp -r ./webroot/static root@180.76.187.132:/root/demo/webroot
   echo "7、---------------------------------------------------------------------"
 }
 
@@ -66,4 +66,3 @@ copyStatic()
 #startServer
 copyTemplate
 #copyStatic
-
