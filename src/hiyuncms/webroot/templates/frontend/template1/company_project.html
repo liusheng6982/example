@@ -148,23 +148,23 @@
     {{ if eq $user.CompanyType "1"}}
         <div class="col-md-3" style="text-align: center;padding-top: 20px;padding-bottom: 20px">
             <div class="col-md-6">
-                <a  target="_blank" href="http://180.76.102.131/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
+                <a  target="_blank" href="" onclick="javascript:href_test();return false;">
                     <img src="/static/yy/img/job-logo1.png"><br>
                     国信招标
                 </a>
             </div>
-            <div class="col-md-6">
+            <!--div class="col-md-6">
                 <a  target="_blank" href="http://180.76.102.131/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
                     <img src="/static/yy/img/job-logo2.png"><br>
                     电商
                 </a>
-            </div>
-            <div class="col-md-6">
+            </div-->
+            <!--div class="col-md-6">
                 <a  target="_blank" href="http://180.76.102.131/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
                     <img src="/static/yy/img/job-logo3.png"><br>
                     CA申请
                 </a>
-            </div>
+            </div-->
             <div class="col-md-6">
                 <a  target="_blank" href="/static/yy/ceb_bulletin.zip">
                     <img src="/static/yy/img/job-logo5.png"><br>
@@ -173,13 +173,13 @@
             </div>
             <div class="col-md-6">
                 <a  target="_blank" href="http://180.76.114.73/Api/eygou/verifyToken.ashx?accessToken={{$user.AccessToken}}">
-                    <img src="/static/yy/img/job-logo4.png"><br>
+                    <img src="/static/yy/img/job-logo2.png"><br>
                     采购
                 </a>
             </div>
             <div class="col-md-6">
                 <a  target="_blank" href="javascript:alert('即将开通')">
-                    <img src="/static/yy/img/job-logo4.png"><br>
+                    <img src="/static/yy/img/job-logo3.png"><br>
                     供应商管理
                 </a>
             </div>
@@ -187,18 +187,18 @@
     {{else}}
         <div class="col-md-3" style="text-align: center;padding-top: 20px;padding-bottom: 20px">
             <div class="col-md-6">
-                <a  target="_blank" href="http://180.76.102.131/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
+                <a  target="_blank" href="" onclick="javascript:href_test();return false;">
                     <img src="/static/yy/img/job-logo1.png"><br>
                     国信投标
                 </a>
             </div>
 
-            <div class="col-md-6">
+            <!--div class="col-md-6">
                 <a  target="_blank" href="http://180.76.102.131/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}">
                     <img src="/static/yy/img/job-logo3.png"><br>
                     CA申请
                 </a>
-            </div>
+            </div-->
 
             <div class="col-md-6">
                 <a  target="_blank" href="http://180.76.114.73/Api/eygou/verifyToken.ashx?accessToken={{$user.AccessToken}}">
@@ -216,5 +216,17 @@
         </div>
     {{end}}
 </div>
+
+        <script>
+
+            function href_test() {
+                window.open("http://180.76.102.131/nmgxdzzb/loginController.do?ssoLogin&accessToken={{$user.AccessToken}}", "_mymy");
+                newWin = function () {
+                    window.open("http://180.76.102.131/nmgx/", "_mymy")
+                }
+                setTimeout(newWin, 2000);
+
+            }
+        </script>
 
 
