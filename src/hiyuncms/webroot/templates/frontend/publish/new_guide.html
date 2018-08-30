@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>e医链</title>
+    <link rel="icon" href="">
+    <meta name="keywords" content="互联网，智能采购，供应链">
+    <meta name="description" content="一体化采招平台 便捷看得见">
+    <meta name=”viewport” content="width=device-width, initial-scale=1" />
+    <meta name="applicable-device" content="pc,mobile">
+    <meta http-equiv="Cache-Control" content="no-transform ">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/comm.css">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/home.css">
+    <link rel="stylesheet" type="text/css" href="/static/medicalChain/static/css/font-awesome.min.css">
+</head>
+
+<body>
+<div class="mainPage">
+{{template "new_navbar2.html" .}}
+    <div class="banner-img">
+        <img height="350px" src="/static/medicalChain/static/imgs/aboutUs1.png" style="height: 400px">
+    </div>
+<style>
+    #li {list-style-type:none;}
+    .mycontainer{
+        width: 1190px;
+        margin: 20px auto;
+
+    }
+</style>
+<div class="yy-news">
+    <div class="container mycontainer">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="yy-news-list">
+                    <ul class="met-page-ajax">
+                        {{ $page := loadArticles .path .pageSize .pageNo }}
+                        {{range $k,$v := $page.Rows}}
+                            {{ if eq $k 0 }}
+                                {{ $article := printf "%d" $v.Id  | loadArticle }}
+                                 <p>
+                                     {{$article.Content | html}}
+                                 </p>
+                            {{end}}
+                        {{end}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    &nbsp;
+</div>
+{{template "new_footer.html" .}}
+
+</div>
+<script src="/static/medicalChain/static/js/jquery-2.1.1.min.js"></script>
+<script src="/static/medicalChain/static/js/comm.js"></script>
+<!--<script src="../static/js/swiper.min.js"></script>-->
+<!--<script>-->
+
+<!--var swiper = new Swiper('.bannerSwiper', {-->
+<!--pagination: {-->
+<!--el: '.sbannerSwiper',-->
+<!--dynamicBullets: true,-->
+<!--},-->
+<!--});-->
+
+<!--var swiper = new Swiper('.platSwiper', {-->
+<!--spaceBetween: 30,-->
+<!--pagination: {-->
+<!--el: '.platSwiper',-->
+<!--clickable: true,-->
+<!--},-->
+<!--});-->
+
+<!--</script>-->
+</body>
+</html>
