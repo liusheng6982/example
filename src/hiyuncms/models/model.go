@@ -1,18 +1,19 @@
 package models
 
 import (
-	"time"
-	"log"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/xorm"
 	"github.com/go-xorm/core"
+	"github.com/go-xorm/xorm"
+	_ "github.com/mattn/go-sqlite3"
 	"hiyuncms/config"
+	"log"
+	"time"
 )
 
 //var enginex * xorm.DbMaster
-var DbMaster * xorm.Engine
-var DbSlave * xorm.Engine
+var DbMaster *xorm.Engine
+var DbSlave *xorm.Engine
 
 /*
 db.master.driver=mysql
@@ -22,54 +23,70 @@ db.master.password=root
 db.master.host=localhost:3306
 db.master.prefix=hiyuncms_
 db.master.encoding=utf8
- */
+*/
 
-func init()  {
-	driver := config.GetValue("db.master.driver")
-	dbname := config.GetValue("db.master.dbname")
-	user   := config.GetValue("db.master.user")
-	password := config.GetValue("db.master.password")
-	host := config.GetValue("db.master.host")
-	encode := config.GetValue("db.master.encoding")
+func init() {
+	println("\n%s", config.GetValue("db.type"))
 	prefix := config.GetValue("db.master.prefix")
-	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true", user, password, host, dbname,encode)
-	var err error
-	DbMaster, err = xorm.NewEngine(driver, params)
-	log.Println( "init Database DbMaster ", GetErrorInfo(err))
+	if config.GetValue("db.type") == "mysql" {
+		driver := config.GetValue("db.master.driver")
+		dbname := config.GetValue("db.master.dbname")
+		user := config.GetValue("db.master.user")
+		password := config.GetValue("db.master.password")
+		host := config.GetValue("db.master.host")
+		encode := config.GetValue("db.master.encoding")
 
-	maxIdle := config.GetInt("db.master.max.idle")
-	maxConn := config.GetInt("db.master.max.conn")
-	DbMaster.SetMaxIdleConns( maxIdle )
-	DbMaster.SetMaxOpenConns( maxConn )
-	showSql := config.GetBool("db.master.show.sql")
-	DbMaster.ShowSQL( showSql )
-	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
-	DbMaster.SetTableMapper(tbMapper)
-	//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
-	//DbMaster.SetDefaultCacher(cacher)
+		params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true", user, password, host, dbname, encode)
+		var err error
+		DbMaster, err = xorm.NewEngine(driver, params)
+		log.Println("init Database DbMaster ", GetErrorInfo(err))
 
-	initSlave()
+		maxIdle := config.GetInt("db.master.max.idle")
+		maxConn := config.GetInt("db.master.max.conn")
+		DbMaster.SetMaxIdleConns(maxIdle)
+		DbMaster.SetMaxOpenConns(maxConn)
+		showSql := config.GetBool("db.master.show.sql")
+		DbMaster.ShowSQL(showSql)
+		tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
+		DbMaster.SetTableMapper(tbMapper)
+		//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
+		//DbMaster.SetDefaultCacher(cacher)
+
+		initSlave()
+	} else if config.GetValue("db.type") == "sqllite" {
+		println("into sqllite")
+		var err error
+		DbMaster, err = xorm.NewEngine("sqlite3", "./hiyum.db")
+		if err != nil {
+			log.Println("init Database DbSlave ", GetErrorInfo(err))
+		}
+		DbSlave = DbMaster
+		tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
+		DbMaster.SetTableMapper(tbMapper)
+		println("%+v", DbSlave)
+		println("%+v", DbMaster)
+	}
 }
 
-func initSlave()  {
+func initSlave() {
 	driver := config.GetValue("db.slave.driver")
 	dbname := config.GetValue("db.slave.dbname")
-	user   := config.GetValue("db.slave.user")
+	user := config.GetValue("db.slave.user")
 	password := config.GetValue("db.slave.password")
 	host := config.GetValue("db.slave.host")
 	encode := config.GetValue("db.slave.encoding")
 	prefix := config.GetValue("db.slave.prefix")
-	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true", user, password, host, dbname,encode)
+	params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true", user, password, host, dbname, encode)
 	var err error
 	DbSlave, err = xorm.NewEngine(driver, params)
-	log.Println( "init Database DbSlave ", GetErrorInfo(err))
+	log.Println("init Database DbSlave ", GetErrorInfo(err))
 
 	maxIdle := config.GetInt("db.slave.max.idle")
 	maxConn := config.GetInt("db.slave.max.conn")
-	DbSlave.SetMaxIdleConns( maxIdle )
-	DbSlave.SetMaxOpenConns( maxConn )
+	DbSlave.SetMaxIdleConns(maxIdle)
+	DbSlave.SetMaxOpenConns(maxConn)
 	showSql := config.GetBool("db.slave.show.sql")
-	DbSlave.ShowSQL( showSql )
+	DbSlave.ShowSQL(showSql)
 	tbMapper := core.NewPrefixMapper(core.SnakeMapper{}, prefix)
 	DbSlave.SetTableMapper(tbMapper)
 
@@ -77,25 +94,24 @@ func initSlave()  {
 	//DbSlave.SetDefaultCacher(cacher)
 }
 
-
 type PageRequest struct {
-	Rows       int `form:"rows"`
-	Page       int `form:"page"`
-	Sidx 	   string `form:"sidx"`
-	Sord	   string `form:"sord"`
-	Filters    string `form:"filters"`
+	Rows    int    `form:"rows"`
+	Page    int    `form:"page"`
+	Sidx    string `form:"sidx"`
+	Sord    string `form:"sord"`
+	Filters string `form:"filters"`
 }
 
 type PageResponse struct {
-	Page     int `json:"page"`
-	Records  int64 `json:"records"`
-	Total    int `json:"total"`
+	Page     int         `json:"page"`
+	Records  int64       `json:"records"`
+	Total    int         `json:"total"`
 	Rows     interface{} `json:"rows"`
 	PageSize int
 	Path     string
 }
 
-func InitPageResponse(page * PageRequest, list interface{}, records int64 ) *PageResponse {
+func InitPageResponse(page *PageRequest, list interface{}, records int64) *PageResponse {
 	pageResponse := PageResponse{}
 	pageResponse.Rows = &list
 	pageResponse.Page = page.Page
@@ -105,23 +121,21 @@ func InitPageResponse(page * PageRequest, list interface{}, records int64 ) *Pag
 		page.Rows = 10
 	}
 	total := int(records) / page.Rows
-	if records % int64(page.Rows) != 0 {
-		total +=1
+	if records%int64(page.Rows) != 0 {
+		total += 1
 	}
 	//log.Printf("records=%d,  一共%d页\n",records,  total)
 	pageResponse.Total = total
 	return &pageResponse
 }
 
-
-func GetErrorInfo(err error)  string{
+func GetErrorInfo(err error) string {
 	if err == nil {
 		return "success"
-	}else {
-		return  err.Error()
+	} else {
+		return err.Error()
 	}
 }
-
 
 type Time time.Time
 type Date time.Time
@@ -130,8 +144,6 @@ const (
 	timeFormart = "2006-01-02 15:04:05"
 	dateFormart = "2006-01-02"
 )
-
-
 
 func (t *Time) UnmarshalJSON(data []byte) (err error) {
 	now, err := time.ParseInLocation(`"`+timeFormart+`"`, string(data), time.Local)
@@ -190,8 +202,3 @@ func (e *DbMaster) Where(query interface{}, args ...interface{}) *Session {
 	return newSession
 }
 */
-
-
-
-
-
