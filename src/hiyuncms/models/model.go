@@ -26,7 +26,7 @@ db.master.encoding=utf8
 */
 
 func init() {
-	println("\n%s", config.GetValue("db.type"))
+	log.Println( config.GetValue("db.type") )
 	prefix := config.GetValue("db.master.prefix")
 	if config.GetValue("db.type") == "mysql" {
 		driver := config.GetValue("db.master.driver")
@@ -36,10 +36,10 @@ func init() {
 		host := config.GetValue("db.master.host")
 		encode := config.GetValue("db.master.encoding")
 
-		params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true", user, password, host, dbname, encode)
+		params := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=true&allowNativePasswords=true", user, password, host, dbname, encode)
 		var err error
 		DbMaster, err = xorm.NewEngine(driver, params)
-		log.Println("init Database DbMaster ", GetErrorInfo(err))
+		log.Println("init Database DbMaster ", params,GetErrorInfo(err))
 
 		maxIdle := config.GetInt("db.master.max.idle")
 		maxConn := config.GetInt("db.master.max.conn")

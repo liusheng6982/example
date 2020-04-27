@@ -11,10 +11,13 @@ import (
 	"hiyuncms/service"
 	"hiyuncms/routes"
 	"hiyuncms/config"
+	"path/filepath"
 )
 
 
 func main() {
+	dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+	fmt.Printf("工作目录：%s",dir)
 	runFrontendServer()
 	runBackendServer()
 	RegService()
@@ -46,6 +49,6 @@ func RegService(){
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	<-sig
-	fmt.Println("服务器以优雅的停止")
+	fmt.Println("服务器优雅的停止")
 	service.UnRegService()
 }
